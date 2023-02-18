@@ -2,6 +2,7 @@ import express from "express";
 import * as dotenv from "dotenv";
 dotenv.config();
 import initRoutes from "./src/routes";
+import connectDB from "./src/config/connectDB";
 
 import cors from "cors";
 
@@ -17,9 +18,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 initRoutes(app);
-// app.use("/", (req, res) => {
-//   res.send("server on...");
-// });
+
+connectDB();
 
 const port = process.env.PORT || 8888;
 app.listen(port, () => {
