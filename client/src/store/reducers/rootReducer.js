@@ -16,7 +16,7 @@ const commonConfig = {
 const authConfig = {
   ...commonConfig,
   key: "auth",
-  whitelist: ["isLoggedIn", "token"], //whitelist chứa những state muốn lưu ở localstorage, ngược lại có blacklist
+  whitelist: ["isLoggedIn", "token"], //whitelist chứa những state nào muốn lưu ở localstorage, ngược lại có blacklist
 };
 
 const rootReducer = combineReducers({
