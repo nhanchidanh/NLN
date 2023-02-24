@@ -48,7 +48,8 @@ export const loginService = ({ phone, password }) =>
         where: { phone },
         raw: true, //true tra ve object data, neu false tra ve instance kh lay data dc
       });
-      // console.log(response);
+
+      // Check password?
       const isCorrectPassword =
         response && bcrypt.compareSync(password, response.password);
 
