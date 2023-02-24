@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { Button, InputForm } from "../../components";
-import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import * as actions from "../../store/actions";
 import { useDispatch, useSelector } from "react-redux";
+import Swal from "sweetalert2";
 
 const Login = () => {
   const location = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { isLoggedIn } = useSelector((state) => state.auth); //hook nay giup lay gia tri trong reducer
+  const { isLoggedIn, msg, update } = useSelector((state) => state.auth); //hook nay giup lay gia tri trong reducer
 
   const [isRegister, setIsRegister] = useState(location.state?.flag);
   // console.log(location);
@@ -19,6 +20,7 @@ const Login = () => {
     password: "",
   });
 
+  //Chuyển trạng thái login với đăng ký
   useEffect(() => {
     setIsRegister(location.state?.flag);
   }, [location.state?.flag]);
@@ -27,6 +29,11 @@ const Login = () => {
   useEffect(() => {
     isLoggedIn && navigate("/");
   }, [isLoggedIn]);
+
+  useEffect(() => {
+    console.log(msg);
+    msg && Swal.fire("Opps !", msg, "error");
+  }, [msg, update]);
 
   const handleSubmit = async () => {
     // Phan loai payload
@@ -111,7 +118,7 @@ const Login = () => {
             label={"HỌ TÊN"}
             value={payload.name}
             setValue={setPayload}
-            type={"name"}
+            keyPayload={"name"}
           />
         )}
         <InputForm
@@ -120,7 +127,7 @@ const Login = () => {
           label={"SỐ ĐIỆN THOẠI"}
           value={payload.phone}
           setValue={setPayload}
-          type={"phone"}
+          keyPayload={"phone"}
         />
         <InputForm
           invalidFields={invalidFields}
@@ -128,7 +135,8 @@ const Login = () => {
           label={"MẬT KHẨU"}
           value={payload.password}
           setValue={setPayload}
-          type={"password"}
+          keyPayload={"password"}
+          type="password"
         />
         <Button
           text={isRegister ? "Đăng ký" : "Đăng nhập"}
