@@ -31,7 +31,7 @@ const Login = () => {
   }, [isLoggedIn]);
 
   useEffect(() => {
-    console.log(msg);
+    // console.log(msg);
     msg && Swal.fire("Opps !", msg, "error");
   }, [msg, update]);
 
