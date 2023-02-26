@@ -1,20 +1,24 @@
-const generateCode = (stringLength) => {
-  let text = "";
+require("dotenv").config();
 
-  let possibleLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  let possibleNumbers = "123456789";
+const generateCode = (value) => {
+  let output = "";
+  value = value
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .split(" ")
+    .join("");
+  let merge = value + process.env.phongtro123;
+  let length = merge.length;
 
-  for (let i = 0; i < stringLength - 1; i++) {
-    text += possibleLetters.charAt(
-      Math.floor(Math.random() * possibleLetters.length)
-    );
+  for (let i = 0; i < 3; i++) {
+    let index =
+      i === 2
+        ? Math.floor(merge.length / 2 + length / 2)
+        : Math.floor(length / 2);
+    output += merge.charAt(index);
+    length = index;
   }
-
-  return `${text}${possibleNumbers.charAt(
-    Math.floor(Math.random() * possibleNumbers.length)
-  )}`;
+  return `${value.charAt(2)}${output}`.toUpperCase();
 };
-
-// console.log(generateCode(2));
 
 export default generateCode;

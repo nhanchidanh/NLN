@@ -13,7 +13,7 @@ const {
 
 const Search = () => {
   return (
-    <div className="h-[55px] p-[10px] bg-[#febb02] rounded-lg flex items-center justify-around gap-2">
+    <div className="h-[55px] w-3/4 my-3 p-[10px] bg-[#febb02] rounded-lg flex items-center justify-around gap-2">
       <SearchItem
         IconBefore={<MdOutlineHouseSiding />}
         IconAfter={<BsChevronRight color="rgb(156,163,175)" />}
@@ -37,7 +37,7 @@ const Search = () => {
       />
       <button
         type="button"
-        className="outline-none py-2 px-4 text-xs bg-secondary1 rounded-md w-full flex items-center justify-center gap-2 text-white font-medium"
+        className="outline-none py-2 px-4 text-sm bg-secondary1 rounded-md w-full flex items-center justify-center gap-2 text-white font-medium"
       >
         <FiSearch />
         Tìm kiếm
