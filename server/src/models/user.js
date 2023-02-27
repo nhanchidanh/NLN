@@ -9,6 +9,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      User.hasMany(models.Post, { foreignKey: "userId", as: "user" }); // 1 user có thể tạo nhiều post nhưng 1 post chỉ thuộc 1 user viết ra nó
     }
   }
   User.init(
