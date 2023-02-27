@@ -1,5 +1,7 @@
 import authReducer from "./authReducer";
 import userReducer from "./userReducer";
+import postReducer from "./postReducer";
+
 import { combineReducers } from "redux"; //gom các reducer lại thành 1 reducer lớn
 import storage from "redux-persist/lib/storage"; //nơi lưu state của reducer
 import autoMergeLevel2 from "redux-persist/es/stateReconciler/autoMergeLevel2"; //độ sâu merge
@@ -22,6 +24,7 @@ const authConfig = {
 const rootReducer = combineReducers({
   auth: persistReducer(authConfig, authReducer),
   user: userReducer,
+  post: postReducer,
 });
 //reducer nào muốn persist thì bọc nó trong hàng persistReducer cùng với config
 
