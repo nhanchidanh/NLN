@@ -13,7 +13,7 @@ const {
 
 const Search = () => {
   return (
-    <div className="h-[55px] w-3/4 my-3 p-[10px] bg-[#febb02] rounded-lg flex items-center justify-around gap-2">
+    <div className="h-[55px] w-4/5 mx-auto my-3 p-[10px] bg-[#febb02] rounded-lg flex items-center justify-around gap-2">
       <SearchItem
         IconBefore={<MdOutlineHouseSiding />}
         IconAfter={<BsChevronRight color="rgb(156,163,175)" />}

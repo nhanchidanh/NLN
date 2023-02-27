@@ -18,7 +18,7 @@ const Header = () => {
     navigate(path.LOGIN, { state: { flag } });
   });
   return (
-    <div className="w-3/4 mx-auto flex items-center justify-between">
+    <div className="w-4/5 mx-auto flex items-center justify-between">
       <Link to={"/"}>
         <img
           src={logo}
