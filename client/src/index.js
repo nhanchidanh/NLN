@@ -19,3 +19,4 @@ root.render(
     </PersistGate>
   </Provider>
 );
+/*BrowserRouter: kết nối ứng dụng với URL của trình duyệt*/

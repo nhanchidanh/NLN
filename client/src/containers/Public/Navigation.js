@@ -22,7 +22,7 @@ const Navigation = () => {
 
   return (
     <div className="w-full flex justify-center items-center h-[40px] bg-secondary1 text-white">
-      <div className="w-screen flex h-full items-center text-sm font-medium">
+      <div className="w-4/5 flex h-full items-center text-sm font-medium">
         <NavLink
           to={"/"}
           className={({ isActive }) => (isActive ? active : notActive)}

@@ -14,3 +14,18 @@ export const apiGetPosts = () => {
     }
   });
 };
+
+export const apiGetPostsLimit = (page) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const response = await axiosConfig({
+        method: "get",
+        url: `api/v1/post/limit?page=${page}`,
+      });
+
+      resolve(response);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};

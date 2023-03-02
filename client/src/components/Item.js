@@ -1,6 +1,8 @@
-import React, { memo, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { getDistrictProvince } from "../utils/Common/getDistrictProvince";
 import icons from "../utils/icons";
+import { convertToSlug } from "../utils/Common/convertToSlug";
 
 const { GrStar, RiHeartLine, RiHeartFill } = icons;
 
@@ -12,11 +14,27 @@ const Item = ({
   star,
   title,
   user,
+  id,
 }) => {
   const [isHoverHeart, setIsHoverHeart] = useState(false);
+  const navigate = useNavigate();
+
+  const handleStar = (star) => {
+    let stars = [];
+    for (let i = 1; i <= +star; i++) {
+      stars.push(
+        <GrStar className="inline-block mb-1" size={18} color="orange" />
+      );
+    }
+    return stars;
+  };
+
   return (
     <div className="flex flex-row w-full gap-3 py-4 border-t border-orange-600">
-      <div className="w-full basis-2/5 relative cursor-pointer">
+      <Link
+        to={`chi-tiet/${convertToSlug(title)}/${id}`}
+        className="w-full basis-2/5 relative cursor-pointer"
+      >
         <img
           src={images[0]}
           alt="preview"
@@ -36,19 +54,14 @@ const Item = ({
             <RiHeartLine size={24} />
           )}
         </span>
-      </div>
+      </Link>
       <div className="w-full basis-3/5">
         <div>
           <div className="text-red-600 font-semibold">
-            <GrStar className="inline-block mb-1" size={18} color="orange" />
-            <GrStar className="inline-block mb-1" size={18} color="orange" />
-            <GrStar className="inline-block mb-1" size={18} color="orange" />
-            <GrStar className="inline-block mb-1" size={18} color="orange" />
-            <GrStar
-              className="inline-block mb-1 mr-1"
-              size={18}
-              color="orange"
-            />
+            {handleStar(+star).length > 0 &&
+              handleStar(+star).map((star, number) => {
+                return <span key={number}>{star}</span>;
+              })}
             {title}
           </div>
         </div>

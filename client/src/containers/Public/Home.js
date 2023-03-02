@@ -5,7 +5,7 @@ import { Navigation, Search } from "./index";
 
 const Home = () => {
   return (
-    <div className="w-full mx-auto h-full ">
+    <div className="w-full  h-full ">
       <Header></Header>
       <Navigation></Navigation>
       <Search></Search>
