@@ -3,6 +3,8 @@ import bcrypt from "bcryptjs";
 import { v4 } from "uuid";
 import chothuephongtro from "../../data/chothuephongtro.json";
 import generateCode from "../utils/generateCode";
+import { dataPrice, dataArea } from "../utils/data";
+import { getNumberFromString } from "../utils/common";
 
 require("dotenv").config();
 
@@ -21,6 +23,10 @@ export const insertService = () => {
         let userId = v4();
         let overviewId = v4();
         let imagesId = v4();
+        let currentArea = getNumberFromString(
+          item?.header?.attributes?.acreage
+        );
+        let currentPrice = getNumberFromString(item?.header?.attributes?.price);
 
         //Tao bang post
         await db.Post.create({
@@ -35,6 +41,12 @@ export const insertService = () => {
           userId,
           overviewId,
           imagesId,
+          areaCode: dataArea.find(
+            (area) => area.max >= currentArea && area.min <= currentArea
+          )?.code,
+          priceCode: dataPrice.find(
+            (price) => price.max >= currentPrice && price.min <= currentPrice
+          )?.code,
         });
 
         //Tao bang attribute
@@ -104,3 +116,26 @@ export const insertService = () => {
     }
   });
 };
+
+export const createPricesAndAreas = () =>
+  new Promise((resolve, reject) => {
+    try {
+      dataPrice.forEach(async (item, index) => {
+        await db.Price.create({
+          code: item.code,
+          order: index + 1,
+          value: item.value,
+        });
+      });
+      dataArea.forEach(async (item, index) => {
+        await db.Area.create({
+          code: item.code,
+          order: index + 1,
+          value: item.value,
+        });
+      });
+      resolve("ok");
+    } catch (error) {
+      reject(error);
+    }
+  });

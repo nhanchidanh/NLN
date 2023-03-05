@@ -1,8 +1,8 @@
-import React, { memo, useEffect, useState } from "react";
+import React, { memo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { convertToSlug } from "../utils/Common/convertToSlug";
 import { getDistrictProvince } from "../utils/Common/getDistrictProvince";
 import icons from "../utils/icons";
-import { convertToSlug } from "../utils/Common/convertToSlug";
 
 const { GrStar, RiHeartLine, RiHeartFill } = icons;
 
@@ -31,20 +31,20 @@ const Item = ({
 
   return (
     <div className="flex flex-row w-full gap-3 py-4 border-t border-orange-600">
-      <Link
-        to={`chi-tiet/${convertToSlug(title)}/${id}`}
-        className="w-full basis-2/5 relative cursor-pointer"
-      >
-        <img
-          src={images[0]}
-          alt="preview"
-          className="w-full rounded-md h-[250px] block object-cover "
-        />
+      <div className="w-full basis-2/5 relative cursor-pointer">
+        <Link to={`chi-tiet/${convertToSlug(title)}/${id}`}>
+          <img
+            src={images[0]}
+            alt="preview"
+            className="w-full rounded-md h-[250px] block object-cover "
+          />
+        </Link>
+
         <span className="bg-overlay-70 text-white py-1 px-2 rounded-md absolute bottom-1 left-1">
           {`${images.length} ảnh`}
         </span>
         <span
-          className=" text-white  rounded-md absolute bottom-1 right-1"
+          className=" text-white rounded-md absolute bottom-1 right-1"
           onMouseEnter={() => setIsHoverHeart(true)}
           onMouseLeave={() => setIsHoverHeart(false)}
         >
@@ -54,7 +54,8 @@ const Item = ({
             <RiHeartLine size={24} />
           )}
         </span>
-      </Link>
+      </div>
+
       <div className="w-full basis-3/5">
         <div>
           <div className="text-red-600 font-semibold">

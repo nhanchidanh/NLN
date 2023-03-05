@@ -1,6 +1,7 @@
 import authReducer from "./authReducer";
 import userReducer from "./userReducer";
 import postReducer from "./postReducer";
+import appReducer from "./appReducer";
 
 import { combineReducers } from "redux"; //gom các reducer lại thành 1 reducer lớn
 import storage from "redux-persist/lib/storage"; //nơi lưu state của reducer
@@ -25,6 +26,7 @@ const rootReducer = combineReducers({
   auth: persistReducer(authConfig, authReducer),
   user: userReducer,
   post: postReducer,
+  app: appReducer,
 });
 //reducer nào muốn persist thì bọc nó trong hàng persistReducer cùng với config
 

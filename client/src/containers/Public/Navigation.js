@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom"; //tra ve isactive
-import { apiGetCategories } from "../../services/category";
+import * as actions from "../../store/actions";
 import { convertToSlug } from "../../utils/Common/convertToSlug";
 
 const notActive =
@@ -9,15 +10,12 @@ const active =
   "hover:bg-secondary2 px-4 h-full flex items-center bg-secondary2";
 
 const Navigation = () => {
-  const [categories, setCategories] = useState([]);
+  // const [categories, setCategories] = useState([]);
+  const dispatch = useDispatch();
+  const { categories } = useSelector((state) => state.app);
+
   useEffect(() => {
-    const fetchCategoies = async () => {
-      const response = await apiGetCategories();
-      if (response?.data?.err === 0) {
-        setCategories(response?.data?.response);
-      }
-    };
-    fetchCategoies();
+    dispatch(actions.getCategories());
   }, []);
 
   return (

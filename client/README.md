@@ -1,6 +1,7 @@
 - thunk: Xu li bat dong bo giua redux va react
 - react-router-dom: tao route cho app
-- useLocation: Lay thong tin tu URL hien tai(NHận đata từ component khác))
+- useLocation: Lay thong tin tu URL hien tai(NHận đata từ component khác)
+- memo: giúp hạn chế re render. chỉ render khi prop truyền xuống bị thay đổi
 - useCallback: giong useMemo nhung khac mot chut
 - useReducer: phien ban nang cao cua useState
 - useSelector: Lấy data từ store reducer ra
