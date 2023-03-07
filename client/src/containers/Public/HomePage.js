@@ -3,12 +3,11 @@ import { ItemSideBar, Province } from "../../components";
 import { text } from "../../utils/constant";
 import List from "./List";
 import Pagination from "./Pagination";
-import { useParams, useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import * as actions from "../../store/actions";
 
 const HomePage = () => {
-  const [params] = useSearchParams();
+  // const [params] = useSearchParams();
   const dispatch = useDispatch();
   const { categories, prices, areas } = useSelector((state) => state.app);
 
@@ -27,20 +26,26 @@ const HomePage = () => {
       <Province></Province>
       <div className="grid grid-cols-12 gap-4">
         <div className="col-span-8 w-full">
-          <List page={params.get("page")} />
-          <Pagination page={params.get("page")} />
+          <List />
+          <Pagination />
         </div>
         <div className="col-span-4 w-full border space-y-4">
           <ItemSideBar
             content={categories}
             title="Danh mục cho thuê"
-            colNumber={1}
+            isDoubleCol={false}
           />
-          <ItemSideBar content={prices} title="Xem theo giá" colNumber={2} />
           <ItemSideBar
+            type="priceCode"
+            content={prices}
+            title="Xem theo giá"
+            isDoubleCol={true}
+          />
+          <ItemSideBar
+            type="areaCode"
             content={areas}
             title="Xem theo diện tích"
-            colNumber={2}
+            isDoubleCol={true}
           />
         </div>
       </div>

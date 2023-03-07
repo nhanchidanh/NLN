@@ -42,10 +42,10 @@ export const insertService = () => {
           overviewId,
           imagesId,
           areaCode: dataArea.find(
-            (area) => area.max >= currentArea && area.min <= currentArea
+            (area) => area.max > currentArea && area.min <= currentArea
           )?.code,
           priceCode: dataPrice.find(
-            (price) => price.max >= currentPrice && price.min <= currentPrice
+            (price) => price.max > currentPrice && price.min <= currentPrice
           )?.code,
         });
 

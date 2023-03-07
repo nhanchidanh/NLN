@@ -2,18 +2,26 @@ import React, { useEffect, useState } from "react";
 import { PageNumber } from "../../components";
 import { useSelector } from "react-redux";
 import icons from "../../utils/icons";
+import { useSearchParams } from "react-router-dom";
 
 const { GrLinkNext, GrLinkPrevious } = icons;
 
-const Pagination = ({ page }) => {
+const Pagination = () => {
   const { count, posts } = useSelector((state) => state.post); //count: tổng số post, posts: data 5 posts
   const [arrPage, setArrPage] = useState([]); //Luu mang cac page: 1,2,3,..
-  const [currentPage, setCurrentPage] = useState(+page || 1);
+  const [currentPage, setCurrentPage] = useState(1);
   const [isHideEnd, setIsHideEnd] = useState(false);
   const [isHideStart, setIsHideStart] = useState(false);
+  const [searchParams] = useSearchParams(); //Luu thong tin searchParams
 
   useEffect(() => {
-    let maxPage = Math.floor(count / posts.length);
+    let page = searchParams.get("page");
+    page && +page !== currentPage && setCurrentPage(+page);
+    !page && setCurrentPage(1);
+  }, [searchParams]);
+
+  useEffect(() => {
+    let maxPage = Math.ceil(count / process.env.REACT_APP_LIMIT_POSTS);
     // console.log("maxpage", maxPage);
 
     let end = currentPage + 1 > maxPage ? maxPage : currentPage + 1;
@@ -56,7 +64,7 @@ const Pagination = ({ page }) => {
       {!isHideEnd && (
         <PageNumber
           icon={<GrLinkNext />}
-          text={Math.floor(count / posts.length)}
+          text={Math.ceil(count / process.env.REACT_APP_LIMIT_POSTS)}
           setCurrentPage={setCurrentPage}
         />
       )}

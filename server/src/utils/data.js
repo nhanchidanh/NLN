@@ -7,8 +7,8 @@ const prices = [
     value: "Dưới 1 triệu",
   },
   {
-    min: 0,
-    max: 1,
+    min: 1,
+    max: 2,
     value: "Từ 1 - 2 triệu",
   },
   {
