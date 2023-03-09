@@ -18,7 +18,7 @@ const HomePage = () => {
 
   // console.log(prices);
   return (
-    <div className="border flex flex-col gap-3">
+    <div className=" flex flex-col gap-3">
       <div>
         <h1 className="text-[28px] font-bold">{text.HOME_TITLE}</h1>
         <p className="text-base text-gray-700">{text.HOME_DESCRIPTION}</p>
@@ -29,8 +29,9 @@ const HomePage = () => {
           <List />
           <Pagination />
         </div>
-        <div className="col-span-4 w-full border space-y-4">
+        <div className="col-span-4 w-full space-y-4">
           <ItemSideBar
+            type="category"
             content={categories}
             title="Danh mục cho thuê"
             isDoubleCol={false}

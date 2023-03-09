@@ -22,7 +22,7 @@ const Header = () => {
 
   useEffect(() => {
     headerRef.current.scrollIntoView({ behavior: "smooth" }); //scroll cho đến khi header nằm trong view frame
-  }, [searchParams.get("page")]);
+  }, [searchParams]);
   return (
     <div
       ref={headerRef}

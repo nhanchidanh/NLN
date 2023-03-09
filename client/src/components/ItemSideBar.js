@@ -1,32 +1,22 @@
 import React, { memo } from "react";
-import icons from "../utils/icons";
+import { Link } from "react-router-dom";
 import { convertToSlug } from "../utils/Common/convertToSlug";
-import {
-  Link,
-  createSearchParams,
-  useNavigate,
-  useLocation,
-} from "react-router-dom";
-import * as actions from "../store/actions";
-import { useDispatch } from "react-redux";
+import icons from "../utils/icons";
 
 const { MdNavigateNext } = icons;
 
 const ItemSideBar = ({ title, content, isDoubleCol, type }) => {
-  const dispatch = useDispatch();
-  const location = useLocation();
-  const navigate = useNavigate();
-  // console.log(location);
+  // console.log(type);
 
-  const handleFilterPosts = (code) => {
-    // dispatch(actions.getPostsLimit({ [type]: code }));
-    navigate({
-      pathname: location.pathname,
-      search: createSearchParams({
-        [type]: code,
-      }).toString(),
-    });
-  };
+  // const handleFilterPosts = (code) => {
+  //   // dispatch(actions.getPostsLimit({ [type]: code }));
+  //   navigate({
+  //     pathname: location.pathname,
+  //     search: createSearchParams({
+  //       [type]: code,
+  //     }).toString(),
+  //   });
+  // };
   return (
     <div className="p-4 bg-white rounded-md">
       <h3 className="text-lg font-semibold mb-4">{title}</h3>
@@ -38,15 +28,21 @@ const ItemSideBar = ({ title, content, isDoubleCol, type }) => {
         {content?.length > 0 &&
           content.map((item) => {
             return (
-              <div
-                onClick={() => handleFilterPosts(item.code)}
+              <Link
+                // onClick={() => handleFilterPosts(item.code)}
                 // to={`${convertToSlug(item.value)}`}
+                // to={`?${type}=${item.code}`}
+                to={
+                  type === "category"
+                    ? `${convertToSlug(item.value)}`
+                    : `?${type}=${item.code}`
+                }
                 key={item.code}
                 className=" flex gap-1  items-center cursor-pointer hover:text-orange-600 border-b border-gray-200 pb-1 border-dashed "
               >
                 <MdNavigateNext color="#999" className="mt-[2px]" />
                 <p>{item.value}</p>
-              </div>
+              </Link>
             );
           })}
       </div>
