@@ -1,20 +1,13 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import { useSelector } from "react-redux";
 import { ItemSideBar, Province, RelatedPost } from "../../components";
-import * as actions from "../../store/actions";
 import { text } from "../../utils/constant";
 import List from "./List";
 import Pagination from "./Pagination";
 
 const HomePage = () => {
   // const [params] = useSearchParams();
-  const dispatch = useDispatch();
   const { categories, prices, areas } = useSelector((state) => state.app);
-
-  useEffect(() => {
-    dispatch(actions.getPrices());
-    dispatch(actions.getAreas());
-  }, []);
 
   // console.log(prices);
   return (

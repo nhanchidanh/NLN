@@ -2,13 +2,16 @@ import db from "../models";
 import bcrypt from "bcryptjs";
 import { v4 } from "uuid";
 import chothuephongtro from "../../data/chothuephongtro.json";
+import chothuecanho from "../../data/chothuecanho.json";
+import nhachothue from "../../data/nhachothue.json";
+import chothuematbang from "../../data/chothuematbang.json";
 import generateCode from "../utils/generateCode";
 import { dataPrice, dataArea } from "../utils/data";
 import { getNumberFromString } from "../utils/common";
 
 require("dotenv").config();
 
-const dataBody = chothuephongtro.body;
+const dataBody = chothuematbang.body;
 
 const hashPassword = (password) =>
   bcrypt.hashSync(password, bcrypt.genSaltSync(12));
@@ -36,7 +39,7 @@ export const insertService = () => {
           labelCode,
           address: item?.header?.address,
           attributesId,
-          categoryCode: "CTPT",
+          categoryCode: "CTMB",
           description: JSON.stringify(item?.mainContent?.content), //content la array nen stringify ve chuoi de luu
           userId,
           overviewId,

@@ -5,10 +5,11 @@ import { getPostsLimit } from "../../store/actions/post";
 import { useSearchParams } from "react-router-dom";
 import { truncateText } from "../../utils/Common/truncateText";
 
-const List = () => {
+const List = ({ categoryCode }) => {
   const dispatch = useDispatch();
   const { posts } = useSelector((state) => state.post);
   const [searchParams] = useSearchParams();
+  // console.log(categoryCode);
 
   useEffect(() => {
     let params = [];
@@ -17,13 +18,15 @@ const List = () => {
     }
 
     let searchParamsObject = {};
+    if (categoryCode) searchParamsObject.categoryCode = categoryCode;
+
     params?.map((item) => {
       searchParamsObject = { ...searchParamsObject, [item[0]]: item[1] };
     });
     // console.log(searchParamsObject);
 
     dispatch(getPostsLimit(searchParamsObject));
-  }, [searchParams]);
+  }, [searchParams, categoryCode]);
 
   return (
     <div className=" p-5 bg-white shadow-md rounded-md">

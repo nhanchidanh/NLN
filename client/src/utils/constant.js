@@ -1,6 +1,6 @@
 export const path = {
   HOME: "/*",
-  HOME__PAGE: ":page", //route con kh có dấu / ở trc
+  // HOME__PAGE: ":page", //route con kh có dấu / ở trc
   LOGIN: "login", //route con kh có dấu / ở trc
   CHO_THUE_PHONG_TRO: "cho-thue-phong-tro",
   CHO_THUE_MAT_BANG: "cho-thue-mat-bang",

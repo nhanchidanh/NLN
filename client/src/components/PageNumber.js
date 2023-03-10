@@ -3,6 +3,7 @@ import {
   useNavigate,
   createSearchParams,
   useSearchParams,
+  useLocation,
 } from "react-router-dom";
 
 const notActive = "px-5 py-3 bg-white hover:bg-gray-300 rounded-md ";
@@ -11,6 +12,8 @@ const active = "px-5 py-3 bg-[#E13427] text-white hover:opacity-90 rounded-md";
 const PageNumber = ({ text, currentPage, icon, setCurrentPage, type }) => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+  const location = useLocation();
+
   let entries = searchParams.entries();
   // console.log(entries);
   // console.log(currentPage);
@@ -33,7 +36,7 @@ const PageNumber = ({ text, currentPage, icon, setCurrentPage, type }) => {
     if (!(text === "...")) {
       setCurrentPage(+text);
       navigate({
-        pathname: "/",
+        pathname: location.pathname,
         search: createSearchParams(append(entries)).toString(),
       });
     }
