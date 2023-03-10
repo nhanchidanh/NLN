@@ -3,7 +3,6 @@ import express from "express";
 import connectDB from "./src/config/connectDB";
 import initRoutes from "./src/routes";
 dotenv.config();
-
 import cors from "cors";
 
 const app = express();

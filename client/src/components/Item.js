@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { convertToSlug } from "../utils/Common/convertToSlug";
 import { getDistrictProvince } from "../utils/Common/getDistrictProvince";
 import icons from "../utils/icons";
+import { truncateText } from "../utils/Common/truncateText";
 
 const { GrStar, RiHeartLine, RiHeartFill } = icons;
 
@@ -72,9 +73,7 @@ const Item = ({
           <span>{attributes?.acreage}</span>
           <span>{getDistrictProvince(address)}</span>
         </div>
-        <p className="text-gray-500 h-[75px] text-ellipsis overflow-hidden">
-          {description}
-        </p>
+        <p className="text-gray-500">{truncateText(description, 180)}</p>
         <div className="flex items-center mt-4 justify-between">
           <div className="flex items-center gap-1">
             <img

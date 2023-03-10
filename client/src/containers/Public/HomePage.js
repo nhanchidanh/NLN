@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
-import { ItemSideBar, Province } from "../../components";
+import { useDispatch, useSelector } from "react-redux";
+import { ItemSideBar, Province, RelatedPost } from "../../components";
+import * as actions from "../../store/actions";
 import { text } from "../../utils/constant";
 import List from "./List";
 import Pagination from "./Pagination";
-import { useDispatch, useSelector } from "react-redux";
-import * as actions from "../../store/actions";
 
 const HomePage = () => {
   // const [params] = useSearchParams();
@@ -48,6 +48,7 @@ const HomePage = () => {
             title="Xem theo diện tích"
             isDoubleCol={true}
           />
+          <RelatedPost />
         </div>
       </div>
     </div>

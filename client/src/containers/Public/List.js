@@ -3,13 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { Button, Item } from "../../components";
 import { getPostsLimit } from "../../store/actions/post";
 import { useSearchParams } from "react-router-dom";
+import { truncateText } from "../../utils/Common/truncateText";
 
 const List = () => {
   const dispatch = useDispatch();
   const { posts } = useSelector((state) => state.post);
   const [searchParams] = useSearchParams();
-
-  // console.log([searchParams.get("page")]);
 
   useEffect(() => {
     let params = [];
