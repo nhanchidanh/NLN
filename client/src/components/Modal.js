@@ -51,10 +51,10 @@ const Modal = ({ setIsShowModal, content, name }) => {
             })}
           </div>
         )}
-
         {(name === "price" || name === "area") && (
           <div className="p-4">input range</div>
         )}
+        input
       </div>
     </div>
   );
