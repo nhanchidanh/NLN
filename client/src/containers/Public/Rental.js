@@ -18,11 +18,12 @@ const Rental = () => {
     const category = categories?.find(
       (item) => `/${convertToSlug(item.value)}` === location.pathname
     );
+
     if (category) {
       setCategoryCode(category.code);
       setCategoryCurrent(category);
     }
-  }, [location]);
+  }, [location, categories]);
 
   return (
     <div className=" flex flex-col gap-3">
