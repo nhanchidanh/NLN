@@ -1,24 +1,32 @@
 import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Outlet } from "react-router-dom";
+import { Contact, Intro } from "../../components";
+import * as actions from "../../store/actions";
 import Header from "./Header";
 import { Navigation, Search } from "./index";
-import { Intro, Contact } from "../../components";
-import { useDispatch } from "react-redux";
-import * as actions from "../../store/actions";
+import { apiGetCurrentUser } from "../../services/user";
 
 const Home = () => {
   const dispatch = useDispatch();
+  const { isLoggedIn } = useSelector((state) => state.auth);
 
   useEffect(() => {
     dispatch(actions.getPrices());
     dispatch(actions.getAreas());
     dispatch(actions.getProvinces());
   }, []);
+
+  useEffect(() => {
+    setTimeout(() => {
+      dispatch(actions.getCurrentUser());
+    }, 100);
+  }, [isLoggedIn]);
   return (
     <div className="w-full h-full ">
       <Header></Header>
       <Navigation></Navigation>
-      <Search></Search>
+      {isLoggedIn && <Search />}
       <div className="w-4/5 mx-auto flex flex-col justify-start mt-5">
         <Outlet></Outlet>
       </div>

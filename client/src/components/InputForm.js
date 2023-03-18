@@ -11,12 +11,12 @@ const InputForm = ({
 }) => {
   return (
     <div>
-      <label className="text-xs" htmlFor="phone">
+      <label className="text-xs" htmlFor={type}>
         {label}
       </label>
       <input
         type={type || "text"}
-        id="phone"
+        id={type}
         className="outline-none bg-[#e8f0fe] p-2 rounded-md w-full"
         value={value}
         onChange={(e) =>

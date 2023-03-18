@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 import { ItemSideBar, Province, RelatedPost } from "../../components";
-import { text } from "../../utils/constant";
+import { convertToSlug } from "../../utils/Common/convertToSlug";
 import List from "./List";
 import Pagination from "./Pagination";
-import { useLocation } from "react-router-dom";
-import { convertToSlug } from "../../utils/Common/convertToSlug";
 
 const Rental = () => {
   const { prices, areas, categories } = useSelector((state) => state.app);

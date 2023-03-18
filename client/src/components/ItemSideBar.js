@@ -17,6 +17,7 @@ const ItemSideBar = ({ title, content, isDoubleCol, type }) => {
   //     }).toString(),
   //   });
   // };
+
   return (
     <div className="p-4 bg-white rounded-md">
       <h3 className="text-lg font-semibold mb-4">{title}</h3>

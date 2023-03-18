@@ -1,15 +1,17 @@
-import React, { useCallback, useEffect, useRef } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import logo from "../../assets/logo.png";
-import { Button } from "../../components";
-import icons from "../../utils/icons";
-import { useNavigate, Link, useSearchParams } from "react-router-dom";
-import { path } from "../../utils/constant";
-import { useSelector, useDispatch } from "react-redux";
+import { Button, User } from "../../components";
 import * as actions from "../../store/actions";
+import { path } from "../../utils/constant";
+import icons from "../../utils/icons";
+import { menuManagerAccount } from "../../utils/MenuManagerAccount";
 
-const { AiOutlinePlusCircle } = icons;
+const { AiOutlinePlusCircle, BsChevronDown } = icons;
 
 const Header = () => {
+  const [isShowMenu, setIsShowMenu] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [searchParams] = useSearchParams();
@@ -23,6 +25,14 @@ const Header = () => {
   useEffect(() => {
     headerRef.current.scrollIntoView({ behavior: "smooth" }); //scroll cho đến khi header nằm trong view frame
   }, [searchParams]);
+
+  const handleLink = (text) => {
+    // console.log(text);
+    if (text === "Đăng xuất") {
+      dispatch(actions.logout());
+      setIsShowMenu(false);
+    }
+  };
   return (
     <div
       ref={headerRef}
@@ -57,14 +67,38 @@ const Header = () => {
         )}
 
         {isLoggedIn && (
-          <div className="flex items-center gap-1">
-            <small>Ten!</small>
+          <div className="flex items-center gap-1 relative">
+            <User />
             <Button
-              text={"Đăng xuất"}
+              text={"Quản lý tài khoản"}
               textColor="text-white"
-              bgColor="bg-red-700"
-              onClick={() => dispatch(actions.logout())}
+              bgColor="bg-blue-700"
+              IcAfter={BsChevronDown}
+              onClick={() => setIsShowMenu((prev) => !prev)}
             />
+
+            {/* Menu quản lý tài khoản */}
+            {isShowMenu && (
+              <div className="absolute min-w-[200px] top-full right-0 bg-white shadow-md rounded-md p-4">
+                {menuManagerAccount.map((item) => {
+                  return (
+                    <div
+                      key={item.id}
+                      className="py-2 border-b text-blue-600 hover:text-orange-500"
+                    >
+                      <Link
+                        onClick={() => handleLink(item.text)}
+                        to={item?.path}
+                        className="flex items-center gap-2"
+                      >
+                        {item?.icon}
+                        {item.text}
+                      </Link>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
           </div>
         )}
 
