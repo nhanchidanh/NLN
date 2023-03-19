@@ -9,7 +9,7 @@ const notActive =
 const active =
   "hover:bg-secondary2 px-4 h-full flex items-center bg-secondary2";
 
-const Navigation = () => {
+const Navigation = ({ isAdmin }) => {
   // const [categories, setCategories] = useState([]);
   const dispatch = useDispatch();
   const { categories } = useSelector((state) => state.app);
@@ -19,8 +19,14 @@ const Navigation = () => {
   }, []);
 
   return (
-    <div className="w-full flex justify-center items-center h-[40px] bg-secondary1 text-white">
-      <div className="w-4/5 flex h-full items-center text-sm font-medium">
+    <div
+      className={`w-full flex justify-center items-center h-[40px] bg-secondary1 text-white`}
+    >
+      <div
+        className={` ${
+          isAdmin ? "w-full" : "w-4/5"
+        }  flex h-full  text-sm font-medium`}
+      >
         <NavLink
           to={"/"}
           className={({ isActive }) => (isActive ? active : notActive)}
@@ -32,7 +38,7 @@ const Navigation = () => {
             return (
               <div key={item.code} className="h-full">
                 <NavLink
-                  to={convertToSlug(item.value)}
+                  to={`/${convertToSlug(item.value)}`}
                   className={({ isActive }) => (isActive ? active : notActive)}
                 >
                   {item.value}

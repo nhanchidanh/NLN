@@ -9,6 +9,7 @@ export const path = {
   DETAIL_POST__TITLE__POSTID: "chi-tiet/:title/:postId",
 
   SYSTEM: "/he-thong/*",
+  CREATE_POST: "tao-moi-bai-dang",
 };
 
 export const text = {
