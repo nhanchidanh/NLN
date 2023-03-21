@@ -24,12 +24,26 @@ const SelectAddressForm = ({
         {options?.map((item) => {
           return (
             <option
-              key={type === "province" ? item?.province_id : item?.district_id}
+              key={
+                type === "province"
+                  ? item?.province_id
+                  : type === "district"
+                  ? item?.district_id
+                  : item?.ward_id
+              }
               value={
-                type === "province" ? item?.province_id : item?.district_id
+                type === "province"
+                  ? item?.province_id
+                  : type === "district"
+                  ? item?.district_id
+                  : item?.ward_id
               }
             >
-              {type === "province" ? item?.province_name : item?.district_name}
+              {type === "province"
+                ? item?.province_name
+                : type === "district"
+                ? item?.district_name
+                : item?.ward_name}
             </option>
           );
         })}

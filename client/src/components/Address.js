@@ -1,13 +1,20 @@
 import React, { useEffect, useState } from "react";
 import SelectAddressForm from "./SelectAddressForm";
-import { apiGetPublicDistricts, apiGetPublicProvinces } from "../services";
+import {
+  apiGetPublicDistricts,
+  apiGetPublicProvinces,
+  apiGetPublicWards,
+} from "../services";
 
 const Address = () => {
   const [provinces, setProvinces] = useState([]);
   const [districts, setDistricts] = useState([]);
+  const [wards, setWards] = useState([]);
   const [province, setProvince] = useState();
   const [district, setDistrict] = useState();
+  const [ward, setWard] = useState();
   const [reset, setReset] = useState(false);
+
   useEffect(() => {
     const fetchPublicProvinces = async () => {
       const response = await apiGetPublicProvinces();
@@ -32,7 +39,20 @@ const Address = () => {
     !province ? setReset(true) : setReset(false);
   }, [province]);
 
-  // console.log({ province, district });
+  useEffect(() => {
+    setWard();
+    const fetchPublicWards = async () => {
+      const response = await apiGetPublicWards(district);
+      // console.log(response);
+      if (response.status === 200) {
+        setWards(response?.data?.results);
+      }
+    };
+    district && fetchPublicWards();
+    !district ? setReset(true) : setReset(false);
+  }, [district]);
+
+  console.log({ province, district, ward });
 
   return (
     <div className="space-y-5">
@@ -53,6 +73,14 @@ const Address = () => {
           label={"Quận/Huyện"}
           type="district"
         />
+        <SelectAddressForm
+          reset={reset}
+          value={ward}
+          setValue={setWard}
+          options={wards}
+          label={"Xã/Phường"}
+          type="ward"
+        />
       </div>
       <div className="flex flex-col gap-2">
         <label className="font-medium" htmlFor="exact-address">
@@ -60,6 +88,10 @@ const Address = () => {
         </label>
         <input
           value={`${
+            ward
+              ? `${wards?.find((item) => item.ward_id === ward)?.ward_name}, `
+              : ""
+          }${
             district
               ? `${
                   districts?.find((item) => item.district_id === district)
