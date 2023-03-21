@@ -17,11 +17,6 @@ const Home = () => {
     dispatch(actions.getProvinces());
   }, []);
 
-  useEffect(() => {
-    setTimeout(() => {
-      dispatch(actions.getCurrentUser());
-    }, 100);
-  }, [isLoggedIn]);
   return (
     <div className="w-full h-full ">
       <Header></Header>

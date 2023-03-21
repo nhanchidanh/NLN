@@ -1,9 +1,10 @@
 import React, { memo, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { convertToSlug } from "../utils/Common/convertToSlug";
 import { getDistrictProvince } from "../utils/Common/getDistrictProvince";
-import icons from "../utils/icons";
 import { truncateText } from "../utils/Common/truncateText";
+import icons from "../utils/icons";
+import anonAvatar from "../assets/anon-avatar.png";
 
 const { GrStar, RiHeartLine, RiHeartFill } = icons;
 
@@ -18,7 +19,7 @@ const Item = ({
   id,
 }) => {
   const [isHoverHeart, setIsHoverHeart] = useState(false);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const handleStar = (star) => {
     let stars = [];
@@ -77,7 +78,7 @@ const Item = ({
         <div className="flex items-center mt-4 justify-between">
           <div className="flex items-center gap-1">
             <img
-              src="https://lnsel.com/wp-content/uploads/2018/12/anon-avatar-300x300.png"
+              src={anonAvatar}
               alt="avatar"
               className="w-[30px] h-[30px] object-cover rounded-full "
             />

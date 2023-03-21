@@ -11,11 +11,11 @@ const System = () => {
   return (
     <div className="w-full h-screen">
       <Header />
-      <div className="grid grid-cols-12  h-full">
-        <div className="col-span-2 h-full">
+      <div className="grid grid-cols-12 grid-rows-none h-full">
+        <div className="col-span-2 h-full mt-[40px]">
           <Sidebar />
         </div>
-        <div className="col-span-10 h-full bg-white shadow-md">
+        <div className="col-span-10 mt-[40px] h-full bg-white shadow-md">
           <Outlet />
         </div>
       </div>

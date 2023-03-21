@@ -18,3 +18,5 @@
 - export default: chỉ là phép export một mặc định cho mỗi file. Có thể là một function, một class, hoặc một object. Việc đặt tên import hoàn toàn độc lập trong export default-> ta có thể sử dụng tên bất kì.
 
 - Khi truyền object có dạng key-value: {[name]: value}
+
+- import { Navigate, Outlet } from "react-router-dom"; //Đây là "component" hoạt động như hook useNavigate

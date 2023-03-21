@@ -1,5 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import anonAvatar from "../assets/anon-avatar.png";
 
 const User = () => {
   const { currentUser } = useSelector((state) => state.user);
@@ -7,10 +8,7 @@ const User = () => {
   return (
     <div className="flex items-center gap-2">
       <img
-        src={
-          currentUser?.avatar ||
-          "https://lnsel.com/wp-content/uploads/2018/12/anon-avatar-300x300.png"
-        }
+        src={currentUser?.avatar || anonAvatar}
         alt="avatar"
         className="w-10 h-10 object-cover rounded-full shadow-md"
       />
@@ -19,8 +17,7 @@ const User = () => {
           <span>Xin chào</span> <b>{currentUser?.name}</b>
         </div>
         <div>
-          <span>Mã tài khoản:</span>{" "}
-          <b>{`${currentUser?.id?.slice(0, 10)}...`}</b>
+          <span>Mã tài khoản:</span> <b>{`${currentUser?.id?.slice(0, 6)}`}</b>
         </div>
       </div>
     </div>
