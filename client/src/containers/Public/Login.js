@@ -111,40 +111,42 @@ const Login = () => {
         {isRegister ? "Đăng ký" : "Đăng nhập"}
       </h3>
       <div className="w-full flex flex-col gap-5">
-        {isRegister && (
+        <form>
+          {isRegister && (
+            <InputForm
+              invalidFields={invalidFields}
+              setInvalidFields={setInvalidFields}
+              label={"HỌ TÊN"}
+              value={payload.name}
+              setValue={setPayload}
+              keyPayload={"name"}
+            />
+          )}
           <InputForm
             invalidFields={invalidFields}
             setInvalidFields={setInvalidFields}
-            label={"HỌ TÊN"}
-            value={payload.name}
+            label={"SỐ ĐIỆN THOẠI"}
+            value={payload.phone}
             setValue={setPayload}
-            keyPayload={"name"}
+            keyPayload={"phone"}
           />
-        )}
-        <InputForm
-          invalidFields={invalidFields}
-          setInvalidFields={setInvalidFields}
-          label={"SỐ ĐIỆN THOẠI"}
-          value={payload.phone}
-          setValue={setPayload}
-          keyPayload={"phone"}
-        />
-        <InputForm
-          invalidFields={invalidFields}
-          setInvalidFields={setInvalidFields}
-          label={"MẬT KHẨU"}
-          value={payload.password}
-          setValue={setPayload}
-          keyPayload={"password"}
-          type="password"
-        />
-        <Button
-          text={isRegister ? "Đăng ký" : "Đăng nhập"}
-          textColor="text-white"
-          bgColor="bg-secondary1"
-          fullWidth
-          onClick={handleSubmit}
-        ></Button>
+          <InputForm
+            invalidFields={invalidFields}
+            setInvalidFields={setInvalidFields}
+            label={"MẬT KHẨU"}
+            value={payload.password}
+            setValue={setPayload}
+            keyPayload={"password"}
+            type="password"
+          />
+          <Button
+            text={isRegister ? "Đăng ký" : "Đăng nhập"}
+            textColor="text-white"
+            bgColor="bg-secondary1"
+            fullWidth
+            onClick={handleSubmit}
+          ></Button>
+        </form>
       </div>
 
       <div className="mt-7 flex items-center justify-between">

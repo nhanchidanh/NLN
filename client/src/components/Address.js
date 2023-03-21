@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import SelectAddressForm from "./SelectAddressForm";
 import {
   apiGetPublicDistricts,
   apiGetPublicProvinces,
   apiGetPublicWards,
 } from "../services";
+import InputReadOnly from "./InputReadOnly";
+import SelectForm from "./SelectForm";
 
 const Address = () => {
   const [provinces, setProvinces] = useState([]);
@@ -55,17 +56,17 @@ const Address = () => {
   console.log({ province, district, ward });
 
   return (
-    <div className="space-y-5">
-      <h2 className="font-semibold text-xl py-4">Địa chỉ cho thuê</h2>
+    <div className="space-y-4 ">
+      <h2 className="font-bold text-2xl ">Địa chỉ cho thuê</h2>
       <div className="flex w-full items-center gap-6">
-        <SelectAddressForm
+        <SelectForm
           value={province}
           setValue={setProvince}
           options={provinces}
           label={"Tỉnh/Thành phố"}
           type="province"
         />
-        <SelectAddressForm
+        <SelectForm
           reset={reset}
           value={district}
           setValue={setDistrict}
@@ -73,7 +74,7 @@ const Address = () => {
           label={"Quận/Huyện"}
           type="district"
         />
-        <SelectAddressForm
+        <SelectForm
           reset={reset}
           value={ward}
           setValue={setWard}
@@ -82,36 +83,28 @@ const Address = () => {
           type="ward"
         />
       </div>
-      <div className="flex flex-col gap-2">
-        <label className="font-medium" htmlFor="exact-address">
-          Địa chỉ chính xác
-        </label>
-        <input
-          value={`${
-            ward
-              ? `${wards?.find((item) => item.ward_id === ward)?.ward_name}, `
-              : ""
-          }${
-            district
-              ? `${
-                  districts?.find((item) => item.district_id === district)
-                    ?.district_name
-                },`
-              : ""
-          } ${
-            province
-              ? `${
-                  provinces?.find((item) => item.province_id === province)
-                    ?.province_name
-                }`
-              : ""
-          }`}
-          id="exact-address"
-          type="text"
-          readOnly
-          className="border p-2 rounded-md outline-none bg-gray-200 "
-        />
-      </div>
+      <InputReadOnly
+        label={"Thông tin chính xác"}
+        value={`${
+          ward
+            ? `${wards?.find((item) => item.ward_id === ward)?.ward_name}, `
+            : ""
+        }${
+          district
+            ? `${
+                districts?.find((item) => item.district_id === district)
+                  ?.district_name
+              },`
+            : ""
+        } ${
+          province
+            ? `${
+                provinces?.find((item) => item.province_id === province)
+                  ?.province_name
+              }`
+            : ""
+        }`}
+      />
     </div>
   );
 };

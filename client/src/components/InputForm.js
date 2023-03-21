@@ -11,18 +11,19 @@ const InputForm = ({
 }) => {
   return (
     <div>
-      <label className="text-xs" htmlFor={type}>
+      <label className="text-xs" htmlFor={keyPayload}>
         {label}
       </label>
       <input
         type={type || "text"}
-        id={type}
+        id={keyPayload}
         className="outline-none bg-[#e8f0fe] p-2 rounded-md w-full"
         value={value}
         onChange={(e) =>
           setValue((prev) => ({ ...prev, [keyPayload]: e.target.value }))
         }
         onFocus={() => setInvalidFields([])}
+        autoComplete={value}
       />
       {/* Show invalid Field:: some-every=>true/false find-filter=>value/null */}
       {invalidFields.length > 0 &&

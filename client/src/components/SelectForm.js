@@ -1,13 +1,6 @@
 import React, { memo } from "react";
 
-const SelectAddressForm = ({
-  label,
-  options,
-  value,
-  setValue,
-  type,
-  reset,
-}) => {
+const SelectForm = ({ label, options, value, setValue, type, reset }) => {
   return (
     <div className="flex flex-col gap-2 w-full">
       <label htmlFor="select-address" className="font-medium">
@@ -29,21 +22,27 @@ const SelectAddressForm = ({
                   ? item?.province_id
                   : type === "district"
                   ? item?.district_id
-                  : item?.ward_id
+                  : type === "ward"
+                  ? item?.ward_id
+                  : item?.id
               }
               value={
                 type === "province"
                   ? item?.province_id
                   : type === "district"
                   ? item?.district_id
-                  : item?.ward_id
+                  : type === "ward"
+                  ? item?.ward_id
+                  : item?.id
               }
             >
               {type === "province"
                 ? item?.province_name
                 : type === "district"
                 ? item?.district_name
-                : item?.ward_name}
+                : type === "ward"
+                ? item?.ward_name
+                : item?.value}
             </option>
           );
         })}
@@ -52,4 +51,4 @@ const SelectAddressForm = ({
   );
 };
 
-export default memo(SelectAddressForm);
+export default memo(SelectForm);
