@@ -1,6 +1,6 @@
 import React, { memo } from "react";
 
-const SelectForm = ({ label, options, value, setValue, type, reset }) => {
+const SelectForm = ({ label, options, value, setValue, type, reset, name }) => {
   return (
     <div className="flex flex-col gap-2 w-full">
       <label htmlFor="select-address" className="font-medium">
@@ -11,7 +11,11 @@ const SelectForm = ({ label, options, value, setValue, type, reset }) => {
         name="select-address"
         className="outline-none border rounded-md p-2"
         value={reset ? "" : value}
-        onChange={(e) => setValue(e.target.value)}
+        onChange={(e) =>
+          !name
+            ? setValue(e.target.value)
+            : setValue((prev) => ({ ...prev, [name]: e.target.value }))
+        }
       >
         <option value="">{`--Chọn ${label}--`}</option>
         {options?.map((item) => {

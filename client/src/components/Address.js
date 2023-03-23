@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import {
   apiGetPublicDistricts,
   apiGetPublicProvinces,
@@ -7,7 +7,7 @@ import {
 import InputReadOnly from "./InputReadOnly";
 import SelectForm from "./SelectForm";
 
-const Address = () => {
+const Address = ({ setPayload }) => {
   const [provinces, setProvinces] = useState([]);
   const [districts, setDistricts] = useState([]);
   const [wards, setWards] = useState([]);
@@ -53,7 +53,39 @@ const Address = () => {
     !district ? setReset(true) : setReset(false);
   }, [district]);
 
-  console.log({ province, district, ward });
+  // console.log({ province, district, ward });
+
+  //Lay data tat ca inputs
+  useEffect(() => {
+    setPayload((prev) => ({
+      ...prev,
+      address: `${
+        ward
+          ? `${wards?.find((item) => item.ward_id === ward)?.ward_name}, `
+          : ""
+      }${
+        district
+          ? `${
+              districts?.find((item) => item.district_id === district)
+                ?.district_name
+            },`
+          : ""
+      } ${
+        province
+          ? `${
+              provinces?.find((item) => item.province_id === province)
+                ?.province_name
+            }`
+          : ""
+      }`,
+      province: province
+        ? `${
+            provinces?.find((item) => item.province_id === province)
+              ?.province_name
+          }`
+        : "",
+    }));
+  }, [province, district, ward]);
 
   return (
     <div className="space-y-4 ">
@@ -109,4 +141,4 @@ const Address = () => {
   );
 };
 
-export default Address;
+export default memo(Address);
