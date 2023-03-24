@@ -1,8 +1,8 @@
-import * as areaService from "../services/areaService";
+import * as areaRangeService from "../services/areaRangeService";
 
 export const getAreas = async (req, res) => {
   try {
-    const response = await areaService.getAreasService();
+    const response = await areaRangeService.getAreasService();
     return res.status(200).json(response);
   } catch (error) {
     return res.status(500).json({

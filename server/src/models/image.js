@@ -9,12 +9,17 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Image.hasOne(models.Post, { foreignKey: "ImagesId", as: "images" });
+      Image.belongsTo(models.Post, {
+        foreignKey: "postId",
+        targetKey: "id",
+        as: "post",
+      });
     }
   }
   Image.init(
     {
-      image: DataTypes.TEXT,
+      url: DataTypes.STRING,
+      fileName: DataTypes.STRING,
     },
     {
       sequelize,

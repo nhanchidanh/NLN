@@ -9,17 +9,25 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      User.hasMany(models.Post, { foreignKey: "userId", as: "user" }); // 1 user có thể tạo nhiều post nhưng 1 post chỉ thuộc 1 user viết ra nó
+      User.hasMany(models.Post, {
+        foreignKey: "userId",
+        as: "post",
+      });
     }
   }
   User.init(
     {
-      name: DataTypes.STRING,
+      fullName: DataTypes.STRING,
       password: DataTypes.STRING,
       phone: DataTypes.STRING,
-      zalo: DataTypes.STRING,
-      fbUrl: DataTypes.STRING,
+      email: DataTypes.STRING,
+      role: {
+        type: DataTypes.ENUM,
+        values: ["ADMIN", "USER"],
+        defaultValue: "USER",
+      },
       avatar: DataTypes.STRING,
+      fileNameAvatar: DataTypes.STRING,
     },
     {
       sequelize,

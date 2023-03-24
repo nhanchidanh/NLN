@@ -4,6 +4,7 @@ import connectDB from "./src/config/connectDB";
 import initRoutes from "./src/routes";
 dotenv.config();
 import cors from "cors";
+import handleError from "./src/middlewares/handleError";
 
 const app = express();
 app.use(
@@ -17,6 +18,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 initRoutes(app);
+handleError(app);
 
 connectDB();
 

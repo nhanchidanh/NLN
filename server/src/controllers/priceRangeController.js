@@ -1,8 +1,8 @@
-import * as priceService from "../services/priceService";
+import * as priceRangeService from "../services/priceRangeService";
 
 export const getPrices = async (req, res) => {
   try {
-    const response = await priceService.getPricesService();
+    const response = await priceRangeService.getPricesService();
     return res.status(200).json(response);
   } catch (error) {
     return res.status(500).json({

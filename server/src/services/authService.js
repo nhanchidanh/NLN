@@ -7,6 +7,17 @@ require("dotenv").config();
 const hashPassword = (password) =>
   bcrypt.hashSync(password, bcrypt.genSaltSync(12));
 
+const status = {
+  SHOW: {
+    key: "SHOW",
+    value: "Hien thi",
+  },
+  HIDE: {
+    key: "HIDE",
+    value: "An",
+  },
+};
+
 export const registerService = ({ name, phone, password }) =>
   new Promise(async (resolve, reject) => {
     try {
