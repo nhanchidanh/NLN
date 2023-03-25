@@ -38,12 +38,10 @@ export const createCategory = async (req, res) => {
 export const updateCategory = async (req, res, next) => {
   try {
     const { id, title, header, subheader } = req.body;
-    const response = await categoryService.updateCategoryService({
-      id,
-      title,
-      header,
-      subheader,
-    });
+    const response = await categoryService.updateCategoryService(
+      req.params,
+      req.body
+    );
 
     res.status(200).json(response);
   } catch (error) {
