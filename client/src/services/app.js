@@ -6,7 +6,7 @@ export const apiGetPrices = () =>
     try {
       const response = await axios({
         method: "get",
-        url: "api/v1/price/all",
+        url: "api/v1/price-range/all",
       });
 
       resolve(response);
@@ -15,12 +15,12 @@ export const apiGetPrices = () =>
     }
   });
 
-export const apiGetAreas = () =>
+export const apigetAreaRanges = () =>
   new Promise(async (resolve, reject) => {
     try {
       const response = await axios({
         method: "get",
-        url: "api/v1/area/all",
+        url: "api/v1/area-range/all",
       });
 
       resolve(response);

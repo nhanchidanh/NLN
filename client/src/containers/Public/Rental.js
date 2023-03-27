@@ -8,18 +8,18 @@ import Pagination from "./Pagination";
 
 const Rental = () => {
   const { prices, areas, categories } = useSelector((state) => state.app);
-  const [categoryCode, setCategoryCode] = useState("");
+  const [categoryId, setCategoryId] = useState("");
   const [categoryCurrent, setCategoryCurrent] = useState({});
   const location = useLocation();
 
   useEffect(() => {
     //find match category
     const category = categories?.find(
-      (item) => `/${convertToSlug(item.value)}` === location.pathname
+      (item) => `/${convertToSlug(item?.title)}` === location.pathname
     );
 
     if (category) {
-      setCategoryCode(category.code);
+      setCategoryId(category.id);
       setCategoryCurrent(category);
     }
   }, [location, categories]);
@@ -33,7 +33,7 @@ const Rental = () => {
       <Province></Province>
       <div className="grid grid-cols-12 gap-4">
         <div className="col-span-8 w-full">
-          <List categoryCode={categoryCode} />
+          <List categoryId={categoryId} />
           <Pagination />
         </div>
         <div className="col-span-4 w-full space-y-4">

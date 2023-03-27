@@ -35,14 +35,14 @@ const ItemSideBar = ({ title, content, isDoubleCol, type }) => {
                 // to={`?${type}=${item.code}`}
                 to={
                   type === "category"
-                    ? `${convertToSlug(item.value)}`
-                    : `?${type}=${item.code}`
+                    ? `${convertToSlug(item?.title)}`
+                    : `?${type}=${item.id}`
                 }
-                key={item.code}
+                key={item?.id}
                 className=" flex gap-1  items-center cursor-pointer hover:text-orange-600 border-b border-gray-200 pb-1 border-dashed "
               >
                 <MdNavigateNext color="#999" className="mt-[2px]" />
-                <p>{item.value}</p>
+                <p>{item?.title}</p>
               </Link>
             );
           })}

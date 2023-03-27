@@ -20,15 +20,15 @@ export const getAreaRangesService = () => {
 };
 
 //CREATE ALL AREARANGE
-export const createAreaRangeService = ({ value, from, to }) => {
+export const createAreaRangeService = ({ title, from, to }) => {
   return new Promise(async (resolve, reject) => {
     try {
       const response = await db.AreaRange.findOrCreate({
         where: {
-          value,
+          title,
         },
         defaults: {
-          value,
+          title,
           from,
           to,
         },
@@ -45,12 +45,12 @@ export const createAreaRangeService = ({ value, from, to }) => {
 };
 
 //UPDATE AREARANGE
-export const updateAreaRangeService = ({ id }, { value, from, to }) => {
+export const updateAreaRangeService = ({ id }, { title, from, to }) => {
   return new Promise(async (resolve, reject) => {
     try {
       const response = await db.AreaRange.update(
         {
-          value,
+          title,
           from,
           to,
         },

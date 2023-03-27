@@ -36,12 +36,12 @@ const Navigation = ({ isAdmin }) => {
         {categories?.length > 0 &&
           categories.map((item) => {
             return (
-              <div key={item.code} className="h-full">
+              <div key={item.id} className="h-full">
                 <NavLink
-                  to={`/${convertToSlug(item.value)}`}
+                  to={`/${convertToSlug(item?.title)}`}
                   className={({ isActive }) => (isActive ? active : notActive)}
                 >
-                  {item.value}
+                  {item?.title}
                 </NavLink>
               </div>
             );

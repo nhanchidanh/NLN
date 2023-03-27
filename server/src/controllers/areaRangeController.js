@@ -13,9 +13,9 @@ export const getAreaRanges = async (req, res) => {
 };
 
 export const createAreaRange = async (req, res) => {
-  const { value, from, to } = req.body;
+  const { title, from, to } = req.body;
 
-  if (!value || !from || !to) {
+  if (!title || !from || !to) {
     return res.status(400).json({
       err: 1,
       msg: "Missing inputs",

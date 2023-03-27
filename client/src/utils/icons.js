@@ -7,6 +7,7 @@ import {
   MdOutlineHouseSiding,
   MdNavigateNext,
   MdOutlineContentPaste,
+  MdDelete,
 } from "react-icons/md";
 import { FiSearch } from "react-icons/fi";
 import { GrStar, GrLinkNext, GrLinkPrevious } from "react-icons/gr";
@@ -31,6 +32,7 @@ const icons = {
   HiOutlineLogout,
   BsChevronDown,
   TbMessageCircle,
+  MdDelete,
 };
 
 export default icons;

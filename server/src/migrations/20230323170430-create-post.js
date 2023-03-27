@@ -54,6 +54,26 @@ module.exports = {
         onUpdate: "cascade",
         onDelete: "cascade",
       },
+      priceRangeId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: "PriceRanges",
+          key: "id",
+        },
+        allowNull: false,
+        onUpdate: "cascade",
+        onDelete: "cascade",
+      },
+      areaRangeId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: "AreaRanges",
+          key: "id",
+        },
+        allowNull: false,
+        onUpdate: "cascade",
+        onDelete: "cascade",
+      },
       status: {
         type: Sequelize.ENUM,
         values: ["SHOW", "HIDE"],

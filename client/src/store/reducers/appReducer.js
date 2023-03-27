@@ -3,8 +3,8 @@ import actionTypes from "../actions/actionType";
 const initState = {
   msg: "",
   categories: [],
-  prices: [],
-  areas: [],
+  priceRanges: [],
+  areaRanges: [],
   provinces: [],
 };
 
@@ -16,16 +16,16 @@ const appReducer = (state = initState, action) => {
         categories: action.categories || [],
         msg: action.msg || "",
       };
-    case actionTypes.GET_PRICES:
+    case actionTypes.GET_PRICE_RANGES:
       return {
         ...state,
-        prices: action.prices || [],
+        priceRanges: action.priceRanges || [],
         msg: action.msg || "",
       };
-    case actionTypes.GET_AREAS:
+    case actionTypes.GET_AREA_RANGES:
       return {
         ...state,
-        areas: action.areas || [],
+        areaRanges: action.areaRanges || [],
         msg: action.msg || "",
       };
     case actionTypes.GET_PROVINCES:

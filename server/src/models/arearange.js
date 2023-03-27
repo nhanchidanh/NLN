@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class AreaRange extends Model {
     /**
@@ -13,13 +11,16 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  AreaRange.init({
-    value: DataTypes.STRING,
-    from: DataTypes.INTEGER,
-    to: DataTypes.INTEGER
-  }, {
-    sequelize,
-    modelName: 'AreaRange',
-  });
+  AreaRange.init(
+    {
+      title: DataTypes.STRING,
+      from: DataTypes.INTEGER,
+      to: DataTypes.INTEGER,
+    },
+    {
+      sequelize,
+      modelName: "AreaRange",
+    }
+  );
   return AreaRange;
 };

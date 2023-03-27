@@ -33,51 +33,51 @@ export const getPrices = () => async (dispatch) => {
     // console.log(response);
     if (response?.data.err === 0) {
       dispatch({
-        type: actionTypes.GET_PRICES,
-        prices: response.data.response.sort((a, b) => {
+        type: actionTypes.GET_PRICE_RANGES,
+        priceRanges: response.data.response.sort((a, b) => {
           return +a.order - +b.order;
         }),
         msg: "",
       });
     } else {
       dispatch({
-        type: actionTypes.GET_PRICES,
+        type: actionTypes.GET_PRICE_RANGES,
         msg: response.data.msg,
-        prices: null,
+        priceRanges: null,
       });
     }
   } catch (error) {
     dispatch({
-      type: actionTypes.GET_PRICES,
-      prices: null,
+      type: actionTypes.GET_PRICE_RANGES,
+      priceRanges: null,
       msg: error,
     });
   }
 };
 
-export const getAreas = () => async (dispatch) => {
+export const getAreaRanges = () => async (dispatch) => {
   try {
-    const response = await apis.apiGetAreas();
+    const response = await apis.apigetAreaRanges();
     // console.log(response);
     if (response?.data.err === 0) {
       dispatch({
-        type: actionTypes.GET_AREAS,
-        areas: response.data.response.sort((a, b) => {
+        type: actionTypes.GET_AREA_RANGES,
+        areaRanges: response.data.response.sort((a, b) => {
           return +a.order - +b.order;
         }),
         msg: "",
       });
     } else {
       dispatch({
-        type: actionTypes.GET_AREAS,
+        type: actionTypes.GET_AREA_RANGES,
         msg: response.data.msg,
-        areas: null,
+        areaRanges: null,
       });
     }
   } catch (error) {
     dispatch({
-      type: actionTypes.GET_AREAS,
-      areas: null,
+      type: actionTypes.GET_AREA_RANGES,
+      areaRanges: null,
       msg: error,
     });
   }

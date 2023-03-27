@@ -20,15 +20,15 @@ export const getPriceRangesService = () => {
 };
 
 //CREATE ALL priceRANGE
-export const createPriceRangeService = ({ value, from, to }) => {
+export const createPriceRangeService = ({ title, from, to }) => {
   return new Promise(async (resolve, reject) => {
     try {
       const response = await db.PriceRange.findOrCreate({
         where: {
-          value,
+          title,
         },
         defaults: {
-          value,
+          title,
           from,
           to,
         },
@@ -45,12 +45,12 @@ export const createPriceRangeService = ({ value, from, to }) => {
 };
 
 //UPDATE priceRANGE
-export const updatePriceRangeService = ({ id }, { value, from, to }) => {
+export const updatePriceRangeService = ({ id }, { title, from, to }) => {
   return new Promise(async (resolve, reject) => {
     try {
       const response = await db.PriceRange.update(
         {
-          value,
+          title,
           from,
           to,
         },

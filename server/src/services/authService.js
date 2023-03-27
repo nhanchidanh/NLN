@@ -7,24 +7,13 @@ require("dotenv").config();
 const hashPassword = (password) =>
   bcrypt.hashSync(password, bcrypt.genSaltSync(12));
 
-const status = {
-  SHOW: {
-    key: "SHOW",
-    value: "Hien thi",
-  },
-  HIDE: {
-    key: "HIDE",
-    value: "An",
-  },
-};
-
-export const registerService = ({ name, phone, password }) =>
+export const registerService = ({ fullName, phone, password }) =>
   new Promise(async (resolve, reject) => {
     try {
       const response = await db.User.findOrCreate({
         where: { phone },
         defaults: {
-          name,
+          fullName,
           phone,
           password: hashPassword(password),
           id: v4(),
@@ -78,7 +67,7 @@ export const loginService = ({ phone, password }) =>
           ? "Login is successfully"
           : response
           ? "Password is wrong !"
-          : "phone number not found !",
+          : "Phone number does not exist !",
         token: token || null,
       });
     } catch (error) {

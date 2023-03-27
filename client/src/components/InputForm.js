@@ -23,7 +23,7 @@ const InputForm = ({
           setValue((prev) => ({ ...prev, [keyPayload]: e.target.value }))
         }
         onFocus={() => setInvalidFields([])}
-        autoComplete={value}
+        autoComplete="off"
       />
       {/* Show invalid Field:: some-every=>true/false find-filter=>value/null */}
       {invalidFields.length > 0 &&

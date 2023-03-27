@@ -17,6 +17,7 @@ export const getCurrentUser = () => async (dispatch) => {
         msg: response.data.msg,
         currentUser: null,
       });
+      dispatch({ type: actionTypes.LOGOUT });
     }
   } catch (error) {
     dispatch({
@@ -24,5 +25,6 @@ export const getCurrentUser = () => async (dispatch) => {
       currentUser: null,
       msg: error,
     });
+    dispatch({ type: actionTypes.LOGOUT });
   }
 };

@@ -11,12 +11,6 @@ const Home = () => {
   const dispatch = useDispatch();
   const { isLoggedIn } = useSelector((state) => state.auth);
 
-  useEffect(() => {
-    dispatch(actions.getPrices());
-    dispatch(actions.getAreas());
-    dispatch(actions.getProvinces());
-  }, []);
-
   return (
     <div className="w-full h-full ">
       <Header></Header>

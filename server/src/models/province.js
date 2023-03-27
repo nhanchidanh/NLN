@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Province.init(
     {
-      value: DataTypes.STRING,
+      title: DataTypes.STRING,
     },
     {
       sequelize,

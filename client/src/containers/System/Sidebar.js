@@ -26,16 +26,13 @@ const Sidebar = () => {
             className="w-12 h-12 object-cover rounded-full"
           />
           <div className="text-left">
-            <p className="font-semibold">{currentUser?.name}</p>
+            <p className="font-semibold">{currentUser?.fullName}</p>
             <p className="text-sm">{currentUser?.phone}</p>
           </div>
         </div>
         <span>
           Mã thành viên:{" "}
-          <span className="font-semibold">{`${currentUser?.id?.slice(
-            0,
-            6
-          )}`}</span>
+          <span className="font-semibold">{`${currentUser?.id}`}</span>
         </span>
       </div>
 

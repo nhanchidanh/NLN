@@ -24,11 +24,11 @@ const Intro = () => {
               categories.map((item, index) => {
                 return (
                   <Link
-                    to={`/${convertToSlug(item.value)}`}
-                    key={item.code}
+                    to={`/${convertToSlug(item.title)}`}
+                    key={item.id}
                     className="text-blue-600 font-medium hover:text-orange-600"
                   >
-                    {`${item.value.toLowerCase()}, `}
+                    {`${item?.title?.toLowerCase()}, `}
                   </Link>
                 );
               })}

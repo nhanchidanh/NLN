@@ -7,9 +7,11 @@ import Pagination from "./Pagination";
 
 const HomePage = () => {
   // const [params] = useSearchParams();
-  const { categories, prices, areas } = useSelector((state) => state.app);
+  const { categories, priceRanges, areaRanges } = useSelector(
+    (state) => state.app
+  );
 
-  // console.log(prices);
+  // console.log({ categories, priceRanges, areaRanges });
   return (
     <div className=" flex flex-col gap-3">
       <div>
@@ -30,14 +32,14 @@ const HomePage = () => {
             isDoubleCol={false}
           />
           <ItemSideBar
-            type="priceCode"
-            content={prices}
+            type="priceRange"
+            content={priceRanges}
             title="Xem theo giá"
             isDoubleCol={true}
           />
           <ItemSideBar
-            type="areaCode"
-            content={areas}
+            type="areaRange"
+            content={areaRanges}
             title="Xem theo diện tích"
             isDoubleCol={true}
           />

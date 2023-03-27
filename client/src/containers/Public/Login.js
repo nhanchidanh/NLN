@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Button, InputForm } from "../../components";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import * as actions from "../../store/actions";
 import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
@@ -10,12 +10,13 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { isLoggedIn, msg, update } = useSelector((state) => state.auth); //hook nay giup lay gia tri trong reducer
+  // console.log(msg);
 
   const [isRegister, setIsRegister] = useState(location.state?.flag);
   // console.log(location);
   const [invalidFields, setInvalidFields] = useState([]);
   const [payload, setPayload] = useState({
-    name: "",
+    fullName: "",
     phone: "",
     password: "",
   });
@@ -55,7 +56,7 @@ const Login = () => {
 
   const validate = (payload) => {
     let invalids = 0;
-    let fields = Object.entries(payload);
+    let fields = Object.entries(payload); //CHuyen object -> array gom co key/value
 
     fields.forEach((item) => {
       if (item[1] === "") {
@@ -117,9 +118,9 @@ const Login = () => {
               invalidFields={invalidFields}
               setInvalidFields={setInvalidFields}
               label={"HỌ TÊN"}
-              value={payload.name}
+              value={payload.fullName}
               setValue={setPayload}
-              keyPayload={"name"}
+              keyPayload={"fullName"}
             />
           )}
           <InputForm
@@ -158,7 +159,7 @@ const Login = () => {
               onClick={() => {
                 setIsRegister(false);
                 setPayload({
-                  name: "",
+                  fullName: "",
                   phone: "",
                   password: "",
                 });
@@ -176,7 +177,7 @@ const Login = () => {
               onClick={() => {
                 setIsRegister(true);
                 setPayload({
-                  name: "",
+                  fullName: "",
                   phone: "",
                   password: "",
                 });

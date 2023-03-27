@@ -46,7 +46,7 @@ const SelectForm = ({ label, options, value, setValue, type, reset, name }) => {
                 ? item?.district_name
                 : type === "ward"
                 ? item?.ward_name
-                : item?.value}
+                : item?.title}
             </option>
           );
         })}

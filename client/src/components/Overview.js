@@ -3,8 +3,8 @@ import { useSelector } from "react-redux";
 import { InputFormSystem, InputReadOnly, SelectForm } from "./";
 
 const targets = [
-  { id: 1, value: "Nam" },
-  { id: 2, value: "Nữ" },
+  { id: "MALE", title: "Nam" },
+  { id: "FEMALE", title: "Nữ" },
 ];
 
 const Overview = ({ payload, setPayload }) => {
@@ -16,13 +16,13 @@ const Overview = ({ payload, setPayload }) => {
       <h2 className="font-bold text-2xl">Thông tin mô tả</h2>
       <SelectForm
         label={"Loại chuyên mục"}
-        value={payload.categoryCode}
+        value={payload?.categoryId}
         setValue={setPayload}
-        name="categoryCode"
+        name="categoryId"
         options={categories}
       />
       <InputFormSystem
-        value={payload.title}
+        value={payload?.title}
         setValue={setPayload}
         label={"Tiêu đề"}
         name="title"
@@ -36,34 +36,37 @@ const Overview = ({ payload, setPayload }) => {
           className="outline-none border rounded-md"
           cols={30}
           rows={10}
-          value={payload.description}
+          value={payload?.description}
           onChange={(e) =>
             setPayload((prev) => ({ ...prev, description: e.target.value }))
           }
         ></textarea>
       </div>
-      <InputReadOnly label={"Thông tin liên hệ"} value={currentUser?.name} />
+      <InputReadOnly
+        label={"Thông tin liên hệ"}
+        value={currentUser?.fullName}
+      />
       <InputReadOnly label={"Điện thoại"} value={currentUser?.phone} />
       <InputFormSystem
         small={"Nhập đầy đủ số, ví dụ 1 triệu thì nhập là 1000000"}
         label={"Giá cho thuê"}
         unit={"đồng"}
-        name="priceNumber"
-        value={payload.priceNumber}
+        name="price"
+        value={payload?.price}
         setValue={setPayload}
       />
       <InputFormSystem
         label={"Diện tích"}
         unit={"m2"}
-        name="areaNumber"
-        value={payload.areaNumber}
+        name="area"
+        value={payload?.area}
         setValue={setPayload}
       />
       <SelectForm
         label={"Đối tượng cho thuê"}
         options={targets}
         name="target"
-        value={payload.target}
+        value={payload?.target}
         setValue={setPayload}
       />
     </div>
