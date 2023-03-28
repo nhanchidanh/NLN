@@ -5,6 +5,7 @@ import { InputFormSystem, InputReadOnly, SelectForm } from "./";
 const targets = [
   { id: "MALE", title: "Nam" },
   { id: "FEMALE", title: "Nữ" },
+  { id: "ALL", title: "Tất cả" },
 ];
 
 const Overview = ({ payload, setPayload }) => {

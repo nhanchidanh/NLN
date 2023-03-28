@@ -14,11 +14,6 @@ module.exports = (sequelize, DataTypes) => {
         targetKey: "id",
         as: "category",
       }),
-        Post.belongsTo(models.Province, {
-          foreignKey: "provinceId",
-          targetKey: "id",
-          as: "province",
-        }),
         Post.belongsTo(models.User, {
           foreignKey: "userId",
           targetKey: "id",
@@ -46,18 +41,9 @@ module.exports = (sequelize, DataTypes) => {
           key: "id",
         },
         allowNull: false,
-        onUpdate: "cascade",
-        onDelete: "cascade",
       },
-      provinceId: {
-        type: DataTypes.INTEGER,
-        references: {
-          model: "Provinces",
-          key: "id",
-        },
-        allowNull: false,
-        onUpdate: "cascade",
-        onDelete: "cascade",
+      province: {
+        type: DataTypes.STRING,
       },
       userId: {
         type: DataTypes.INTEGER,
@@ -66,8 +52,22 @@ module.exports = (sequelize, DataTypes) => {
           key: "id",
         },
         allowNull: false,
-        onUpdate: "cascade",
-        onDelete: "cascade",
+      },
+      priceRangeId: {
+        type: DataTypes.INTEGER,
+        references: {
+          model: "PriceRanges",
+          key: "id",
+        },
+        allowNull: false,
+      },
+      areaRangeId: {
+        type: DataTypes.INTEGER,
+        references: {
+          model: "AreaRanges",
+          key: "id",
+        },
+        allowNull: false,
       },
       status: {
         type: DataTypes.ENUM,

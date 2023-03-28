@@ -47,6 +47,22 @@ export const apiGetNewPosts = () => {
   });
 };
 
+export const apiCreatePost = (body) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const response = await axiosConfig({
+        method: "post",
+        url: `api/v1/post/create-post`,
+        data: body,
+      });
+
+      resolve(response);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
 export const apiUploadImages = (images) => {
   return new Promise(async (resolve, reject) => {
     try {

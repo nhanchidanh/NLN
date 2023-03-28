@@ -16,7 +16,6 @@ export const registerService = ({ fullName, phone, password }) =>
           fullName,
           phone,
           password: hashPassword(password),
-          id: v4(),
         },
       });
       // console.log(response);

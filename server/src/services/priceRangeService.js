@@ -37,6 +37,7 @@ export const createPriceRangeService = ({ title, from, to }) => {
       resolve({
         err: response[1] ? 0 : 1,
         msg: response[1] ? "Create successfully" : "PriceRange already exist!",
+        response,
       });
     } catch (error) {
       reject(error);

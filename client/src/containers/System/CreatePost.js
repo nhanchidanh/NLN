@@ -2,12 +2,15 @@ import { CircularProgress } from "@mui/material";
 import React, { useState } from "react";
 import { BsFillCameraFill } from "react-icons/bs";
 import { MdDelete } from "react-icons/md";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Address, Button, Overview } from "../../components";
-import { apiUploadImages } from "../../services";
+import { apiCreatePost, apiUploadImages } from "../../services";
 import { getRangeFromValue } from "../../utils/Common/getRangeFromValue";
+import Swal from "sweetalert2";
 const CreatePost = () => {
+  const dispatch = useDispatch();
   const { priceRanges, areaRanges } = useSelector((state) => state.app);
+  const { currentUser } = useSelector((state) => state.user);
 
   //Lay data tat ca inputs
   const [payload, setPayload] = useState({
@@ -17,8 +20,8 @@ const CreatePost = () => {
     images: "",
     address: "",
     categoryId: "",
-    priceRangeId: null,
-    areaRangeId: null,
+    priceRangeId: "",
+    areaRangeId: "",
     description: "",
     target: "",
     province: "",
@@ -63,11 +66,11 @@ const CreatePost = () => {
     setImagePreview((prev) => prev?.filter((item) => item !== image));
     setPayload((prev) => ({
       ...prev,
-      images: prev?.images?.filter((item) => item !== image),
+      images: prev.images?.filter((item) => item !== image),
     }));
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     let areaRangeId = getRangeFromValue(areaRanges, +payload?.area);
     let priceRangeId = getRangeFromValue(priceRanges, +payload?.price);
 
@@ -75,9 +78,33 @@ const CreatePost = () => {
       ...payload,
       areaRangeId,
       priceRangeId,
+      userId: currentUser?.id,
+      target: payload?.target || "ALL",
     };
 
     console.log(finalPayload);
+
+    const response = await apiCreatePost(finalPayload);
+    console.log(response);
+    if (response.status === 200) {
+      Swal.fire("Thành công", "Tạo tin mới thành công", "success").then(() => {
+        setPayload({
+          title: "",
+          price: "",
+          area: "",
+          images: "",
+          address: "",
+          categoryId: "",
+          priceRangeId: "",
+          areaRangeId: "",
+          description: "",
+          target: "",
+          province: "",
+        });
+      });
+    } else {
+      Swal.fire("Oops", "Đã có lỗi xãy ra", "error");
+    }
   };
 
   return (

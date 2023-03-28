@@ -13,7 +13,7 @@ function App() {
     setTimeout(() => {
       isLoggedIn && dispatch(actions.getCurrentUser());
     }, 100);
-  }, [isLoggedIn]);
+  }, [dispatch, isLoggedIn]);
 
   useEffect(() => {
     dispatch(actions.getPrices());

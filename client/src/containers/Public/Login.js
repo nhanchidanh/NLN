@@ -112,7 +112,7 @@ const Login = () => {
         {isRegister ? "Đăng ký" : "Đăng nhập"}
       </h3>
       <div className="w-full flex flex-col gap-5">
-        <form>
+        <form className="w-full flex flex-col gap-5">
           {isRegister && (
             <InputForm
               invalidFields={invalidFields}

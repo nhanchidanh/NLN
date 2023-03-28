@@ -31,18 +31,9 @@ module.exports = {
           key: "id",
         },
         allowNull: false,
-        onUpdate: "cascade",
-        onDelete: "cascade",
       },
-      provinceId: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: "Provinces",
-          key: "id",
-        },
-        allowNull: false,
-        onUpdate: "cascade",
-        onDelete: "cascade",
+      province: {
+        type: Sequelize.STRING,
       },
       userId: {
         type: Sequelize.INTEGER,
@@ -51,8 +42,6 @@ module.exports = {
           key: "id",
         },
         allowNull: false,
-        onUpdate: "cascade",
-        onDelete: "cascade",
       },
       priceRangeId: {
         type: Sequelize.INTEGER,
@@ -61,8 +50,6 @@ module.exports = {
           key: "id",
         },
         allowNull: false,
-        onUpdate: "cascade",
-        onDelete: "cascade",
       },
       areaRangeId: {
         type: Sequelize.INTEGER,
@@ -71,8 +58,6 @@ module.exports = {
           key: "id",
         },
         allowNull: false,
-        onUpdate: "cascade",
-        onDelete: "cascade",
       },
       status: {
         type: Sequelize.ENUM,

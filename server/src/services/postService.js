@@ -100,3 +100,40 @@ export const getNewPostService = () => {
     }
   });
 };
+
+//CREATE POST
+export const createPostService = (body, userId) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const post = await db.Post.create({
+        title: body.title,
+        description: body.description,
+        price: body.price,
+        area: body.area,
+        address: body.address,
+        province: body.province,
+        categoryId: body.categoryId,
+        priceRangeId: body.priceRangeId,
+        areaRangeId: body.areaRangeId,
+        target: body.target,
+        userId,
+      });
+      // console.log(body.images);
+
+      for (let i = 0; i < body.images.length; i++) {
+        const image = await db.Image.create({
+          url: body.images[i],
+          postId: post.id,
+        });
+      }
+
+      resolve({
+        err: 0,
+        msg: "Create successfully!",
+        post,
+      });
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
