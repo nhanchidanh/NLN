@@ -24,7 +24,7 @@ export const apiGetPostsLimit = (query) => {
         url: `api/v1/post/limit`,
         params: query,
       });
-
+      // console.log(response);
       resolve(response);
     } catch (error) {
       reject(error);

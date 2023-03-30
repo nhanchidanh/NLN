@@ -27,9 +27,9 @@ export const getCategories = () => async (dispatch) => {
   }
 };
 
-export const getPrices = () => async (dispatch) => {
+export const getPriceRanges = () => async (dispatch) => {
   try {
-    const response = await apis.apiGetPrices();
+    const response = await apis.apiGetPriceRanges();
     // console.log(response);
     if (response?.data.err === 0) {
       dispatch({

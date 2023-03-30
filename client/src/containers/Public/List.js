@@ -8,6 +8,7 @@ import { truncateText } from "../../utils/Common/truncateText";
 const List = ({ categoryId }) => {
   const dispatch = useDispatch();
   const { posts } = useSelector((state) => state.post);
+  // console.log(posts);
   const [searchParams] = useSearchParams();
   // console.log(categoryId);
 
@@ -32,7 +33,6 @@ const List = ({ categoryId }) => {
     <div className=" p-5 bg-white shadow-md rounded-md">
       <div className="flex items-center justify-between mb-3">
         <h4 className="text-xl font-semibold">Danh sách tin đăng</h4>
-        <span>Cập nhật: 12/08/2022</span>
       </div>
       <div className="flex items-center gap-1 my-2">
         <span>Sắp xếp:</span>
@@ -46,10 +46,11 @@ const List = ({ categoryId }) => {
               <Item
                 key={item?.id}
                 address={item?.address}
-                attributes={item?.attributes}
-                description={JSON.parse(item?.description)}
-                images={JSON.parse(item?.images?.image)}
-                star={+item?.star}
+                price={item?.price}
+                area={item?.area}
+                description={item?.description}
+                images={item?.images}
+                star={5}
                 title={item?.title}
                 user={item?.user}
                 id={item?.id}

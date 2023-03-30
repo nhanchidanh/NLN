@@ -19,9 +19,10 @@ const Search = () => {
   const [name, setName] = useState("");
   const [queries, setQueries] = useState({});
 
-  const { provinces, prices, areas, categories } = useSelector(
+  const { provinces, priceRanges, areaRanges, categories } = useSelector(
     (state) => state.app
   );
+  // console.log(priceRanges);
 
   const handleShowModal = (content, name) => {
     setContent(content);
@@ -40,7 +41,7 @@ const Search = () => {
   );
   //moi lan render lai se tao 1 function moi nen phai dung useCallback den ngan chan dieu nay
 
-  // console.log(queries);
+  console.log(queries);
 
   return (
     <div>
@@ -69,24 +70,24 @@ const Search = () => {
           />
         </span>
         <span
-          onClick={() => handleShowModal(prices, "price")}
+          onClick={() => handleShowModal(priceRanges, "priceRange")}
           className="cursor-pointer flex-1"
         >
           <SearchItem
             IconBefore={<TbReportMoney />}
             IconAfter={<BsChevronRight color="rgb(156,163,175)" />}
-            text={queries.price}
+            text={queries.priceRangeTitle}
             defaultText={"Chọn giá"}
           />
         </span>
         <span
-          onClick={() => handleShowModal(areas, "area")}
+          onClick={() => handleShowModal(areaRanges, "areaRange")}
           className="cursor-pointer flex-1"
         >
           <SearchItem
             IconBefore={<RiCrop2Line />}
             IconAfter={<BsChevronRight color="rgb(156,163,175)" />}
-            text={queries.area}
+            text={queries.areaRangeTitle}
             defaultText={"Chọn diện tích"}
           />
         </span>

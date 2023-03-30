@@ -1,7 +1,7 @@
 import axios from "../axiosConfig";
 import axiosDefault from "axios";
 
-export const apiGetPrices = () =>
+export const apiGetPriceRanges = () =>
   new Promise(async (resolve, reject) => {
     try {
       const response = await axios({
@@ -36,7 +36,7 @@ export const apiGetProvinces = () =>
         method: "get",
         url: "api/v1/province/all",
       });
-
+      // console.log(response);
       resolve(response);
     } catch (error) {
       reject(error);

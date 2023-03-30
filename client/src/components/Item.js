@@ -10,8 +10,9 @@ const { GrStar, RiHeartLine, RiHeartFill } = icons;
 
 const Item = ({
   address,
-  attributes,
   description,
+  price,
+  area,
   images,
   star,
   title,
@@ -20,7 +21,7 @@ const Item = ({
 }) => {
   const [isHoverHeart, setIsHoverHeart] = useState(false);
   // const navigate = useNavigate();
-
+  // console.log(images);
   const handleStar = (star) => {
     let stars = [];
     for (let i = 1; i <= +star; i++) {
@@ -36,7 +37,7 @@ const Item = ({
       <div className="w-full basis-2/5 relative cursor-pointer">
         <Link to={`chi-tiet/${convertToSlug(title)}/${id}`}>
           <img
-            src={images[0]}
+            src={images[0]?.url}
             alt="preview"
             className="w-full rounded-md h-[250px] block object-cover "
           />
@@ -70,8 +71,8 @@ const Item = ({
         </div>
 
         <div className="flex items-center my-2 justify-between">
-          <span className="font-bold text-green-600">{attributes?.price}</span>
-          <span>{attributes?.acreage}</span>
+          <span className="font-bold text-green-600">{price + " đồng"}</span>
+          <span>{area + "m2"}</span>
           <span>{getDistrictProvince(address)}</span>
         </div>
         <p className="text-gray-500">{truncateText(description, 180)}</p>

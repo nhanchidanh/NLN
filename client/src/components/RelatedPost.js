@@ -25,8 +25,8 @@ const RelatedPost = () => {
             <SubItem
               key={item.id}
               title={item.title}
-              image={JSON.parse(item.images.image)[0]}
-              price={item?.attributes?.price}
+              image={item?.images[0]}
+              price={item?.price}
               createdAt={item.createdAt}
             />
           );

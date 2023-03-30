@@ -5,10 +5,15 @@ import db from "../models";
 export const getProvincesService = () => {
   return new Promise(async (resolve, reject) => {
     try {
-      const response = await db.Province.findAll({
-        raw: true,
-        attributes: ["code", "value"], //chỉ định trường cần lấy data
-      }); //bình thường trả ve instance chứa data và một vài thông số khác. Nhưng có raw:true thì trả về data{}
+      const response = await db.Post.findAll({
+        attributes: ["id", "province"],
+        group: "province",
+      });
+
+      for (let i = 0; i < response.length; i++) {
+        response[i].title = response[i].province;
+        delete response[i].province;
+      }
       resolve({
         err: response ? 0 : 1,
         msg: response ? "OK" : "Failed to get provincesService.",

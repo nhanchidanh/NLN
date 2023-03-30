@@ -7,34 +7,26 @@ import icons from "../utils/icons";
 const { GrLinkPrevious } = icons;
 
 const Modal = ({ setIsShowModal, content, name, handleSubmit, queries }) => {
-  const { prices, areas } = useSelector((state) => state.app);
-  //slide 2 ranges
+  const { priceRanges, areaRanges } = useSelector((state) => state.app);
 
-  //Chuyển 100% về 15trieu
-  const convert100ToPriceOrArea = (number) => {
-    if (name === "price") {
-      return Math.round(number * 0.15);
-    } else {
-      return Math.round(number * 0.9);
-    }
-  };
-  //Chuyển 15 triệu về 100%
-  const convertTo100 = (number) => {
-    if (name === "price") {
-      return Math.round(number / 0.15);
-    } else {
-      return Math.round(number / 0.9);
-    }
-  };
+  const [priceRange, setPriceRange] = useState([20, 30]);
+  const [priceRangeTitle, setPriceRangeTitle] = useState("2 - 3 triệu");
+  const [areaRange, setAreaRange] = useState([20, 30]);
+  const [areaRangeTitle, setAreaRangeTitle] = useState("20 - 30 m2");
 
-  // const [value, setPrice] = useState([convertTo100(3), convertTo100(5)]);
-  const [price, setPrice] = useState([convertTo100(3), convertTo100(5)]);
-  const [area, setArea] = useState([20 / 0.9, 30 / 0.9]);
   const handleChange = (event, newValue) => {
-    if (name === "price") {
-      setPrice(newValue);
+    if (name === "priceRange") {
+      setPriceRange(newValue);
+      setPriceRangeTitle(
+        `${Math.round(newValue[0] * 0.15)} - ${Math.round(
+          newValue[1] * 0.15
+        )} triệu`
+      );
     } else {
-      setArea(newValue);
+      setAreaRange(newValue);
+      setAreaRangeTitle(
+        `${Math.round(newValue[0] * 0.9)} - ${Math.round(newValue[1] * 0.9)} m2`
+      );
     }
   };
 
@@ -64,31 +56,47 @@ const Modal = ({ setIsShowModal, content, name, handleSubmit, queries }) => {
   ];
 
   //Xu li btn chon gia nhanh
-  const handleSelectPrice = (stringPrices) => {
-    let arrNumber = getNumberFromString(stringPrices);
-
-    if (arrNumber.length === 1) {
-      if (arrNumber[0] === "1") {
-        setPrice([0, convertTo100(arrNumber[0])]);
-      } else if (arrNumber[0] === "15") {
-        setPrice([convertTo100(15), convertTo100(arrNumber[0])]);
-      }
+  const handleQuickSelection = (item) => {
+    // let arrNumber = getNumberFromString(stringPrices);
+    // if (arrNumber.length === 1) {
+    //   if (arrNumber[0] === "1") {
+    //     setPrice([0, convertTo100(arrNumber[0])]);
+    //   } else if (arrNumber[0] === "15") {
+    //     setPrice([convertTo100(15), convertTo100(arrNumber[0])]);
+    //   }
+    // } else {
+    //   setPrice([convertTo100(arrNumber[0]), convertTo100(arrNumber[1])]);
+    // }
+    if (name === "priceRange") {
+      setPriceRange([
+        item?.from / (0.15 * 1000000),
+        item?.to / (0.15 * 1000000),
+      ]);
+      setPriceRangeTitle(item?.title);
     } else {
-      setPrice([convertTo100(arrNumber[0]), convertTo100(arrNumber[1])]);
+      setAreaRange([item?.from / 0.9, item?.to / 0.9]);
+      setAreaRangeTitle(item?.title);
     }
   };
-  //Xu li btn chon dien tich nhanh
-  const handleSelectArea = (stringAreas) => {
-    let arrNumber = getNumberFromString(stringAreas);
 
-    if (arrNumber.length === 1) {
-      if (arrNumber[0] === "20") {
-        setArea([0, convertTo100(arrNumber[0])]);
-      } else if (arrNumber[0] === "90") {
-        setArea([convertTo100(90), convertTo100(arrNumber[0])]);
-      }
+  // console.log(areaRangeTitle);
+
+  const handleBeforeSubmit = (e) => {
+    if (name === "priceRange") {
+      handleSubmit(e, {
+        [name]: [
+          priceRange[0] * (0.15 * 1000000),
+          priceRange[1] * (0.15 * 1000000),
+        ],
+        [`${name}Title`]: priceRangeTitle,
+      });
+      // from: priceRange[0] * (0.15 * 1000000),
+      // to: priceRange[1] * (0.15 * 1000000),
     } else {
-      setArea([convertTo100(arrNumber[0]), convertTo100(arrNumber[1])]);
+      handleSubmit(e, {
+        [name]: [areaRange[0] * 0.9, areaRange[1] * 0.9],
+        [`${name}Title`]: areaRangeTitle,
+      });
     }
   };
 
@@ -125,26 +133,24 @@ const Modal = ({ setIsShowModal, content, name, handleSubmit, queries }) => {
             {content?.map((item) => {
               return (
                 <div
-                  key={item.code}
+                  key={item?.id}
                   className="flex items-center gap-2  border-b border-gray-200"
                 >
                   <input
                     type="radio"
                     name={name}
-                    id={item.code}
-                    value={item.code}
-                    checked={
-                      item.code === queries[`${name}Code`] ? true : false
-                    }
-                    onClick={(e) =>
+                    id={item?.id}
+                    value={item?.id}
+                    checked={item.id === queries[`${name}Id`] ? true : false}
+                    onChange={(e) =>
                       handleSubmit(e, {
-                        [name]: item.value,
-                        [`${name}Code`]: item.code,
+                        [name]: item.title,
+                        [`${name}Id`]: item.id,
                       })
                     }
                   />
-                  <label className="w-full py-2" htmlFor={item.code}>
-                    {item.value}
+                  <label className="w-full py-2" htmlFor={item.id}>
+                    {item.title}
                   </label>
                 </div>
               );
@@ -153,67 +159,70 @@ const Modal = ({ setIsShowModal, content, name, handleSubmit, queries }) => {
         )}
 
         {/* Prices and Area */}
-        {(name === "price" || name === "area") && (
+        {(name === "priceRange" || name === "areaRange") && (
           <div className="p-4">
             <div className="text-center font-bold text-orange-500 text-xl">
-              {price[0] === 100 || area[0] === 100
+              {/* {priceRange[0] === 100 || areaRange[0] === 100
                 ? `Trên ${convert100ToPriceOrArea(
-                    name === "price" ? price[0] : area[0]
-                  )} ${name === "price" ? "triệu" : "m2"}`
+                    name === "priceRange" ? priceRange[0] : areaRange[0]
+                  )} ${name === "priceRange" ? "triệu" : "m2"}`
                 : `${convert100ToPriceOrArea(
-                    name === "price" ? price[0] : area[0]
+                    name === "priceRange" ? priceRange[0] : areaRange[0]
                   )} - ${convert100ToPriceOrArea(
-                    name === "price" ? price[1] : area[1]
-                  )} ${name === "price" ? "triệu" : "m2"}`}
+                    name === "priceRange" ? priceRange[1] : areaRange[1]
+                  )} ${name === "priceRange" ? "triệu" : "m2"}`} */}
+              {name === "priceRange" ? priceRangeTitle : areaRangeTitle}
             </div>
 
             <div className="px-5">
               <Slider
                 getAriaLabel={() => "Prices and Areas range"}
-                value={name === "price" ? price : area}
+                value={name === "priceRange" ? priceRange : areaRange}
+                // value={priceRange}
                 onChange={handleChange}
                 valueLabelDisplay="off"
-                step={0.5}
+                step={1}
                 size={"medium"}
-                marks={name === "price" ? marks[0] : marks[1]}
+                marks={name === "priceRange" ? marks[0] : marks[1]}
                 className="font-bold"
               />
             </div>
 
             <div>
               <h4 className="font-medium mb-6">Chọn nhanh</h4>
-              {name === "price" &&
-                prices.map((item) => {
+              {(name === "priceRange" ? priceRanges : areaRanges).map(
+                (item) => {
                   return (
                     <button
-                      key={item.code}
-                      onClick={() => handleSelectPrice(item.value)}
+                      key={item.id}
+                      onClick={() => handleQuickSelection(item)}
                       className="bg-primary  m-1 rounded-md px-2 py-1 select-none focus:bg-secondary1 focus:text-white"
                     >
-                      {item.value}
+                      {item.title}
                     </button>
                   );
-                })}
+                }
+              )}
 
-              {name === "area" &&
-                areas.map((item) => {
+              {/* {name === "areaRange" &&
+                areaRanges.map((item) => {
                   return (
                     <button
-                      key={item.code}
-                      onClick={() => handleSelectArea(item.value)}
+                      key={item.id}
+                      onClick={() => handleSelectArea(item.title)}
                       className="bg-primary  m-1 rounded-md px-2 py-1 select-none focus:bg-secondary1 focus:text-white"
                     >
-                      {item.value}
+                      {item.title}
                     </button>
                   );
-                })}
+                })} */}
             </div>
           </div>
         )}
-        {(name === "price" || name === "area") && (
+        {(name === "priceRange" || name === "areaRange") && (
           <div>
             <button
-              // onClick={handleSubmit}
+              onClick={(e) => handleBeforeSubmit(e)}
               className="w-full rounded-bl-md rounded-br-md bg-orange-400 py-2 font-medium uppercase"
               type="button"
             >

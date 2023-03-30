@@ -16,9 +16,9 @@ function App() {
   }, [dispatch, isLoggedIn]);
 
   useEffect(() => {
-    dispatch(actions.getPrices());
+    dispatch(actions.getPriceRanges());
     dispatch(actions.getAreaRanges());
-    // dispatch(actions.getProvinces());
+    dispatch(actions.getProvinces());
   }, []);
   return (
     <div className=" bg-primary">

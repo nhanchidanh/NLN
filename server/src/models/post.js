@@ -13,17 +13,20 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "categoryId",
         targetKey: "id",
         as: "category",
-      }),
-        Post.belongsTo(models.User, {
-          foreignKey: "userId",
-          targetKey: "id",
-          as: "user",
-        }),
-        //Mot post co nhieu image
-        Post.hasMany(models.Image, {
-          foreignKey: "postId",
-          as: "image",
-        });
+      });
+
+      Post.belongsTo(models.User, {
+        foreignKey: "userId",
+        targetKey: "id",
+        as: "user",
+      });
+
+      //Mot post co nhieu image
+      Post.hasMany(models.Image, {
+        foreignKey: "postId",
+        as: "images",
+        sourceKey: "id",
+      });
     }
   }
   Post.init(

@@ -1,5 +1,6 @@
 import db from "../models";
 
+//GET ALL POSTS
 export const getPostsService = () => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -7,19 +8,15 @@ export const getPostsService = () => {
         raw: true,
         nest: true,
         include: [
-          { model: db.Image, as: "images", attributes: ["image"] },
-          {
-            model: db.Attribute,
-            as: "attributes",
-            attributes: ["price", "acreage", "published", "hashtag"],
-          },
+          { model: db.Image, as: "image", attributes: ["url"] },
+
           {
             model: db.User,
             as: "user",
-            attributes: ["name", "phone", "zalo"],
+            attributes: ["fullName", "phone"],
           },
         ],
-        attributes: ["id", "title", "star", "address", "description"], //bao gom cả data đã include ở trên
+        // attributes: ["id", "title", "address", "description"], //bao gom cả data đã include ở trên
       });
 
       resolve({
@@ -33,36 +30,39 @@ export const getPostsService = () => {
   });
 };
 
+//GET POST LIMIT
 export const getPostsLimitService = (page, query) => {
   return new Promise(async (resolve, reject) => {
     try {
       let offset = !page || +page <= 1 ? 0 : +page - 1;
-      const response = await db.Post.findAndCountAll({
+      const response = await db.Post.findAll({
         where: query,
-        raw: true,
-        nest: true,
+        // raw: true,
         offset: offset * +process.env.LIMIT,
         limit: +process.env.LIMIT,
         include: [
-          { model: db.Image, as: "images", attributes: ["image"] },
           {
-            model: db.Attribute,
-            as: "attributes",
-            attributes: ["price", "acreage", "published", "hashtag"],
+            model: db.Image,
+            as: "images",
+            attributes: ["url"],
           },
           {
             model: db.User,
             as: "user",
-            attributes: ["name", "phone", "zalo"],
+            attributes: ["fullName", "phone"],
           },
         ],
-        attributes: ["id", "title", "star", "address", "description"], //bao gom cả data đã include ở trên
+
+        // attributes: ["id", "title" "address", "description"], //bao gom cả data đã include ở trên
       });
+
+      const count = await db.Post.count();
 
       resolve({
         err: response ? 0 : 1,
         msg: response ? "OK" : "Failed at post Service",
         response,
+        count,
       });
     } catch (error) {
       reject(error);
@@ -70,24 +70,18 @@ export const getPostsLimitService = (page, query) => {
   });
 };
 
+//GET NEW POST
 export const getNewPostService = () => {
   return new Promise(async (resolve, reject) => {
     try {
       const response = await db.Post.findAll({
-        raw: true,
+        // raw: true,
         nest: true,
         offset: 0,
         order: [["createdAt", "DESC"]], //order by DESC loc theo kieu giam dan
         limit: +process.env.LIMIT,
-        include: [
-          { model: db.Image, as: "images", attributes: ["image"] },
-          {
-            model: db.Attribute,
-            as: "attributes",
-            attributes: ["price", "acreage", "published", "hashtag"],
-          },
-        ],
-        attributes: ["id", "title", "star", "createdAt"], //bao gom cả data đã include ở trên
+        include: [{ model: db.Image, as: "images", attributes: ["url"] }],
+        // attributes: ["id", "title", "star", "createdAt"], //bao gom cả data đã include ở trên
       });
 
       resolve({
