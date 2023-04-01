@@ -8,7 +8,12 @@ import { Navigation, Search } from "./index";
 import { apiGetCurrentUser } from "../../services/user";
 
 const Home = () => {
+  //Dung useEffect de goi api
   const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(actions.getNewPosts());
+  }, []);
+
   const { isLoggedIn } = useSelector((state) => state.auth);
 
   return (

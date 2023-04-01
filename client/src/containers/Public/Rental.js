@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { ItemSideBar, Province, RelatedPost } from "../../components";
 import { convertToSlug } from "../../utils/Common/convertToSlug";
 import List from "./List";
 import Pagination from "./Pagination";
 
 const Rental = () => {
-  const { prices, areas, categories } = useSelector((state) => state.app);
+  const { categories, priceRanges, areaRanges } = useSelector(
+    (state) => state.app
+  );
+  const [isCancel, setIsCancel] = useState(false);
   const [categoryId, setCategoryId] = useState("");
   const [categoryCurrent, setCategoryCurrent] = useState({});
   const location = useLocation();
@@ -33,22 +36,29 @@ const Rental = () => {
       <Province></Province>
       <div className="grid grid-cols-12 gap-4">
         <div className="col-span-8 w-full">
-          <List categoryId={categoryId} />
-          <Pagination />
+          {categoryId && <List categoryId={categoryId} />}
+          {/* <Pagination /> */}
         </div>
         <div className="col-span-4 w-full space-y-4">
           <ItemSideBar
-            type="priceCode"
-            content={prices}
+            onResetCancel={() => setIsCancel(false)}
+            isCancel={isCancel}
+            type="priceRange"
+            content={priceRanges}
             title="Xem theo giá"
             isDoubleCol={true}
           />
           <ItemSideBar
-            type="areaCode"
-            content={areas}
+            onResetCancel={() => setIsCancel(false)}
+            isCancel={isCancel}
+            type="areaRange"
+            content={areaRanges}
             title="Xem theo diện tích"
             isDoubleCol={true}
           />
+          <Link onClick={() => setIsCancel(true)} to={"/"}>
+            Hủy
+          </Link>
           <RelatedPost />
         </div>
       </div>

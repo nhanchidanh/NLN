@@ -7,7 +7,7 @@ import {
 import InputReadOnly from "./InputReadOnly";
 import SelectForm from "./SelectForm";
 
-const Address = ({ setPayload }) => {
+const Address = ({ setPayload, invalidFields, setInvalidFields }) => {
   const [provinces, setProvinces] = useState([]);
   const [districts, setDistricts] = useState([]);
   const [wards, setWards] = useState([]);
@@ -69,9 +69,9 @@ const Address = ({ setPayload }) => {
           ? `${
               districts?.find((item) => item.district_id === district)
                 ?.district_name
-            },`
+            }, `
           : ""
-      } ${
+      }${
         province
           ? `${
               provinces?.find((item) => item.province_id === province)
@@ -93,6 +93,8 @@ const Address = ({ setPayload }) => {
       <h2 className="font-bold text-2xl ">Địa chỉ cho thuê</h2>
       <div className="flex w-full items-center gap-6">
         <SelectForm
+          invalidFields={invalidFields}
+          setInvalidFields={setInvalidFields}
           value={province}
           setValue={setProvince}
           options={provinces}
@@ -100,6 +102,8 @@ const Address = ({ setPayload }) => {
           type="province"
         />
         <SelectForm
+          invalidFields={invalidFields}
+          setInvalidFields={setInvalidFields}
           reset={reset}
           value={district}
           setValue={setDistrict}
@@ -108,6 +112,8 @@ const Address = ({ setPayload }) => {
           type="district"
         />
         <SelectForm
+          invalidFields={invalidFields}
+          setInvalidFields={setInvalidFields}
           reset={reset}
           value={ward}
           setValue={setWard}
@@ -129,7 +135,7 @@ const Address = ({ setPayload }) => {
                   ?.district_name
               },`
             : ""
-        } ${
+        }${
           province
             ? `${
                 provinces?.find((item) => item.province_id === province)

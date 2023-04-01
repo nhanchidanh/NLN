@@ -7,6 +7,7 @@ import { Address, Button, Overview } from "../../components";
 import { apiCreatePost, apiUploadImages } from "../../services";
 import { getRangeFromValue } from "../../utils/Common/getRangeFromValue";
 import Swal from "sweetalert2";
+import validate from "../../utils/Common/validateFields";
 const CreatePost = () => {
   const dispatch = useDispatch();
   const { priceRanges, areaRanges } = useSelector((state) => state.app);
@@ -29,9 +30,11 @@ const CreatePost = () => {
 
   const [imagePreview, setImagePreview] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [invalidFields, setInvalidFields] = useState([]);
 
   //Xu li up load hinh anh
   const handleUploadFiles = async (e) => {
+    setInvalidFields([]);
     e.stopPropagation();
     let images = [];
     let files = e.target.files;
@@ -79,31 +82,36 @@ const CreatePost = () => {
       areaRangeId,
       priceRangeId,
       userId: currentUser?.id,
-      target: payload?.target || "ALL",
+      target: payload?.target,
     };
 
-    console.log(finalPayload);
-
-    const response = await apiCreatePost(finalPayload);
-    console.log(response);
-    if (response.status === 200) {
-      Swal.fire("Thành công", "Tạo tin mới thành công", "success").then(() => {
-        setPayload({
-          title: "",
-          price: "",
-          area: "",
-          images: "",
-          address: "",
-          categoryId: "",
-          priceRangeId: "",
-          areaRangeId: "",
-          description: "",
-          target: "",
-          province: "",
-        });
-      });
-    } else {
-      Swal.fire("Oops", "Đã có lỗi xãy ra", "error");
+    // console.log(finalPayload);
+    // console.log(payload);
+    const result = validate(finalPayload, setInvalidFields);
+    if (result === 0) {
+      const response = await apiCreatePost(finalPayload);
+      console.log(response);
+      if (response.status === 200) {
+        Swal.fire("Thành công", "Tạo tin mới thành công", "success").then(
+          () => {
+            setPayload({
+              title: "",
+              price: "",
+              area: "",
+              images: "",
+              address: "",
+              categoryId: "",
+              priceRangeId: "",
+              areaRangeId: "",
+              description: "",
+              target: "",
+              province: "",
+            });
+          }
+        );
+      } else {
+        Swal.fire("Oops", "Đã có lỗi xãy ra", "error");
+      }
     }
   };
 
@@ -111,9 +119,18 @@ const CreatePost = () => {
     <div className="px-8">
       <h1 className="text-3xl py-4 border-b">Đăng tin mới</h1>
       <div className="grid grid-cols-12 gap-6">
-        <div className="col-span-8  space-y-8 border">
-          <Address setPayload={setPayload} />
-          <Overview payload={payload} setPayload={setPayload} />
+        <form className="col-span-8  space-y-8 border">
+          <Address
+            invalidFields={invalidFields}
+            setInvalidFields={setInvalidFields}
+            setPayload={setPayload}
+          />
+          <Overview
+            invalidFields={invalidFields}
+            setInvalidFields={setInvalidFields}
+            payload={payload}
+            setPayload={setPayload}
+          />
           <div className="w-full">
             <h2 className="font-bold text-2xl">Hình ảnh</h2>
             <small>Cập nhật hình ảnh rõ ràng sẽ cho thuê nhanh hơn</small>
@@ -139,6 +156,11 @@ const CreatePost = () => {
                 id="file"
                 multiple
               />
+              <small className="text-red-500">
+                {invalidFields?.some((item) => item.name === "images") &&
+                  invalidFields?.find((item) => item.name === "images")
+                    ?.message}
+              </small>
             </div>
             <div>
               <h3 className="font-medium">Xem trước</h3>
@@ -165,13 +187,14 @@ const CreatePost = () => {
             </div>
           </div>
           <Button
+            type="submit"
             onClick={handleSubmit}
             textColor="text-white"
             text="Thêm mới"
             bgColor="bg-green-600"
             fullWidth
           />
-        </div>
+        </form>
         <div className="col-span-4 border">
           <CircularProgress />
         </div>

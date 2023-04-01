@@ -1,8 +1,9 @@
 import React, { useCallback, useState } from "react";
 import { SearchItem, Modal } from "../../components";
 import icons from "../../utils/icons";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getCodeArea, getCodePrice } from "../../utils/Common/getCodes";
+import { getPostsLimit } from "../../store/actions";
 
 const {
   BsChevronRight,
@@ -14,6 +15,7 @@ const {
 } = icons;
 
 const Search = () => {
+  const dispatch = useDispatch();
   const [isShowModal, setIsShowModal] = useState(false);
   const [content, setContent] = useState([]);
   const [name, setName] = useState("");
@@ -31,14 +33,24 @@ const Search = () => {
   };
 
   //Xu li submit
-  const handleSubmit = useCallback(
-    (e, query) => {
-      e.stopPropagation();
-      setQueries((prev) => ({ ...prev, ...query }));
-      setIsShowModal(false);
-    },
-    [isShowModal, queries]
-  );
+  const handleSubmit = useCallback((e, query) => {
+    e.stopPropagation();
+    setQueries((prev) => ({ ...prev, ...query }));
+    setIsShowModal(false);
+  }, []);
+
+  const handleSearch = () => {
+    dispatch(
+      getPostsLimit({
+        categoryId: queries.categoryId,
+        province: queries.province,
+        priceRangeStart: queries.priceRange[0],
+        priceRangeEnd: queries.priceRange[1],
+        areaRangeStart: queries.areaRange[0],
+        areaRangeEnd: queries.areaRange[1],
+      })
+    );
+  };
   //moi lan render lai se tao 1 function moi nen phai dung useCallback den ngan chan dieu nay
 
   console.log(queries);
@@ -93,6 +105,7 @@ const Search = () => {
         </span>
         <button
           type="button"
+          onClick={handleSearch}
           className="outline-none py-2 px-4 text-sm bg-secondary1 rounded-md flex-1 flex items-center justify-center gap-2 text-white font-medium"
         >
           <FiSearch />

@@ -83,7 +83,7 @@ const Item = ({
               alt="avatar"
               className="w-[30px] h-[30px] object-cover rounded-full "
             />
-            <p>{user?.name}</p>
+            <p>{user?.fullName}</p>
           </div>
           <div className="flex items-center gap-1">
             <button className="bg-blue-700 text-white py-1 px-2 rounded-md">

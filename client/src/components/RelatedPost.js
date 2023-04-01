@@ -8,12 +8,6 @@ const RelatedPost = () => {
   const { newPosts } = useSelector((state) => state.post);
   // console.log(newPosts);
 
-  //Dung useEffect de goi api
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(actions.getNewPosts());
-  }, []);
-
   return (
     <div className="border bg-white rounded-md p-4">
       <h3 className="font-semibold text-lg mb-4">Tin mới đăng</h3>

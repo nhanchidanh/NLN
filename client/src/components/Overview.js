@@ -8,7 +8,7 @@ const targets = [
   { id: "ALL", title: "Tất cả" },
 ];
 
-const Overview = ({ payload, setPayload }) => {
+const Overview = ({ payload, setPayload, invalidFields, setInvalidFields }) => {
   const { categories } = useSelector((state) => state.app);
   const { currentUser } = useSelector((state) => state.user);
   // console.log(categories);
@@ -21,12 +21,16 @@ const Overview = ({ payload, setPayload }) => {
         setValue={setPayload}
         name="categoryId"
         options={categories}
+        invalidFields={invalidFields}
+        setInvalidFields={setInvalidFields}
       />
       <InputFormSystem
         value={payload?.title}
         setValue={setPayload}
         label={"Tiêu đề"}
         name="title"
+        invalidFields={invalidFields}
+        setInvalidFields={setInvalidFields}
       />
       <div className="flex flex-col gap-2 w-full">
         <label className="font-medium" htmlFor="description">
@@ -41,7 +45,12 @@ const Overview = ({ payload, setPayload }) => {
           onChange={(e) =>
             setPayload((prev) => ({ ...prev, description: e.target.value }))
           }
+          onFocus={() => setInvalidFields([])}
         ></textarea>
+        <small className="text-red-500">
+          {invalidFields?.some((item) => item.name === "description") &&
+            invalidFields?.find((item) => item.name === "description")?.message}
+        </small>
       </div>
       <InputReadOnly
         label={"Thông tin liên hệ"}
@@ -49,6 +58,8 @@ const Overview = ({ payload, setPayload }) => {
       />
       <InputReadOnly label={"Điện thoại"} value={currentUser?.phone} />
       <InputFormSystem
+        invalidFields={invalidFields}
+        setInvalidFields={setInvalidFields}
         small={"Nhập đầy đủ số, ví dụ 1 triệu thì nhập là 1000000"}
         label={"Giá cho thuê"}
         unit={"đồng"}
@@ -57,6 +68,8 @@ const Overview = ({ payload, setPayload }) => {
         setValue={setPayload}
       />
       <InputFormSystem
+        invalidFields={invalidFields}
+        setInvalidFields={setInvalidFields}
         label={"Diện tích"}
         unit={"m2"}
         name="area"
@@ -64,6 +77,8 @@ const Overview = ({ payload, setPayload }) => {
         setValue={setPayload}
       />
       <SelectForm
+        invalidFields={invalidFields}
+        setInvalidFields={setInvalidFields}
         label={"Đối tượng cho thuê"}
         options={targets}
         name="target"

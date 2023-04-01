@@ -1,4 +1,5 @@
 import db from "../models";
+import { Op } from "sequelize";
 
 //GET ALL POSTS
 export const getPostsService = () => {
@@ -35,11 +36,48 @@ export const getPostsLimitService = (page, query) => {
   return new Promise(async (resolve, reject) => {
     try {
       let offset = !page || +page <= 1 ? 0 : +page - 1;
+
+      const categoryId = +query.categoryId || 0;
+      const province = query.province || "";
+      const priceRangeStart = +query.priceRangeStart || 0;
+      const priceRangeEnd = +query.priceRangeEnd || 9999999;
+      const areaRangeStart = +query.areaRangeStart || 0;
+      const areaRangeEnd = +query.areaRangeEnd || 99999999;
+      const priceRangeId = +query.priceRangeId || 0;
+      const areaRangeId = +query.areaRangeId || 0;
+      const isNew = +query.isNew || 0;
+
       const response = await db.Post.findAll({
-        where: query,
+        // logging: true,
+
+        where: {
+          price: {
+            [Op.between]: [priceRangeStart, priceRangeEnd],
+          },
+          area: {
+            [Op.between]: [areaRangeStart, areaRangeEnd],
+          },
+          province: {
+            [Op.substring]: province,
+          },
+          categoryId: {
+            [categoryId === 0 ? Op.is : Op.eq]:
+              categoryId === 0 ? !null : categoryId,
+          },
+          priceRangeId: {
+            [priceRangeId === 0 ? Op.is : Op.eq]:
+              priceRangeId === 0 ? !null : priceRangeId,
+          },
+          areaRangeId: {
+            [areaRangeId === 0 ? Op.is : Op.eq]:
+              areaRangeId === 0 ? !null : areaRangeId,
+          },
+        },
         // raw: true,
+        order: [["createdAt", isNew === 1 ? "DESC" : "ASC"]],
         offset: offset * +process.env.LIMIT,
         limit: +process.env.LIMIT,
+
         include: [
           {
             model: db.Image,
@@ -56,7 +94,33 @@ export const getPostsLimitService = (page, query) => {
         // attributes: ["id", "title" "address", "description"], //bao gom cả data đã include ở trên
       });
 
-      const count = await db.Post.count();
+      // console.log("response", response);
+
+      const count = await db.Post.count({
+        where: {
+          price: {
+            [Op.between]: [priceRangeStart, priceRangeEnd],
+          },
+          area: {
+            [Op.between]: [areaRangeStart, areaRangeEnd],
+          },
+          province: {
+            [Op.substring]: province,
+          },
+          categoryId: {
+            [categoryId === 0 ? Op.is : Op.eq]:
+              categoryId === 0 ? !null : categoryId,
+          },
+          priceRangeId: {
+            [priceRangeId === 0 ? Op.is : Op.eq]:
+              priceRangeId === 0 ? !null : priceRangeId,
+          },
+          areaRangeId: {
+            [areaRangeId === 0 ? Op.is : Op.eq]:
+              areaRangeId === 0 ? !null : areaRangeId,
+          },
+        },
+      });
 
       resolve({
         err: response ? 0 : 1,

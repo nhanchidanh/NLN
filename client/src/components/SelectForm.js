@@ -1,6 +1,25 @@
 import React, { memo } from "react";
 
-const SelectForm = ({ label, options, value, setValue, type, reset, name }) => {
+const SelectForm = ({
+  label,
+  options,
+  value,
+  setValue,
+  type,
+  reset,
+  name,
+  invalidFields,
+  setInvalidFields,
+}) => {
+  const handleErrorText = () => {
+    let nameInvalid = invalidFields?.find((item) => item.name === name);
+    let addressInvalid = invalidFields?.find((item) => item.name === "address");
+
+    return (
+      `${nameInvalid ? nameInvalid.message : ""}` ||
+      `${addressInvalid ? addressInvalid.message : ""}`
+    );
+  };
   return (
     <div className="flex flex-col gap-2 w-full">
       <label htmlFor="select-address" className="font-medium">
@@ -14,8 +33,12 @@ const SelectForm = ({ label, options, value, setValue, type, reset, name }) => {
         onChange={(e) =>
           !name
             ? setValue(e.target.value)
-            : setValue((prev) => ({ ...prev, [name]: e.target.value }))
+            : setValue((prev) => ({
+                ...prev,
+                [name]: e.target.value,
+              }))
         }
+        onFocus={() => setInvalidFields([])}
       >
         <option value="">{`--Chọn ${label}--`}</option>
         {options?.map((item) => {
@@ -51,6 +74,7 @@ const SelectForm = ({ label, options, value, setValue, type, reset, name }) => {
           );
         })}
       </select>
+      <small className="text-red-500">{handleErrorText()}</small>
     </div>
   );
 };

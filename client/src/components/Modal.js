@@ -57,16 +57,6 @@ const Modal = ({ setIsShowModal, content, name, handleSubmit, queries }) => {
 
   //Xu li btn chon gia nhanh
   const handleQuickSelection = (item) => {
-    // let arrNumber = getNumberFromString(stringPrices);
-    // if (arrNumber.length === 1) {
-    //   if (arrNumber[0] === "1") {
-    //     setPrice([0, convertTo100(arrNumber[0])]);
-    //   } else if (arrNumber[0] === "15") {
-    //     setPrice([convertTo100(15), convertTo100(arrNumber[0])]);
-    //   }
-    // } else {
-    //   setPrice([convertTo100(arrNumber[0]), convertTo100(arrNumber[1])]);
-    // }
     if (name === "priceRange") {
       setPriceRange([
         item?.from / (0.15 * 1000000),
@@ -85,16 +75,17 @@ const Modal = ({ setIsShowModal, content, name, handleSubmit, queries }) => {
     if (name === "priceRange") {
       handleSubmit(e, {
         [name]: [
-          priceRange[0] * (0.15 * 1000000),
-          priceRange[1] * (0.15 * 1000000),
+          Math.round(priceRange[0] * (0.15 * 1000000)),
+          Math.round(priceRange[1] * (0.15 * 1000000)),
         ],
         [`${name}Title`]: priceRangeTitle,
       });
-      // from: priceRange[0] * (0.15 * 1000000),
-      // to: priceRange[1] * (0.15 * 1000000),
     } else {
       handleSubmit(e, {
-        [name]: [areaRange[0] * 0.9, areaRange[1] * 0.9],
+        [name]: [
+          Math.round(areaRange[0] * 0.9),
+          Math.round(areaRange[1] * 0.9),
+        ],
         [`${name}Title`]: areaRangeTitle,
       });
     }
@@ -195,7 +186,7 @@ const Modal = ({ setIsShowModal, content, name, handleSubmit, queries }) => {
                   return (
                     <button
                       key={item.id}
-                      onClick={() => handleQuickSelection(item)}
+                      onClick={(e) => handleQuickSelection(item)}
                       className="bg-primary  m-1 rounded-md px-2 py-1 select-none focus:bg-secondary1 focus:text-white"
                     >
                       {item.title}

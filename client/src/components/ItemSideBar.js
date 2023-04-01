@@ -1,11 +1,19 @@
-import React, { memo } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { convertToSlug } from "../utils/Common/convertToSlug";
 import icons from "../utils/icons";
 
 const { MdNavigateNext } = icons;
 
-const ItemSideBar = ({ title, content, isDoubleCol, type }) => {
+const ItemSideBar = ({
+  title,
+  content,
+  isDoubleCol,
+  type,
+  isCancel,
+  onResetCancel,
+}) => {
+  const [activeId, setActiveId] = useState(0);
   // console.log(type);
 
   // const handleFilterPosts = (code) => {
@@ -17,6 +25,13 @@ const ItemSideBar = ({ title, content, isDoubleCol, type }) => {
   //     }).toString(),
   //   });
   // };
+
+  useEffect(() => {
+    if (isCancel) {
+      setActiveId(0);
+      onResetCancel();
+    }
+  }, [isCancel, onResetCancel]);
 
   return (
     <div className="p-4 bg-white rounded-md">
@@ -36,10 +51,12 @@ const ItemSideBar = ({ title, content, isDoubleCol, type }) => {
                 to={
                   type === "category"
                     ? `${convertToSlug(item?.title)}`
-                    : `?${type}=${item.id}`
+                    : `?${type}Id=${item.id}`
                 }
                 key={item?.id}
-                className=" flex gap-1  items-center cursor-pointer hover:text-orange-600 border-b border-gray-200 pb-1 border-dashed "
+                className={`flex gap-1  items-center cursor-pointer hover:text-orange-600 border-b border-gray-200 pb-1 border-dashed 
+                    ${activeId === item.id ? "text-orange-600" : ""}`}
+                onClick={() => setActiveId(item.id)}
               >
                 <MdNavigateNext color="#999" className="mt-[2px]" />
                 <p>{item?.title}</p>
