@@ -17,6 +17,7 @@ export const apiGetPosts = () => {
 };
 
 export const apiGetPostsLimit = (query) => {
+  // console.log(query);
   return new Promise(async (resolve, reject) => {
     try {
       const response = await axiosConfig({

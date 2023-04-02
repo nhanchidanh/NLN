@@ -14,7 +14,7 @@ const List = ({ categoryId }) => {
   // console.log(count);
   const [searchParams] = useSearchParams();
 
-  const ref = useRef();
+  const postRef = useRef();
 
   useEffect(() => {
     let params = [];
@@ -42,11 +42,11 @@ const List = ({ categoryId }) => {
   }, [dispatch, page, categoryId, filter]);
 
   const handleChangePage = (value) => {
-    ref.current.scrollIntoView({ behavior: "smooth" });
+    postRef.current.scrollIntoView({ behavior: "smooth" });
     setPage(value);
   };
   return (
-    <div ref={ref}>
+    <div ref={postRef}>
       <div className=" p-5 bg-white shadow-md rounded-md">
         <div className="flex items-center justify-between mb-3">
           <h4 className="text-xl font-semibold">Danh sách tin đăng</h4>

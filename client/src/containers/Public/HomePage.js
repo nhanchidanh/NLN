@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { ItemSideBar, Province, RelatedPost } from "../../components";
 import { text } from "../../utils/constant";
 import List from "./List";
-import Pagination from "./Pagination";
-import { Link } from "react-router-dom";
 
 const HomePage = () => {
   const [isCancel, setIsCancel] = useState(false);

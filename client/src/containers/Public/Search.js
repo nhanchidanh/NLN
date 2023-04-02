@@ -40,20 +40,21 @@ const Search = () => {
   }, []);
 
   const handleSearch = () => {
-    dispatch(
-      getPostsLimit({
-        categoryId: queries.categoryId,
-        province: queries.province,
-        priceRangeStart: queries.priceRange[0],
-        priceRangeEnd: queries.priceRange[1],
-        areaRangeStart: queries.areaRange[0],
-        areaRangeEnd: queries.areaRange[1],
-      })
-    );
+    const lastQueries = {
+      categoryId: queries?.categoryId || "",
+      province: queries?.province || "",
+      priceRangeStart: queries?.priceRanges?.from || "",
+      priceRangeEnd: queries?.priceRanges?.to || "",
+      areaRangeStart: queries?.areaRanges?.from || "",
+      areaRangeEnd: queries?.areaRanges?.to || "",
+    };
+    console.log("Search", lastQueries);
+
+    dispatch(getPostsLimit(lastQueries));
   };
   //moi lan render lai se tao 1 function moi nen phai dung useCallback den ngan chan dieu nay
 
-  console.log(queries);
+  // console.log(queries);
 
   return (
     <div>
@@ -66,7 +67,7 @@ const Search = () => {
             IconBefore={<MdOutlineHouseSiding />}
             IconAfter={<BsChevronRight color="rgb(156,163,175)" />}
             text={queries.category}
-            defaultText={"Phòng trọ, nhà trọ"}
+            defaultText={"Danh mục cho thuê"}
             fontWeight
           />
         </span>

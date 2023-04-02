@@ -74,18 +74,18 @@ const Modal = ({ setIsShowModal, content, name, handleSubmit, queries }) => {
   const handleBeforeSubmit = (e) => {
     if (name === "priceRange") {
       handleSubmit(e, {
-        [name]: [
-          Math.round(priceRange[0] * (0.15 * 1000000)),
-          Math.round(priceRange[1] * (0.15 * 1000000)),
-        ],
+        [name]: {
+          from: Math.round(priceRange[0] * (0.15 * 1000000)),
+          to: Math.round(priceRange[1] * (0.15 * 1000000)),
+        },
         [`${name}Title`]: priceRangeTitle,
       });
     } else {
       handleSubmit(e, {
-        [name]: [
-          Math.round(areaRange[0] * 0.9),
-          Math.round(areaRange[1] * 0.9),
-        ],
+        [name]: {
+          from: Math.round(areaRange[0] * 0.9),
+          to: Math.round(areaRange[1] * 0.9),
+        },
         [`${name}Title`]: areaRangeTitle,
       });
     }

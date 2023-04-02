@@ -37,7 +37,7 @@ export const getPostsLimitService = (page, query) => {
     try {
       let offset = !page || +page <= 1 ? 0 : +page - 1;
 
-      const categoryId = +query.categoryId || 0;
+      const categoryId = +query.categoryId || "";
       const province = query.province || "";
       const priceRangeStart = +query.priceRangeStart || 0;
       const priceRangeEnd = +query.priceRangeEnd || 9999999;
@@ -61,8 +61,7 @@ export const getPostsLimitService = (page, query) => {
             [Op.substring]: province,
           },
           categoryId: {
-            [categoryId === 0 ? Op.is : Op.eq]:
-              categoryId === 0 ? !null : categoryId,
+            [categoryId === "" ? Op.ne : Op.eq]: categoryId,
           },
           priceRangeId: {
             [priceRangeId === 0 ? Op.is : Op.eq]:
@@ -108,8 +107,7 @@ export const getPostsLimitService = (page, query) => {
             [Op.substring]: province,
           },
           categoryId: {
-            [categoryId === 0 ? Op.is : Op.eq]:
-              categoryId === 0 ? !null : categoryId,
+            [categoryId === "" ? Op.ne : Op.eq]: categoryId,
           },
           priceRangeId: {
             [priceRangeId === 0 ? Op.is : Op.eq]:

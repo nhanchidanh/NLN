@@ -1,5 +1,5 @@
-import React, { memo, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { memo, useEffect, useRef, useState } from "react";
+import { Link, useSearchParams } from "react-router-dom";
 import { convertToSlug } from "../utils/Common/convertToSlug";
 import icons from "../utils/icons";
 
