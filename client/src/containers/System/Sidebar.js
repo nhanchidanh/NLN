@@ -4,9 +4,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { menuSidebar } from "../../utils/menuSidebar";
 import { NavLink } from "react-router-dom";
 import * as actions from "../../store/actions";
+import { menuSidebarAdmin } from "../../utils/menuSidebarAdmin";
 
 const Sidebar = () => {
   const { currentUser } = useSelector((state) => state.user);
+  console.log(currentUser.role);
   const dispatch = useDispatch();
 
   const handleLink = (text) => {
@@ -37,6 +39,25 @@ const Sidebar = () => {
       </div>
 
       <div>
+        {currentUser?.role === "admin" &&
+          menuSidebarAdmin?.map((item) => {
+            return (
+              <NavLink
+                key={item.id}
+                onClick={() => handleLink(item.text)}
+                to={item?.path}
+                className={({ isActive }) =>
+                  isActive
+                    ? "flex items-center gap-2 py-2 border-b font-semibold  hover:bg-gray-200"
+                    : "flex items-center gap-2 py-2 border-b  hover:bg-gray-200"
+                }
+              >
+                {item?.icon}
+                {item.text}
+              </NavLink>
+            );
+          })}
+
         {menuSidebar.map((item) => {
           return (
             <NavLink

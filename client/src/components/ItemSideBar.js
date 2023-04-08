@@ -12,6 +12,7 @@ const ItemSideBar = ({
   type,
   isCancel,
   onResetCancel,
+  onScroll,
 }) => {
   const [activeId, setActiveId] = useState(0);
   // console.log(type);
@@ -33,6 +34,10 @@ const ItemSideBar = ({
     }
   }, [isCancel, onResetCancel]);
 
+  const handleClick = (item) => {
+    setActiveId(item.id);
+    onScroll();
+  };
   return (
     <div className="p-4 bg-white rounded-md">
       <h3 className="text-lg font-semibold mb-4">{title}</h3>
@@ -56,7 +61,7 @@ const ItemSideBar = ({
                 key={item?.id}
                 className={`flex gap-1  items-center cursor-pointer hover:text-orange-600 border-b border-gray-200 pb-1 border-dashed 
                     ${activeId === item.id ? "text-orange-600" : ""}`}
-                onClick={() => setActiveId(item.id)}
+                onClick={() => handleClick(item)}
               >
                 <MdNavigateNext color="#999" className="mt-[2px]" />
                 <p>{item?.title}</p>

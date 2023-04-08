@@ -9,23 +9,32 @@ const { GrLinkPrevious } = icons;
 const Modal = ({ setIsShowModal, content, name, handleSubmit, queries }) => {
   const { priceRanges, areaRanges } = useSelector((state) => state.app);
 
-  const [priceRange, setPriceRange] = useState([20, 30]);
-  const [priceRangeTitle, setPriceRangeTitle] = useState("2 - 3 triệu");
-  const [areaRange, setAreaRange] = useState([20, 30]);
-  const [areaRangeTitle, setAreaRangeTitle] = useState("20 - 30 m2");
+  //Thiết lập tỉ số khoảng lớn nhất
+  const maxRangeScore =
+    name === "priceRange"
+      ? priceRanges[priceRanges.length - 1]?.from / 1000000 / 100
+      : areaRanges[areaRanges.length - 1]?.from / 100;
+  // console.log(maxRangeScore);
+
+  const [priceRange, setPriceRange] = useState([0, 100]);
+  const [priceRangeTitle, setPriceRangeTitle] = useState("");
+  const [areaRange, setAreaRange] = useState([0, 100]);
+  const [areaRangeTitle, setAreaRangeTitle] = useState("");
 
   const handleChange = (event, newValue) => {
     if (name === "priceRange") {
       setPriceRange(newValue);
       setPriceRangeTitle(
-        `${Math.round(newValue[0] * 0.15)} - ${Math.round(
-          newValue[1] * 0.15
+        `${Math.round(newValue[0] * maxRangeScore)} - ${Math.round(
+          newValue[1] * maxRangeScore
         )} triệu`
       );
     } else {
       setAreaRange(newValue);
       setAreaRangeTitle(
-        `${Math.round(newValue[0] * 0.9)} - ${Math.round(newValue[1] * 0.9)} m2`
+        `${Math.round(newValue[0] * maxRangeScore)} - ${Math.round(
+          newValue[1] * maxRangeScore
+        )} m2`
       );
     }
   };
@@ -39,7 +48,7 @@ const Modal = ({ setIsShowModal, content, name, handleSubmit, queries }) => {
 
       {
         value: 100,
-        label: "15 triệu+",
+        label: `${maxRangeScore * 100} triệu+`,
       },
     ],
     [
@@ -50,7 +59,7 @@ const Modal = ({ setIsShowModal, content, name, handleSubmit, queries }) => {
 
       {
         value: 100,
-        label: "90m2+",
+        label: `${maxRangeScore * 100}m2+`,
       },
     ],
   ];
@@ -59,12 +68,12 @@ const Modal = ({ setIsShowModal, content, name, handleSubmit, queries }) => {
   const handleQuickSelection = (item) => {
     if (name === "priceRange") {
       setPriceRange([
-        item?.from / (0.15 * 1000000),
-        item?.to / (0.15 * 1000000),
+        item?.from / (maxRangeScore * 1000000),
+        item?.to / (maxRangeScore * 1000000),
       ]);
       setPriceRangeTitle(item?.title);
     } else {
-      setAreaRange([item?.from / 0.9, item?.to / 0.9]);
+      setAreaRange([item?.from / maxRangeScore, item?.to / maxRangeScore]);
       setAreaRangeTitle(item?.title);
     }
   };
@@ -75,16 +84,16 @@ const Modal = ({ setIsShowModal, content, name, handleSubmit, queries }) => {
     if (name === "priceRange") {
       handleSubmit(e, {
         [name]: {
-          from: Math.round(priceRange[0] * (0.15 * 1000000)),
-          to: Math.round(priceRange[1] * (0.15 * 1000000)),
+          from: Math.round(priceRange[0] * (maxRangeScore * 1000000)),
+          to: Math.round(priceRange[1] * (maxRangeScore * 1000000)),
         },
         [`${name}Title`]: priceRangeTitle,
       });
     } else {
       handleSubmit(e, {
         [name]: {
-          from: Math.round(areaRange[0] * 0.9),
-          to: Math.round(areaRange[1] * 0.9),
+          from: Math.round(areaRange[0] * maxRangeScore),
+          to: Math.round(areaRange[1] * maxRangeScore),
         },
         [`${name}Title`]: areaRangeTitle,
       });
@@ -152,7 +161,7 @@ const Modal = ({ setIsShowModal, content, name, handleSubmit, queries }) => {
         {/* Prices and Area */}
         {(name === "priceRange" || name === "areaRange") && (
           <div className="p-4">
-            <div className="text-center font-bold text-orange-500 text-xl">
+            <div className="text-center font-bold text-orange-500 text-xl h-10">
               {/* {priceRange[0] === 100 || areaRange[0] === 100
                 ? `Trên ${convert100ToPriceOrArea(
                     name === "priceRange" ? priceRange[0] : areaRange[0]

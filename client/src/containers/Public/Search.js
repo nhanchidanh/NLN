@@ -4,6 +4,7 @@ import icons from "../../utils/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { getCodeArea, getCodePrice } from "../../utils/Common/getCodes";
 import { getPostsLimit } from "../../store/actions";
+import { useSearchParams } from "react-router-dom";
 
 const {
   BsChevronRight,
@@ -20,6 +21,7 @@ const Search = () => {
   const [content, setContent] = useState([]);
   const [name, setName] = useState("");
   const [queries, setQueries] = useState({});
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const { provinces, priceRanges, areaRanges, categories } = useSelector(
     (state) => state.app
@@ -40,18 +42,31 @@ const Search = () => {
   }, []);
 
   const handleSearch = () => {
+    console.log(queries);
     const lastQueries = {
       categoryId: queries?.categoryId || "",
       province: queries?.province || "",
-      priceRangeStart: queries?.priceRanges?.from || "",
-      priceRangeEnd: queries?.priceRanges?.to || "",
-      areaRangeStart: queries?.areaRanges?.from || "",
-      areaRangeEnd: queries?.areaRanges?.to || "",
+      priceRangeStart: queries?.priceRange?.from || "",
+      priceRangeEnd: queries?.priceRange?.to || "",
+      areaRangeStart: queries?.areaRange?.from || "",
+      areaRangeEnd: queries?.areaRange?.to || "",
     };
-    console.log("Search", lastQueries);
+    // console.log("Search", lastQueries);
 
     dispatch(getPostsLimit(lastQueries));
+    setSearchParams(deleteEmptyObj(lastQueries));
   };
+
+  //Xoa rong object
+  const deleteEmptyObj = (object) => {
+    Object.keys(object).forEach((key) => {
+      if (!object[key]) {
+        delete object[key];
+      }
+    });
+    return object;
+  };
+
   //moi lan render lai se tao 1 function moi nen phai dung useCallback den ngan chan dieu nay
 
   // console.log(queries);
@@ -111,6 +126,16 @@ const Search = () => {
         >
           <FiSearch />
           Tìm kiếm
+        </button>
+        <button
+          type="button"
+          className="bg-secondary2 py-2 px-4 text-sm rounded-md outline-none text-white font-medium"
+          onClick={() => {
+            setQueries({});
+            setSearchParams();
+          }}
+        >
+          Xóa
         </button>
       </div>
 

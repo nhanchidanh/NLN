@@ -7,24 +7,32 @@ import * as actions from "../../store/actions";
 import { path } from "../../utils/constant";
 import icons from "../../utils/icons";
 import { menuManagerAccount } from "../../utils/MenuManagerAccount";
+import { AiOutlineArrowUp } from "react-icons/ai";
+import { BsArrowUp } from "react-icons/bs";
 
 const { AiOutlinePlusCircle, BsChevronDown } = icons;
 
 const Header = () => {
   const [isShowMenu, setIsShowMenu] = useState(false);
+  const [visible, setVisible] = useState(false);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [searchParams] = useSearchParams();
-  const headerRef = useRef();
+  // const headerRef = useRef();
   const { isLoggedIn } = useSelector((state) => state.auth);
+  const postRef = useRef();
 
-  const goLogin = useCallback((flag) => {
-    navigate(path.LOGIN, { state: { flag } });
-  });
+  const goLogin = useCallback(
+    (flag) => {
+      navigate(path.LOGIN, { state: { flag } });
+    },
+    [navigate]
+  );
 
-  useEffect(() => {
-    headerRef.current.scrollIntoView({ behavior: "smooth" }); //scroll cho đến khi header nằm trong view frame
-  }, [searchParams]);
+  // useEffect(() => {
+  //   headerRef.current.scrollIntoView({ behavior: "smooth" }); //scroll cho đến khi header nằm trong view frame
+  // }, [searchParams]);
 
   const handleLink = (text) => {
     // console.log(text);
@@ -33,9 +41,30 @@ const Header = () => {
       setIsShowMenu(false);
     }
   };
+
+  useEffect(() => {
+    const toggleVisible = () => {
+      const scrolled = document.documentElement.scrollTop;
+      if (scrolled > 300) {
+        setVisible(true);
+      } else if (scrolled <= 300) {
+        setVisible(false);
+      }
+    };
+
+    window.addEventListener("scroll", toggleVisible);
+
+    return () => window.removeEventListener("scroll", toggleVisible);
+  }, []);
+
+  const ScrollToTop = () => {
+    postRef.current.scrollIntoView({ behavior: "smooth" });
+  };
+
+  // console.log(visible);
   return (
     <div
-      ref={headerRef}
+      ref={postRef}
       className="w-4/5 mx-auto flex items-center justify-between"
     >
       <Link to={"/"}>
@@ -108,6 +137,15 @@ const Header = () => {
           bgColor="bg-secondary2"
           IcAfter={AiOutlinePlusCircle}
         />
+      </div>
+
+      <div
+        onClick={ScrollToTop}
+        className={`fixed bg-red-500 right-10 bottom-10 p-4 ease-in-out duration-300 transition-all animate-bounce rounded-full cursor-pointer hover:bg-red-600 text-white ${
+          visible ? "block" : "hidden"
+        }`}
+      >
+        <BsArrowUp size={30} />
       </div>
     </div>
   );

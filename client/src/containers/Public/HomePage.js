@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { ItemSideBar, Province, RelatedPost } from "../../components";
@@ -7,6 +7,7 @@ import List from "./List";
 
 const HomePage = () => {
   const [isCancel, setIsCancel] = useState(false);
+  const postRef = useRef();
 
   // const [params] = useSearchParams();
   const { categories, priceRanges, areaRanges } = useSelector(
@@ -14,6 +15,14 @@ const HomePage = () => {
   );
 
   // console.log({ categories, priceRanges, areaRanges });
+
+  const ScrollToList = () => {
+    postRef.current.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const handleReset = () => {
+    setIsCancel(false);
+  };
   return (
     <div className=" flex flex-col gap-3">
       <div>
@@ -22,13 +31,14 @@ const HomePage = () => {
       </div>
       <Province></Province>
       <div className="grid grid-cols-12 gap-4">
-        <div className="col-span-8 w-full">
+        <div className="col-span-8 w-full" ref={postRef}>
           <List />
           {/* <Pagination /> */}
         </div>
         <div className="col-span-4 w-full space-y-4">
           <ItemSideBar
-            onResetCancel={() => setIsCancel(false)}
+            onResetCancel={handleReset}
+            onScroll={ScrollToList}
             isCancel={isCancel}
             type="category"
             content={categories}
@@ -36,7 +46,8 @@ const HomePage = () => {
             isDoubleCol={false}
           />
           <ItemSideBar
-            onResetCancel={() => setIsCancel(false)}
+            onResetCancel={handleReset}
+            onScroll={ScrollToList}
             isCancel={isCancel}
             type="priceRange"
             content={priceRanges}
@@ -44,7 +55,8 @@ const HomePage = () => {
             isDoubleCol={true}
           />
           <ItemSideBar
-            onResetCancel={() => setIsCancel(false)}
+            onResetCancel={handleReset}
+            onScroll={ScrollToList}
             isCancel={isCancel}
             type="areaRange"
             content={areaRanges}
@@ -52,7 +64,14 @@ const HomePage = () => {
             isDoubleCol={true}
           />
           <div className="w-full p-3 bg-red-600 text-white text-center rounded-md hover:bg-red-500 transition-all ease-in-out duration-300">
-            <Link className=" block" onClick={() => setIsCancel(true)} to={"/"}>
+            <Link
+              className=" block"
+              onClick={() => {
+                setIsCancel(true);
+                ScrollToList();
+              }}
+              to={"/"}
+            >
               Hủy
             </Link>
           </div>

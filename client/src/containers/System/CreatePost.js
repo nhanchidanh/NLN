@@ -85,9 +85,10 @@ const CreatePost = () => {
       target: payload?.target,
     };
 
-    // console.log(finalPayload);
+    console.log(finalPayload);
     // console.log(payload);
     const result = validate(finalPayload, setInvalidFields);
+
     if (result === 0) {
       const response = await apiCreatePost(finalPayload);
       console.log(response);
@@ -107,6 +108,7 @@ const CreatePost = () => {
               target: "",
               province: "",
             });
+            setImagePreview([]);
           }
         );
       } else {

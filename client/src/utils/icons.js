@@ -1,4 +1,8 @@
-import { AiOutlinePlusCircle, AiOutlineUser } from "react-icons/ai";
+import {
+  AiOutlinePlusCircle,
+  AiOutlineUser,
+  AiOutlineArrowUp,
+} from "react-icons/ai";
 import { BsChevronRight, BsPencilSquare, BsChevronDown } from "react-icons/bs";
 import { HiOutlineLocationMarker, HiOutlineLogout } from "react-icons/hi";
 import { TbReportMoney, TbMessageCircle } from "react-icons/tb";
@@ -33,6 +37,7 @@ const icons = {
   BsChevronDown,
   TbMessageCircle,
   MdDelete,
+  AiOutlineArrowUp,
 };
 
 export default icons;
