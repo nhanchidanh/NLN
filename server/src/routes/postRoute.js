@@ -8,5 +8,5 @@ router.get("/limit", postController.getPostLimit);
 router.get("/new-post", postController.getNewPost);
 
 router.post("/create-post", verifyToken, postController.createPost);
-
+router.get("/limit-by-user", verifyToken, postController.getPostLimitByUserId);
 export default router;

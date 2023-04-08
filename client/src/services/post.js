@@ -79,3 +79,21 @@ export const apiUploadImages = (images) => {
     }
   });
 };
+
+//GET POST BY USER ID
+export const apiGetPostsLimitByUserId = (query) => {
+  // console.log(query);
+  return new Promise(async (resolve, reject) => {
+    try {
+      const response = await axiosConfig({
+        method: "get",
+        url: `api/v1/post/limit-by-user`,
+        params: query,
+      });
+      // console.log(response);
+      resolve(response);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};

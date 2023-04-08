@@ -54,7 +54,7 @@ const validate = (payload, setInvalidFields) => {
             },
           ]);
         }
-        if (+item[1] === NaN) {
+        if (isNaN(+item[1])) {
           setInvalidFields((prev) => [
             ...prev,
             {

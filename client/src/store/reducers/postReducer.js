@@ -5,6 +5,7 @@ const initState = {
   msg: "",
   count: 0,
   newPosts: [],
+  postsOfUser: [],
 };
 
 const postReducer = (state = initState, action) => {
@@ -22,6 +23,13 @@ const postReducer = (state = initState, action) => {
         ...state,
         msg: action.msg || "",
         newPosts: action.newPosts || [],
+      };
+    case actionTypes.GET_POSTS_LIMIT_BY_USER_ID:
+      return {
+        ...state,
+        msg: action.msg || "",
+        postsOfUser: action.postsOfUser || [],
+        count: action.count || 0,
       };
 
     default:

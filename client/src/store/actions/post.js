@@ -2,6 +2,7 @@ import {
   apiGetNewPosts,
   apiGetPosts,
   apiGetPostsLimit,
+  apiGetPostsLimitByUserId,
 } from "../../services/post";
 import actionTypes from "./actionType";
 
@@ -73,6 +74,32 @@ export const getNewPosts = () => async (dispatch) => {
     dispatch({
       type: actionTypes.GET_NEW_POSTS,
       newPosts: null,
+    });
+  }
+};
+
+export const getPostsLimitByUserId = (query) => async (dispatch) => {
+  try {
+    // console.log("action post: ", query);
+    const response = await apiGetPostsLimitByUserId(query);
+    // console.log(response);
+    if (response?.data.err === 0) {
+      dispatch({
+        type: actionTypes.GET_POSTS_LIMIT_BY_USER_ID,
+        postsOfUser: response.data.response,
+        count: response.data?.count,
+      });
+    } else {
+      dispatch({
+        type: actionTypes.GET_POSTS_LIMIT_BY_USER_ID,
+        msg: response.data.msg,
+        postsOfUser: null,
+      });
+    }
+  } catch (error) {
+    dispatch({
+      type: actionTypes.GET_POSTS_LIMIT_BY_USER_ID,
+      posts: null,
     });
   }
 };

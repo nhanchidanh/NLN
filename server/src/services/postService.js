@@ -193,3 +193,105 @@ export const createPostService = (body, userId) => {
     }
   });
 };
+
+export const getPostLimitByUserIdService = (page, userId, query) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let offset = !page || +page <= 1 ? 0 : +page - 1;
+
+      const categoryId = +query.categoryId || "";
+      const province = query.province || "";
+      const priceRangeStart = +query.priceRangeStart || 0;
+      const priceRangeEnd = +query.priceRangeEnd || 9999999;
+      const areaRangeStart = +query.areaRangeStart || 0;
+      const areaRangeEnd = +query.areaRangeEnd || 99999999;
+      const priceRangeId = +query.priceRangeId || 0;
+      const areaRangeId = +query.areaRangeId || 0;
+      const isNew = +query.isNew || 0;
+
+      const response = await db.Post.findAll({
+        // logging: true,
+
+        where: {
+          price: {
+            [Op.between]: [priceRangeStart, priceRangeEnd],
+          },
+          area: {
+            [Op.between]: [areaRangeStart, areaRangeEnd],
+          },
+          province: {
+            [Op.substring]: province,
+          },
+          categoryId: {
+            [categoryId === "" ? Op.ne : Op.eq]: categoryId,
+          },
+          priceRangeId: {
+            [priceRangeId === 0 ? Op.is : Op.eq]:
+              priceRangeId === 0 ? !null : priceRangeId,
+          },
+          areaRangeId: {
+            [areaRangeId === 0 ? Op.is : Op.eq]:
+              areaRangeId === 0 ? !null : areaRangeId,
+          },
+          userId,
+        },
+        // raw: true,
+        order: [["createdAt", isNew === 1 ? "DESC" : "ASC"]],
+        offset: offset * +process.env.LIMIT,
+        limit: +process.env.LIMIT,
+
+        include: [
+          {
+            model: db.Image,
+            as: "images",
+            attributes: ["url"],
+          },
+          {
+            model: db.User,
+            as: "user",
+            attributes: ["fullName", "phone"],
+          },
+        ],
+
+        // attributes: ["id", "title" "address", "description"], //bao gom cả data đã include ở trên
+      });
+
+      // console.log("response", response);
+
+      const count = await db.Post.count({
+        where: {
+          price: {
+            [Op.between]: [priceRangeStart, priceRangeEnd],
+          },
+          area: {
+            [Op.between]: [areaRangeStart, areaRangeEnd],
+          },
+          province: {
+            [Op.substring]: province,
+          },
+          categoryId: {
+            [categoryId === "" ? Op.ne : Op.eq]: categoryId,
+          },
+          priceRangeId: {
+            [priceRangeId === 0 ? Op.is : Op.eq]:
+              priceRangeId === 0 ? !null : priceRangeId,
+          },
+          areaRangeId: {
+            [areaRangeId === 0 ? Op.is : Op.eq]:
+              areaRangeId === 0 ? !null : areaRangeId,
+          },
+          userId,
+        },
+      });
+
+      resolve({
+        err: response ? 0 : 1,
+        msg: response ? "OK" : "Failed at post Service",
+        response,
+        count,
+      });
+    } catch (error) {
+      reject(error);
+    }
+  });
+};

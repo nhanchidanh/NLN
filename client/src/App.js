@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import { Home, Login, Rental, HomePage, DetailPost } from "./containers/Public";
 import { path } from "./utils/constant";
-import { CreatePost, System } from "./containers/System";
+import { CreatePost, ManagePost, System } from "./containers/System";
 import * as actions from "./store/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
@@ -35,6 +35,7 @@ function App() {
 
         <Route path={path.SYSTEM} element={<System />}>
           <Route path={path.CREATE_POST} element={<CreatePost />} />
+          <Route path={path.MANAGE_POST} element={<ManagePost />} />
         </Route>
       </Routes>
     </div>

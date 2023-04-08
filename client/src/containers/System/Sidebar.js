@@ -8,7 +8,7 @@ import { menuSidebarAdmin } from "../../utils/menuSidebarAdmin";
 
 const Sidebar = () => {
   const { currentUser } = useSelector((state) => state.user);
-  console.log(currentUser.role);
+  // console.log(currentUser.role);
   const dispatch = useDispatch();
 
   const handleLink = (text) => {
