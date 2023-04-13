@@ -233,7 +233,9 @@ export const getPostLimitByUserIdService = (page, userId, query) => {
             [areaRangeId === 0 ? Op.is : Op.eq]:
               areaRangeId === 0 ? !null : areaRangeId,
           },
-          userId,
+          userId: {
+            [userId === 1 ? Op.is : Op.eq]: userId === 1 ? !null : userId,
+          },
         },
         // raw: true,
         order: [["createdAt", isNew === 1 ? "DESC" : "ASC"]],
@@ -291,6 +293,73 @@ export const getPostLimitByUserIdService = (page, userId, query) => {
         count,
       });
     } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+//DELETE POST
+export const deletePostService = (id) =>
+  new Promise(async (resolve, reject) => {
+    try {
+      const deleteImages = await db.Image.destroy({
+        where: { postId: id },
+      });
+
+      const response = await db.Post.destroy({
+        where: { id: id },
+      });
+
+      resolve({
+        err: response ? 0 : 1,
+        msg: response ? "Deleted" : "No Post to delete",
+        response,
+        deleteImages,
+      });
+    } catch (error) {
+      reject(error);
+    }
+  });
+
+//UPDATE POST
+export const updatePostService = (id, data) => {
+  // console.log(data.data);
+  return new Promise(async (resolve, reject) => {
+    try {
+      const findPost = await db.Post.findOne({
+        where: { id: id },
+      });
+
+      if (!findPost) {
+        return resolve({
+          err: 1,
+          msg: "Post does not exists",
+        });
+      }
+
+      const updatePost = await db.Post.update(data.data, { where: { id: id } });
+
+      const deleteImages = await db.Image.destroy({
+        where: { postId: findPost.id },
+      });
+
+      // console.log(data.data.images);
+      if (data.data.images) {
+        for (let i = 0; i < data.data.images.length; i++) {
+          const image = await db.Image.create({
+            url: data.data.images[i],
+            postId: findPost.id,
+          });
+        }
+      }
+
+      resolve({
+        err: updatePost[0] > 0 ? 0 : 1,
+        msg: updatePost[0] > 0 ? "Updated successfully" : "Update failled",
+        updatePost,
+      });
+    } catch (error) {
+      console.log(error);
       reject(error);
     }
   });

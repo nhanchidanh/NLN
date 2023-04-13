@@ -6,9 +6,16 @@ import {
 } from "../services";
 import InputReadOnly from "./InputReadOnly";
 import SelectForm from "./SelectForm";
+import { useSelector } from "react-redux";
 
 const Address = ({ setPayload, invalidFields, setInvalidFields }) => {
+  const { dataEdit } = useSelector((state) => state.post);
+
+  // console.log(dataEdit);
+
   const [provinces, setProvinces] = useState([]);
+  // console.log(provinces);
+
   const [districts, setDistricts] = useState([]);
   const [wards, setWards] = useState([]);
   const [province, setProvince] = useState();
@@ -27,7 +34,42 @@ const Address = ({ setPayload, invalidFields, setInvalidFields }) => {
     };
     fetchPublicProvinces();
   }, []);
-  // console.log(provinces);
+
+  useEffect(() => {
+    if (Object.keys(dataEdit).length > 0) {
+      let addressArr = dataEdit?.address?.split(", ");
+
+      const findDistrict =
+        districts?.length > 0 &&
+        districts?.find((item) => item.district_name === addressArr[1]);
+      setDistrict(findDistrict?.district_id || "");
+    }
+  }, [districts, dataEdit]);
+
+  useEffect(() => {
+    if (Object.keys(dataEdit).length > 0) {
+      let addressArr = dataEdit?.address?.split(", ");
+      const findWard =
+        wards?.length > 0 &&
+        wards?.find((item) => item.ward_name === addressArr[0]);
+
+      setWard(findWard?.ward_id || "");
+    }
+  }, [wards, dataEdit]);
+
+  useEffect(() => {
+    if (Object.keys(dataEdit).length > 0) {
+      let addressArr = dataEdit?.address?.split(", ");
+
+      if (provinces.length) {
+        const findProvince = provinces.find(
+          (item) => item?.province_name === addressArr[addressArr?.length - 1]
+        );
+        setProvince(findProvince?.province_id || "");
+      }
+    }
+  }, [provinces, dataEdit]);
+
   useEffect(() => {
     setDistrict();
     const fetchPublicDistricts = async () => {
@@ -133,7 +175,7 @@ const Address = ({ setPayload, invalidFields, setInvalidFields }) => {
             ? `${
                 districts?.find((item) => item.district_id === district)
                   ?.district_name
-              },`
+              }, `
             : ""
         }${
           province

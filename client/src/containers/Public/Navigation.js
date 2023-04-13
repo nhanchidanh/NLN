@@ -5,9 +5,9 @@ import * as actions from "../../store/actions";
 import { convertToSlug } from "../../utils/Common/convertToSlug";
 
 const notActive =
-  "hover:bg-secondary2 px-4 h-full flex items-center bg-secondary1";
+  "hover:bg-secondary2 transition-all px-4 h-full flex items-center bg-secondary1";
 const active =
-  "hover:bg-secondary2 px-4 h-full flex items-center bg-secondary2";
+  "hover:bg-secondary2 transition-all px-4 h-full flex items-center bg-secondary2";
 
 const Navigation = ({ isAdmin }) => {
   // const [categories, setCategories] = useState([]);

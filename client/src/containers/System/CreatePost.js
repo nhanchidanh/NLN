@@ -1,36 +1,51 @@
 import { CircularProgress } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BsFillCameraFill } from "react-icons/bs";
 import { MdDelete } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
-import { Address, Button, Overview } from "../../components";
-import { apiCreatePost, apiUploadImages } from "../../services";
-import { getRangeFromValue } from "../../utils/Common/getRangeFromValue";
 import Swal from "sweetalert2";
+import { Address, Button, Overview } from "../../components";
+import { apiCreatePost, apiUpdatePost, apiUploadImages } from "../../services";
+import * as actions from "../../store/actions";
+import { getRangeFromValue } from "../../utils/Common/getRangeFromValue";
 import validate from "../../utils/Common/validateFields";
-const CreatePost = () => {
+const CreatePost = ({ isEdit, handleCloseModel }) => {
   const dispatch = useDispatch();
   const { priceRanges, areaRanges } = useSelector((state) => state.app);
   const { currentUser } = useSelector((state) => state.user);
-
+  const { dataEdit } = useSelector((state) => state.post);
+  // console.log(dataEdit);
   //Lay data tat ca inputs
-  const [payload, setPayload] = useState({
-    title: "",
-    price: "",
-    area: "",
-    images: "",
-    address: "",
-    categoryId: "",
-    priceRangeId: "",
-    areaRangeId: "",
-    description: "",
-    target: "",
-    province: "",
+  const [payload, setPayload] = useState(() => {
+    const initData = {
+      title: isEdit ? dataEdit?.title : "",
+      price: isEdit ? dataEdit?.price : "",
+      area: isEdit ? dataEdit?.area : "",
+      images: isEdit ? dataEdit?.images?.map((item) => item?.url) : "",
+      address: isEdit ? dataEdit?.address : "",
+      categoryId: isEdit ? dataEdit?.categoryId : "",
+      priceRangeId: isEdit ? dataEdit?.priceRangeId : "",
+      areaRangeId: isEdit ? dataEdit?.areaRangeId : "",
+      description: isEdit ? dataEdit?.description : "",
+      target: isEdit ? dataEdit?.target : "",
+      province: isEdit ? dataEdit?.province : "",
+    };
+    return initData;
   });
+
+  // console.log(payload?.images);
 
   const [imagePreview, setImagePreview] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [invalidFields, setInvalidFields] = useState([]);
+
+  useEffect(() => {
+    if (dataEdit) {
+      let images = dataEdit?.images?.map((item) => item?.url);
+      // console.log(images);
+      images && setImagePreview(images);
+    }
+  }, [dataEdit]);
 
   //Xu li up load hinh anh
   const handleUploadFiles = async (e) => {
@@ -90,38 +105,59 @@ const CreatePost = () => {
     const result = validate(finalPayload, setInvalidFields);
 
     if (result === 0) {
-      const response = await apiCreatePost(finalPayload);
-      console.log(response);
-      if (response.status === 200) {
-        Swal.fire("Thành công", "Tạo tin mới thành công", "success").then(
-          () => {
-            setPayload({
-              title: "",
-              price: "",
-              area: "",
-              images: "",
-              address: "",
-              categoryId: "",
-              priceRangeId: "",
-              areaRangeId: "",
-              description: "",
-              target: "",
-              province: "",
-            });
-            setImagePreview([]);
-          }
-        );
+      if (isEdit) {
+        // Cap nhat
+        const response = await apiUpdatePost({
+          id: dataEdit?.id,
+          data: finalPayload,
+        });
+        console.log(response?.data?.response?.err);
+        if (response?.data?.response?.err === 0) {
+          Swal.fire("Thành công", "Cập nhật tin thành công", "success").then(
+            () => {
+              dispatch(actions.editDate({}));
+              handleCloseModel();
+            }
+          );
+        } else {
+          Swal.fire("Có lỗi", "Cập nhật tin thất bại", "error");
+        }
       } else {
-        Swal.fire("Oops", "Đã có lỗi xãy ra", "error");
+        const response = await apiCreatePost(finalPayload);
+        console.log(response);
+        if (response.status === 200) {
+          Swal.fire("Thành công", "Tạo tin mới thành công", "success").then(
+            () => {
+              setPayload({
+                title: "",
+                price: "",
+                area: "",
+                images: "",
+                address: "",
+                categoryId: "",
+                priceRangeId: "",
+                areaRangeId: "",
+                description: "",
+                target: "",
+                province: "",
+              });
+              setImagePreview([]);
+            }
+          );
+        } else {
+          Swal.fire("Oops", "Đã có lỗi xãy ra", "error");
+        }
       }
     }
   };
 
   return (
-    <div className="px-8">
-      <h1 className="text-3xl py-4 border-b">Đăng tin mới</h1>
+    <div className="">
+      <h1 className="text-3xl py-4 border-b">
+        {isEdit ? "Chỉnh sửa tin đăng" : "Đăng tin mới"}
+      </h1>
       <div className="grid grid-cols-12 gap-6">
-        <form className="col-span-8  space-y-8 border">
+        <form className="col-span-8 pb-8 space-y-8 border">
           <Address
             invalidFields={invalidFields}
             setInvalidFields={setInvalidFields}
@@ -167,22 +203,24 @@ const CreatePost = () => {
             <div>
               <h3 className="font-medium">Xem trước</h3>
               <div className="grid grid-cols-12 gap-4 w-full">
-                {imagePreview?.map((item) => {
+                {imagePreview?.map((item, index) => {
                   return (
-                    <div key={item} className="relative col-span-4 ">
-                      <img
-                        className="rounded-md h-full w-full object-cover"
-                        src={item}
-                        alt="preview"
-                      />
-                      <span
-                        onClick={() => handleDeleteImage(item)}
-                        title="Xóa"
-                        className="absolute top-1  right-1 p-2 cursor-pointer bg-gray-300  hover:bg-gray-400 rounded-full"
-                      >
-                        <MdDelete />
-                      </span>
-                    </div>
+                    item && (
+                      <div key={index} className="relative col-span-4 ">
+                        <img
+                          className="rounded-md h-full w-full object-cover"
+                          src={item}
+                          alt="preview"
+                        />
+                        <span
+                          onClick={() => handleDeleteImage(item)}
+                          title="Xóa"
+                          className="absolute top-1  right-1 p-2 cursor-pointer bg-gray-300  hover:bg-gray-400 rounded-full"
+                        >
+                          <MdDelete />
+                        </span>
+                      </div>
+                    )
                   );
                 })}
               </div>

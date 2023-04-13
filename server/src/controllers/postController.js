@@ -94,3 +94,54 @@ export const createPost = async (req, res) => {
     });
   }
 };
+
+//DELETE POST
+export const deletePost = async (req, res) => {
+  const { id } = req.body;
+  const userId = req.user.id;
+  console.log(req.body);
+
+  try {
+    if (!userId || !id) {
+      return res.status(400).json({
+        err: 1,
+        msg: "Missing inputs",
+      });
+    }
+
+    const response = await postService.deletePostService(id);
+
+    return res.status(200).json(response);
+  } catch (error) {
+    return res.status(500).json({
+      err: -1,
+      msg: "Failed at post controller: ",
+      error,
+    });
+  }
+};
+
+//UPDATE POST
+export const updatePost = async (req, res) => {
+  const { id, ...data } = req.body;
+  // console.log(req.body);
+  try {
+    if (!id) {
+      return res.status(400).json({
+        err: 1,
+        msg: "Missing inputs",
+      });
+    }
+
+    const response = await postService.updatePostService(id, data);
+
+    return res.status(200).json({
+      response,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      err: -1,
+      msg: "Failed at post controller: ",
+    });
+  }
+};

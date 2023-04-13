@@ -11,11 +11,11 @@ const System = () => {
   return (
     <div className="w-full max-h-screen max-w-screen-2xl overflow-hidden">
       <Header />
-      <div className="grid grid-cols-12 grid-rows-none h-full">
+      <div className="grid grid-cols-12  h-full">
         <div className="col-span-2 mt-[40px]">
           <Sidebar />
         </div>
-        <div className="col-span-10 mt-[40px] overflow-y-auto h-[95vh] pb-8 bg-white shadow-md">
+        <div className="col-span-10 mt-[40px] overflow-y-auto h-[95vh] pb-8 px-8 bg-white shadow-md">
           <Outlet />
         </div>
       </div>

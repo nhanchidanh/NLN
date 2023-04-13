@@ -17,3 +17,4 @@ export { default as Overview } from "./Overview";
 export { default as SelectForm } from "./SelectForm";
 export { default as InputReadOnly } from "./InputReadOnly";
 export { default as InputFormSystem } from "./InputFormSystem";
+export { default as UpdatePost } from "./UpdatePost";

@@ -22,8 +22,8 @@ export const menuManagerAccount = [
   },
   {
     id: 3,
-    text: "Thông tin tài khoản",
-    path: "/he-thong/thong-tin-tai-khoan",
+    text: "Thông tin cá nhân",
+    path: "/he-thong/thong-tin-ca-nhan",
     icon: <AiOutlineUser />,
   },
   {

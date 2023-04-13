@@ -64,6 +64,42 @@ export const apiCreatePost = (body) => {
   });
 };
 
+//UPDATE POST
+export const apiUpdatePost = (body) => {
+  return new Promise(async (resolve, reject) => {
+    // console.log(body);
+    try {
+      const response = await axiosConfig({
+        method: "put",
+        url: `api/v1/post/update`,
+        data: body,
+      });
+
+      resolve(response);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+//DELETE POST
+export const apiDeletePost = (id) => {
+  return new Promise(async (resolve, reject) => {
+    // console.log(id);
+    try {
+      const response = await axiosConfig({
+        method: "delete",
+        url: `api/v1/post/delete`,
+        data: { id },
+      });
+
+      resolve(response);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
 export const apiUploadImages = (images) => {
   return new Promise(async (resolve, reject) => {
     try {

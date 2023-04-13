@@ -6,6 +6,7 @@ const initState = {
   count: 0,
   newPosts: [],
   postsOfUser: [],
+  dataEdit: {},
 };
 
 const postReducer = (state = initState, action) => {
@@ -30,6 +31,11 @@ const postReducer = (state = initState, action) => {
         msg: action.msg || "",
         postsOfUser: action.postsOfUser || [],
         count: action.count || 0,
+      };
+    case actionTypes.EDIT_DATA:
+      return {
+        ...state,
+        dataEdit: action.dataEdit || {},
       };
 
     default:

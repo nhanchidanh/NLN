@@ -23,8 +23,8 @@ export const menuSidebar = [
   },
   {
     id: 3,
-    text: "Sửa thông tin cá nhân",
-    path: "/he-thong/thong-tin-tai-khoan",
+    text: "Thông tin cá nhân",
+    path: "/he-thong/thong-tin-ca-nhan",
     icon: <AiOutlineUser />,
   },
   {

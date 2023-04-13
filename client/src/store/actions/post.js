@@ -103,3 +103,8 @@ export const getPostsLimitByUserId = (query) => async (dispatch) => {
     });
   }
 };
+
+export const editDate = (dataEdit) => ({
+  type: actionTypes.EDIT_DATA,
+  dataEdit,
+});
