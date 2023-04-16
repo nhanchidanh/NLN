@@ -2,8 +2,17 @@ const validate = (payload, setInvalidFields) => {
   let invalids = 0;
   let fields = Object.entries(payload); //CHuyen object -> array gom co key/value
 
+  function isValidEmail(email) {
+    return /\S+@\S+\.\S+/.test(email);
+  }
+
   fields.forEach((item) => {
-    if (item[1] === "") {
+    // console.log(item[1], typeof item[1]);
+    if (
+      typeof item[1] === "string" &&
+      item[1]?.trim() === "" &&
+      item[0] !== "avatar"
+    ) {
       setInvalidFields((prev) => [
         ...prev,
         {
@@ -31,12 +40,24 @@ const validate = (payload, setInvalidFields) => {
         break;
 
       case "phone":
-        if (!+item[1]) {
+        if (!item[1].match("[0-9]{10}")) {
           setInvalidFields((prev) => [
             ...prev,
             {
               name: item[0],
               message: "Số điện thoại không hợp lệ",
+            },
+          ]);
+          invalids++;
+        }
+        break;
+      case "email":
+        if (!isValidEmail(item[1])) {
+          setInvalidFields((prev) => [
+            ...prev,
+            {
+              name: item[0],
+              message: "Email không hợp lệ",
             },
           ]);
           invalids++;

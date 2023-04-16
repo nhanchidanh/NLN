@@ -23,7 +23,7 @@ const Sidebar = () => {
       <div>
         <div className="flex gap-3 items-center mb-3">
           <img
-            src={anonAvatar}
+            src={currentUser?.avatar || anonAvatar}
             alt="avatar"
             className="w-12 h-12 object-cover rounded-full"
           />

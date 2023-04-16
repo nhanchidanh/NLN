@@ -152,7 +152,7 @@ const CreatePost = ({ isEdit, handleCloseModel }) => {
   };
 
   return (
-    <div className="">
+    <div className="px-8">
       <h1 className="text-3xl py-4 border-b">
         {isEdit ? "Chỉnh sửa tin đăng" : "Đăng tin mới"}
       </h1>

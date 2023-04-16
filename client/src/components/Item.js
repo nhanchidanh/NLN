@@ -79,7 +79,7 @@ const Item = ({
         <div className="flex items-center mt-4 justify-between">
           <div className="flex items-center gap-1">
             <img
-              src={anonAvatar}
+              src={user?.avatar || anonAvatar}
               alt="avatar"
               className="w-[30px] h-[30px] object-cover rounded-full "
             />

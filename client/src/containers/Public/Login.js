@@ -20,6 +20,7 @@ const Login = () => {
     fullName: "",
     phone: "",
     password: "",
+    email: "",
   });
 
   //Chuyển trạng thái login với đăng ký
@@ -63,14 +64,24 @@ const Login = () => {
       <div className="w-full flex flex-col gap-5">
         <form className="w-full flex flex-col gap-5">
           {isRegister && (
-            <InputForm
-              invalidFields={invalidFields}
-              setInvalidFields={setInvalidFields}
-              label={"HỌ TÊN"}
-              value={payload.fullName}
-              setValue={setPayload}
-              keyPayload={"fullName"}
-            />
+            <>
+              <InputForm
+                invalidFields={invalidFields}
+                setInvalidFields={setInvalidFields}
+                label={"HỌ TÊN"}
+                value={payload.fullName}
+                setValue={setPayload}
+                keyPayload={"fullName"}
+              />
+              <InputForm
+                invalidFields={invalidFields}
+                setInvalidFields={setInvalidFields}
+                label={"EMAIL"}
+                value={payload.email}
+                setValue={setPayload}
+                keyPayload={"email"}
+              />
+            </>
           )}
           <InputForm
             invalidFields={invalidFields}
@@ -111,6 +122,7 @@ const Login = () => {
                   fullName: "",
                   phone: "",
                   password: "",
+                  email: "",
                 });
               }}
             >
@@ -129,6 +141,7 @@ const Login = () => {
                   fullName: "",
                   phone: "",
                   password: "",
+                  email: "",
                 });
               }}
               className="text-[blue] hover:text-[red] cursor-pointer"

@@ -14,10 +14,10 @@ const User = () => {
       />
       <div>
         <div>
-          <span>Xin chào</span> <b>{currentUser?.fullName}</b>
+          <span>Xin chào</span> <b>{currentUser?.fullName || ""}</b>
         </div>
         <div>
-          <span>Mã tài khoản:</span> <b>{`${currentUser?.id}`}</b>
+          <span>Mã tài khoản:</span> <b>{`${currentUser?.id || ""}`}</b>
         </div>
       </div>
     </div>

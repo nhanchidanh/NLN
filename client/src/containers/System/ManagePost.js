@@ -14,7 +14,7 @@ const ManagePost = () => {
   const { currentUser } = useSelector((state) => state.user);
   const [isEdit, setIsEdit] = useState(false);
 
-  console.log(postsOfUser);
+  // console.log(postsOfUser);
 
   const [page, setPage] = useState(1);
   const [isDelete, setIsDelete] = useState(false);

@@ -13,6 +13,7 @@ export const path = {
   CREATE_POST: "tao-moi-bai-dang",
   MANAGE_POST: "quan-ly-bai-dang",
   PROFILE: "thong-tin-ca-nhan",
+  CONTACT: "lien-he",
 };
 
 export const text = {

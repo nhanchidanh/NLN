@@ -86,7 +86,7 @@ export const getPostsLimitService = (page, query) => {
           {
             model: db.User,
             as: "user",
-            attributes: ["fullName", "phone"],
+            attributes: ["fullName", "phone", "avatar"],
           },
         ],
 

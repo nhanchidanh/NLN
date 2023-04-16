@@ -40,9 +40,15 @@ export const getUser = async (req, res) => {
 
 //UPDATE USER
 export const updateUser = async (req, res) => {
-  const { id } = req.params;
+  const { id } = req.user;
   const data = req.body;
   try {
+    if (!data) {
+      return res.status(400).json({
+        err: 1,
+        msg: "Missing inputs!",
+      });
+    }
     const response = await userService.updateUserService(id, data);
     res.status(200).json(response);
   } catch (error) {

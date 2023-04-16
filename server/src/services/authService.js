@@ -7,7 +7,7 @@ require("dotenv").config();
 const hashPassword = (password) =>
   bcrypt.hashSync(password, bcrypt.genSaltSync(12));
 
-export const registerService = ({ fullName, phone, password }) =>
+export const registerService = ({ fullName, phone, email, password }) =>
   new Promise(async (resolve, reject) => {
     try {
       const response = await db.User.findOrCreate({
@@ -15,10 +15,10 @@ export const registerService = ({ fullName, phone, password }) =>
         defaults: {
           fullName,
           phone,
+          email,
           password: hashPassword(password),
         },
       });
-      // console.log(response);
 
       const token =
         response[1] &&
@@ -47,6 +47,7 @@ export const loginService = ({ phone, password }) =>
         where: { phone },
         raw: true, //true tra ve object data, neu false tra ve instance kh lay data dc
       });
+      // console.log(response);
 
       // Check password?
       const isCorrectPassword =
