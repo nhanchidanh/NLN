@@ -75,7 +75,7 @@ module.exports = (sequelize, DataTypes) => {
       status: {
         type: DataTypes.ENUM,
         values: ["SHOW", "HIDE"],
-        defaultValue: "SHOW",
+        defaultValue: "HIDE",
       },
       target: {
         type: DataTypes.ENUM,

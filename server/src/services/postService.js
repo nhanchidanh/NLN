@@ -46,6 +46,7 @@ export const getPostsLimitService = (page, query) => {
       const priceRangeId = +query.priceRangeId || 0;
       const areaRangeId = +query.areaRangeId || 0;
       const isNew = +query.isNew || 0;
+      const status = query.status || "";
 
       const response = await db.Post.findAll({
         // logging: true,
@@ -70,6 +71,9 @@ export const getPostsLimitService = (page, query) => {
           areaRangeId: {
             [areaRangeId === 0 ? Op.is : Op.eq]:
               areaRangeId === 0 ? !null : areaRangeId,
+          },
+          status: {
+            [status === "" ? Op.ne : Op.eq]: status,
           },
         },
         // raw: true,
@@ -116,6 +120,9 @@ export const getPostsLimitService = (page, query) => {
           areaRangeId: {
             [areaRangeId === 0 ? Op.is : Op.eq]:
               areaRangeId === 0 ? !null : areaRangeId,
+          },
+          status: {
+            [status === "" ? Op.ne : Op.eq]: status,
           },
         },
       });
@@ -282,7 +289,9 @@ export const getPostLimitByUserIdService = (page, userId, query) => {
             [areaRangeId === 0 ? Op.is : Op.eq]:
               areaRangeId === 0 ? !null : areaRangeId,
           },
-          userId,
+          userId: {
+            [userId === 1 ? Op.is : Op.eq]: userId === 1 ? !null : userId,
+          },
         },
       });
 
@@ -322,12 +331,13 @@ export const deletePostService = (id) =>
   });
 
 //UPDATE POST
-export const updatePostService = (id, data) => {
+export const updatePostService = (data) => {
   // console.log(data.data);
   return new Promise(async (resolve, reject) => {
+    // console.log(data);
     try {
       const findPost = await db.Post.findOne({
-        where: { id: id },
+        where: { id: data.id },
       });
 
       if (!findPost) {
@@ -337,19 +347,23 @@ export const updatePostService = (id, data) => {
         });
       }
 
-      const updatePost = await db.Post.update(data.data, { where: { id: id } });
-
-      const deleteImages = await db.Image.destroy({
-        where: { postId: findPost.id },
+      const updatePost = await db.Post.update(data, {
+        where: { id: data.id },
       });
 
-      // console.log(data.data.images);
-      if (data.data.images) {
-        for (let i = 0; i < data.data.images.length; i++) {
-          const image = await db.Image.create({
-            url: data.data.images[i],
-            postId: findPost.id,
-          });
+      if (data?.images?.length > 0) {
+        const deleteImages = await db.Image.destroy({
+          where: { postId: findPost.id },
+        });
+
+        // console.log(data?.images);
+        if (data?.images) {
+          for (let i = 0; i < data?.images.length; i++) {
+            const image = await db.Image.create({
+              url: data?.images[i],
+              postId: findPost.id,
+            });
+          }
         }
       }
 

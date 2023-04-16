@@ -1,12 +1,14 @@
 import { Pagination } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
+import { BiHide, BiShow } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
 import * as actions from "../../store/actions";
 import UpdatePost from "../../components/UpdatePost";
-import { apiDeletePost } from "../../services";
+import { apiDeletePost, apiUpdatePost } from "../../services";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
+import convertToMillion from "../../utils/Common/convertToMillion";
 
 const ManagePost = () => {
   const dispatch = useDispatch();
@@ -34,8 +36,7 @@ const ManagePost = () => {
       );
       setPosts(activePost);
     }
-    // console.log(activePost);
-  }, [statusPost, postsOfUser]);
+  }, [statusPost, postsOfUser, isDelete]);
 
   const handleChangePage = (value) => {
     // postRef.current.scrollIntoView({ behavior: "smooth" });
@@ -72,8 +73,25 @@ const ManagePost = () => {
     });
   };
 
+  const handleApprovePost = async (data) => {
+    console.log(data);
+    const response = await apiUpdatePost(data);
+    console.log(response);
+    if (response?.data?.response?.err === 0) {
+      Swal.fire(
+        "Thành công!",
+        "Cập nhật trạng thái thành công!",
+        "success"
+      ).then(() => {
+        setIsDelete(!isDelete);
+      });
+    } else {
+      Swal.fire("Oops!", "Cập nhật trạng thái thất bại!", "error");
+    }
+  };
+
   return (
-    <div className=" ">
+    <div className="px-8">
       <div className="flex items-center justify-between w-full border-b">
         <h1 className="text-3xl py-4 ">Quản lý bài đăng</h1>
         <div>
@@ -85,8 +103,8 @@ const ManagePost = () => {
             onChange={(e) => setStatusPost(e.target.value)}
           >
             <option value="">Lọc theo trạng thái</option>
-            <option value="SHOW">Tin đang hiển thị</option>
-            <option value="HIDE">Tin đang ẩn</option>
+            <option value="SHOW">Tin đã duyệt</option>
+            <option value="HIDE">Tin chưa duyệt</option>
           </select>
         </div>
       </div>
@@ -95,11 +113,11 @@ const ManagePost = () => {
         <table className="w-full table-auto border-collapse border ">
           <thead>
             <tr className="bg-gray-200">
-              <th className="border p-2 bg-gray-100">Mã tin</th>
+              <th className="border p-2 bg-gray-100">STT</th>
               <th className="border p-2 bg-gray-100">Ảnh đại diện</th>
               <th className="border p-2 bg-gray-100">Tiêu đề</th>
-              <th className="border p-2 bg-gray-100">Giá (đồng/tháng)</th>
-              <th className="border p-2 bg-gray-100">Diện tích (m2)</th>
+              <th className="border p-2 bg-gray-100">Giá </th>
+              <th className="border p-2 bg-gray-100">Diện tích</th>
               <th className="border p-2 bg-gray-100">Trạng thái</th>
               {currentUser?.role === "admin" && (
                 <th className="border p-2 bg-gray-100">Thao tác</th>
@@ -121,10 +139,10 @@ const ManagePost = () => {
                 </td>
               </tr>
             ) : (
-              posts?.map((item) => {
+              posts?.map((item, index) => {
                 return (
                   <tr key={item?.id} className="text-center">
-                    <td className="border p-2">{item?.id}</td>
+                    <td className="border p-2">{index + 1}</td>
                     <td className="border p-2 flex items-center justify-center">
                       <img
                         className="h-20 w-20 object-cover rounded-md"
@@ -135,12 +153,16 @@ const ManagePost = () => {
                       />
                     </td>
                     <td className="border p-2">{item?.title}</td>
-                    <td className="border p-2">{item?.price}</td>
-                    <td className="border p-2">{item?.area}</td>
-                    <td className="border p-2">{item?.status}</td>
+                    <td className="border p-2">
+                      {convertToMillion(item?.price)}
+                    </td>
+                    <td className="border p-2">{item?.area + "m²"}</td>
+                    <td className="border p-2">
+                      {item?.status === "SHOW" ? "Đã duyệt" : "Chưa duyệt"}
+                    </td>
                     {currentUser?.role === "admin" && (
                       <td className="border p-2">
-                        <div className="flex  items-center justify-center gap-2 text-white">
+                        <div className="flex items-center justify-center gap-2 text-white">
                           <button
                             onClick={() => {
                               dispatch(actions.editDate(item));
@@ -155,6 +177,18 @@ const ManagePost = () => {
                             className="p-2 bg-red-500 rounded-md "
                           >
                             <AiOutlineDelete />
+                          </button>
+                          <button
+                            onClick={() =>
+                              handleApprovePost({
+                                id: item?.id,
+                                status:
+                                  item.status === "SHOW" ? "HIDE" : "SHOW",
+                              })
+                            }
+                            className="p-2 bg-yellow-500 rounded-md "
+                          >
+                            {item?.status === "SHOW" ? <BiShow /> : <BiHide />}
                           </button>
                         </div>
                       </td>

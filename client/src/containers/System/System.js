@@ -9,13 +9,13 @@ const System = () => {
   const { isLoggedIn } = useSelector((state) => state.auth);
   if (!isLoggedIn) return <Navigate to={`/${path.LOGIN}`} replace={true} />; //replace: true -> Delete history and dont allow back to prev page
   return (
-    <div className="w-full max-h-screen max-w-screen-2xl overflow-hidden">
+    <div className="w-full max-h-screen overflow-hidden">
       <Header />
       <div className="grid grid-cols-12  h-full">
         <div className="col-span-2 mt-[40px]">
           <Sidebar />
         </div>
-        <div className="col-span-10 mt-[40px] overflow-y-auto h-[95vh] pb-8 px-8 bg-white shadow-md">
+        <div className="col-span-10 mt-[40px] overflow-y-auto h-[95vh] w-full pb-8 bg-white shadow-md">
           <Outlet />
         </div>
       </div>

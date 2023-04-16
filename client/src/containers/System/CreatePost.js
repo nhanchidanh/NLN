@@ -98,6 +98,7 @@ const CreatePost = ({ isEdit, handleCloseModel }) => {
       priceRangeId,
       userId: currentUser?.id,
       target: payload?.target,
+      id: dataEdit?.id,
     };
 
     console.log(finalPayload);
@@ -107,11 +108,8 @@ const CreatePost = ({ isEdit, handleCloseModel }) => {
     if (result === 0) {
       if (isEdit) {
         // Cap nhat
-        const response = await apiUpdatePost({
-          id: dataEdit?.id,
-          data: finalPayload,
-        });
-        console.log(response?.data?.response?.err);
+        const response = await apiUpdatePost(finalPayload);
+        // console.log(response?.data?.response?.err);
         if (response?.data?.response?.err === 0) {
           Swal.fire("Thành công", "Cập nhật tin thành công", "success").then(
             () => {

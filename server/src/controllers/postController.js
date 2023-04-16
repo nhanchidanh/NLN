@@ -123,8 +123,8 @@ export const deletePost = async (req, res) => {
 
 //UPDATE POST
 export const updatePost = async (req, res) => {
-  const { id, ...data } = req.body;
-  // console.log(req.body);
+  const { id } = req.body;
+  // console.log(id);
   try {
     if (!id) {
       return res.status(400).json({
@@ -133,7 +133,7 @@ export const updatePost = async (req, res) => {
       });
     }
 
-    const response = await postService.updatePostService(id, data);
+    const response = await postService.updatePostService(req.body);
 
     return res.status(200).json({
       response,

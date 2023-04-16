@@ -65,7 +65,7 @@ const EditProfile = () => {
     }
   }, [currentUser]);
   return (
-    <div className="">
+    <div className="px-8">
       <h1 className="text-3xl py-4 border-b">Thông tin cá nhân</h1>
       <div className="py-4 space-y-4">
         <div className="flex flex-col justify-center items-center gap-2">

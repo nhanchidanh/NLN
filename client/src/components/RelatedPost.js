@@ -1,7 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
+import { useSelector } from "react-redux";
 import SubItem from "./SubItem";
-import { useDispatch, useSelector } from "react-redux";
-import * as actions from "../store/actions";
 
 const RelatedPost = () => {
   //Lay data tu redux

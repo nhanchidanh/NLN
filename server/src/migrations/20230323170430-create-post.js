@@ -62,7 +62,7 @@ module.exports = {
       status: {
         type: Sequelize.ENUM,
         values: ["SHOW", "HIDE"],
-        defaultValue: "SHOW",
+        defaultValue: "HIDE",
       },
       target: {
         type: Sequelize.ENUM,

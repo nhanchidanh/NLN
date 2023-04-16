@@ -5,6 +5,7 @@ import { getDistrictProvince } from "../utils/Common/getDistrictProvince";
 import { truncateText } from "../utils/Common/truncateText";
 import icons from "../utils/icons";
 import anonAvatar from "../assets/anon-avatar.png";
+import convertToMillion from "../utils/Common/convertToMillion";
 
 const { GrStar, RiHeartLine, RiHeartFill } = icons;
 
@@ -71,8 +72,10 @@ const Item = ({
         </div>
 
         <div className="flex items-center my-2 justify-between">
-          <span className="font-bold text-green-600">{price + " đồng"}</span>
-          <span>{area + "m2"}</span>
+          <span className="font-bold text-green-600">
+            {convertToMillion(price)}
+          </span>
+          <span>{area + "m²"}</span>
           <span>{getDistrictProvince(address)}</span>
         </div>
         <p className="text-gray-500">{truncateText(description, 180)}</p>

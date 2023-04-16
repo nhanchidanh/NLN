@@ -38,7 +38,7 @@ const List = ({ categoryId }) => {
   }, [searchParams]);
 
   useEffect(() => {
-    dispatch(getPostsLimit({ page, categoryId, ...filter }));
+    dispatch(getPostsLimit({ page, categoryId, status: "SHOW", ...filter }));
   }, [dispatch, page, categoryId, filter]);
 
   const handleChangePage = (value) => {
