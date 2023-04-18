@@ -119,3 +119,31 @@ export const getCategoryService = ({ id }) => {
     }
   });
 };
+
+// //GET CATE BY POST ID
+// export const getCategoryByPostIdService = ({ postId }) => {
+//   return new Promise(async (resolve, reject) => {
+//     try {
+//       const category = await db.Category.findOne({
+//         where: {
+//           postId,
+//         },
+//       });
+
+//       if (!category) {
+//         reject({
+//           err: 1,
+//           msg: "Category not found!",
+//           category: null,
+//         });
+//       }
+//       resolve({
+//         err: 0,
+//         msg: "Get category successfuly!",
+//         category,
+//       });
+//     } catch (error) {
+//       reject(error);
+//     }
+//   });
+// };

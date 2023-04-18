@@ -92,7 +92,7 @@ const ManagePost = () => {
 
   return (
     <div className="px-8">
-      <div className="flex items-center justify-between w-full border-b">
+      <div className="flex items-center justify-between w-full ">
         <h1 className="text-3xl py-4 ">Quản lý bài đăng</h1>
         <div>
           <select
@@ -110,7 +110,7 @@ const ManagePost = () => {
       </div>
 
       <div className="w-full">
-        <table className="w-full table-auto border-collapse border ">
+        <table className="w-full table-auto border border-separate border-spacing-0 rounded-2xl overflow-hidden">
           <thead>
             <tr className="bg-gray-200">
               <th className="border p-2 bg-gray-100">STT</th>

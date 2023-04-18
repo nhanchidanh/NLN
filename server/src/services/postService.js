@@ -145,6 +145,7 @@ export const getNewPostService = () => {
     try {
       const response = await db.Post.findAll({
         // raw: true,
+        where: { status: "SHOW" },
         nest: true,
         offset: 0,
         order: [["createdAt", "DESC"]], //order by DESC loc theo kieu giam dan
@@ -193,6 +194,48 @@ export const createPostService = (body, userId) => {
       resolve({
         err: 0,
         msg: "Create successfully!",
+        post,
+      });
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+//GET POST BY ID
+export const getPostByIdService = (id) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const post = await db.Post.findByPk(id, {
+        include: [
+          {
+            model: db.Image,
+            as: "images",
+            attributes: ["url"],
+          },
+          {
+            model: db.User,
+            as: "user",
+            attributes: ["fullName", "phone"],
+          },
+          {
+            model: db.Category,
+            as: "category",
+            attributes: ["title"],
+          },
+        ],
+      });
+      if (post === null) {
+        return resolve({
+          err: 1,
+          msg: "Post not found!",
+          post: null,
+        });
+      }
+      // const r = await post.toObject();
+      resolve({
+        err: 0,
+        msg: "Get successfully!",
         post,
       });
     } catch (error) {

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom"; //tra ve isactive
 import * as actions from "../../store/actions";
 import { convertToSlug } from "../../utils/Common/convertToSlug";
+import { path } from "../../utils/constant";
 
 const notActive =
   "hover:bg-secondary2 transition-all px-4 h-full flex items-center bg-secondary1";
@@ -46,6 +47,12 @@ const Navigation = ({ isAdmin }) => {
               </div>
             );
           })}
+        <NavLink
+          to={path.CONTACT}
+          className={({ isActive }) => (isActive ? active : notActive)}
+        >
+          Liên hệ
+        </NavLink>
       </div>
     </div>
   );

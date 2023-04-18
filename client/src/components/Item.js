@@ -36,7 +36,9 @@ const Item = ({
   return (
     <div className="flex flex-row w-full gap-3 py-4 border-t border-orange-600">
       <div className="w-full basis-2/5 relative cursor-pointer">
-        <Link to={`chi-tiet/${convertToSlug(title)}/${id}`}>
+        <Link
+          to={`chi-tiet/${convertToSlug(title?.replaceAll("/", "-"))}/${id}`}
+        >
           <img
             src={images[0]?.url}
             alt="preview"

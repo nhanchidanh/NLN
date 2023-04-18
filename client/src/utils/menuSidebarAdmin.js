@@ -36,10 +36,10 @@ export const menuSidebarAdmin = [
     path: "/he-thong/quan-ly-khoang-dien-tich",
     icon: <TbChartArea />,
   },
-  {
-    id: 5,
-    text: "Quản lý Tất cả bài viết",
-    path: "/he-thong/quan-ly-tat-ca-bai-viet",
-    icon: <HiOutlineLogout />,
-  },
+  // {
+  //   id: 5,
+  //   text: "Quản lý Tất cả bài viết",
+  //   path: "/he-thong/quan-ly-tat-ca-bai-viet",
+  //   icon: <HiOutlineLogout />,
+  // },
 ];

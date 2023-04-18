@@ -29,6 +29,34 @@ export const getPostLimit = async (req, res) => {
   }
 };
 
+//GET POST BY ID
+export const getPostById = async (req, res) => {
+  const { id } = req.params;
+  // console.log(id);
+  try {
+    if (!id) {
+      return res.status(400).json({
+        err: 1,
+        msg: "Missing post id",
+      });
+    }
+    const response = await postService.getPostByIdService(id);
+    if (response.post === null) {
+      return res.status(404).json({
+        err: 2,
+        msg: "Post not found",
+      });
+    }
+    return res.status(200).json(response);
+  } catch (error) {
+    return res.status(500).json({
+      err: -1,
+      msg: "Failed at post Controller",
+      error,
+    });
+  }
+};
+
 //GET ALL POST BY USER ID
 export const getPostLimitByUserId = async (req, res) => {
   const { id } = req.user;

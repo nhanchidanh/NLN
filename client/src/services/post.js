@@ -133,3 +133,19 @@ export const apiGetPostsLimitByUserId = (query) => {
     }
   });
 };
+
+//GET POST BY ID
+export const apiGetPostById = (id) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const response = await axiosConfig({
+        method: "get",
+        url: `api/v1/post/one/${id}`,
+      });
+      // console.log(response);
+      resolve(response);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};

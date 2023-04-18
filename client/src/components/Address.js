@@ -131,7 +131,7 @@ const Address = ({ setPayload, invalidFields, setInvalidFields }) => {
   }, [province, district, ward]);
 
   return (
-    <div className="space-y-4 ">
+    <div className="space-y-4">
       <h2 className="font-bold text-2xl ">Địa chỉ cho thuê</h2>
       <div className="flex w-full items-center gap-6">
         <SelectForm

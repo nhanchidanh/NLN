@@ -18,3 +18,4 @@ export { default as SelectForm } from "./SelectForm";
 export { default as InputReadOnly } from "./InputReadOnly";
 export { default as InputFormSystem } from "./InputFormSystem";
 export { default as UpdatePost } from "./UpdatePost";
+export { default as Slider } from "./Slider";

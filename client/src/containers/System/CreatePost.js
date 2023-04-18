@@ -64,8 +64,6 @@ const CreatePost = ({ isEdit, handleCloseModel }) => {
 
       const response = await apiUploadImages(formData);
 
-      // console.log(response);
-
       if (response.status === 200) {
         images = [...images, response?.data?.secure_url];
       }
@@ -154,8 +152,8 @@ const CreatePost = ({ isEdit, handleCloseModel }) => {
       <h1 className="text-3xl py-4 border-b">
         {isEdit ? "Chỉnh sửa tin đăng" : "Đăng tin mới"}
       </h1>
-      <div className="grid grid-cols-12 gap-6">
-        <form className="col-span-8 pb-8 space-y-8 border">
+      <div className="grid grid-cols-12 gap-6 mt-4">
+        <form className="col-span-8 pb-8 space-y-8 ">
           <Address
             invalidFields={invalidFields}
             setInvalidFields={setInvalidFields}
@@ -224,6 +222,7 @@ const CreatePost = ({ isEdit, handleCloseModel }) => {
               </div>
             </div>
           </div>
+
           <Button
             type="submit"
             onClick={handleSubmit}
@@ -233,7 +232,7 @@ const CreatePost = ({ isEdit, handleCloseModel }) => {
             fullWidth
           />
         </form>
-        <div className="col-span-4 border">
+        <div className="col-span-4">
           <CircularProgress />
         </div>
       </div>

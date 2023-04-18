@@ -80,3 +80,26 @@ export const getCategory = async (req, res) => {
     });
   }
 };
+
+// //GET CATEGORY BY POST ID
+// export const getCategoryByPostId = async (req, res) => {
+//   try {
+//     const { postId } = req.params;
+
+//     if (!postId) {
+//       return res.status(400).json({
+//         err: 1,
+//         msg: "Missing post id",
+//       });
+//     }
+
+//     const reponse = await categoryService.getCategoryByPostIdService(postId);
+
+//     res.status(200).json(reponse);
+//   } catch (error) {
+//     return res.status(500).json({
+//       err: -1,
+//       msg: "Fail at category controller: " + error,
+//     });
+//   }
+// };
