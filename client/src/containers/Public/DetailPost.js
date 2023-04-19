@@ -13,6 +13,7 @@ import moment from "moment";
 import "moment/locale/vi"; //Chuyển ngôn ngữ thời gian: 2 day ago -> 2 ngày trước
 import { getDistrictProvince } from "../../utils/Common/getDistrictProvince";
 import { GrStar } from "react-icons/gr";
+import GoogleMapReact from "google-map-react";
 const DetailPost = () => {
   const params = useParams();
   const postId = params?.postId;
@@ -37,6 +38,15 @@ const DetailPost = () => {
     }
     return stars;
   };
+
+  const defaultProps = {
+    center: {
+      lat: 10.99835602,
+      lng: 77.01502627,
+    },
+    zoom: 11,
+  };
+
   return (
     <div className="grid grid-cols-12 gap-4">
       <div className="col-span-8 w-full bg-white rounded-md shadow-md overflow-hidden">
@@ -132,6 +142,16 @@ const DetailPost = () => {
                 </tr>
               </tbody>
             </table>
+          </div>
+          <div>
+            <h1 className="text-2xl font-medium">Bản đồ</h1>
+            <div style={{ height: "300px", width: "100%" }}>
+              <GoogleMapReact
+                bootstrapURLKeys={{ key: process.env.REACT_APP_MAP_API }}
+                defaultCenter={defaultProps.center}
+                defaultZoom={defaultProps.zoom}
+              ></GoogleMapReact>
+            </div>
           </div>
         </div>
       </div>

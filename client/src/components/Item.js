@@ -69,7 +69,13 @@ const Item = ({
               handleStar(+star).map((star, number) => {
                 return <span key={number}>{star}</span>;
               })}
-            {title}
+            <Link
+              to={`chi-tiet/${convertToSlug(
+                title?.replaceAll("/", "-")
+              )}/${id}`}
+            >
+              {title}
+            </Link>
           </div>
         </div>
 
