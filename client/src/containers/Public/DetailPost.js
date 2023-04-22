@@ -1,19 +1,18 @@
-import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import { apiGetPostById } from "../../services/post";
-import Slider from "../../components/Slider";
-import { convertToSlug } from "../../utils/Common/convertToSlug";
-import convertToMillion from "../../utils/Common/convertToMillion";
-import { MdOutlineLocationOn } from "react-icons/md";
-import { TbReportMoney } from "react-icons/tb";
-import { RiCrop2Line } from "react-icons/ri";
-import { BsClock } from "react-icons/bs";
-import { AiOutlineClockCircle } from "react-icons/ai";
 import moment from "moment";
 import "moment/locale/vi"; //Chuyển ngôn ngữ thời gian: 2 day ago -> 2 ngày trước
-import { getDistrictProvince } from "../../utils/Common/getDistrictProvince";
+import React, { useEffect, useState } from "react";
+import { AiOutlineClockCircle } from "react-icons/ai";
 import { GrStar } from "react-icons/gr";
-import GoogleMapReact from "google-map-react";
+import { MdOutlineLocationOn } from "react-icons/md";
+import { RiCrop2Line } from "react-icons/ri";
+import { TbReportMoney } from "react-icons/tb";
+import { Link, useParams } from "react-router-dom";
+import MapCustom from "../../components/MapCustom";
+import Slider from "../../components/Slider";
+import { apiGetPostById } from "../../services/post";
+import convertToMillion from "../../utils/Common/convertToMillion";
+import { convertToSlug } from "../../utils/Common/convertToSlug";
+import { getDistrictProvince } from "../../utils/Common/getDistrictProvince";
 const DetailPost = () => {
   const params = useParams();
   const postId = params?.postId;
@@ -39,13 +38,25 @@ const DetailPost = () => {
     return stars;
   };
 
-  const defaultProps = {
-    center: {
-      lat: 10.99835602,
-      lng: 77.01502627,
-    },
-    zoom: 11,
-  };
+  const [toaDo, setToaDo] = useState({
+    kinhDo: "",
+    viDo: "",
+  });
+
+  useEffect(() => {
+    // navigator.geolocation.getCurrentPosition(
+    //   ({ coords: { longitude, latitude } }) => {
+    //     setToaDo({ kinhDo: longitude, viDo: latitude });
+    //   }
+    //   );
+    // const getCoords = async () => {
+    //   const results = await geocodeByAddress("Ninh Thuận");
+    //   console.log(results);
+    //   const latLng = await getLatLng(results[0]);
+    //   console.log(latLng);
+    // };
+    // post && getCoords();
+  }, [post]);
 
   return (
     <div className="grid grid-cols-12 gap-4">
@@ -145,13 +156,8 @@ const DetailPost = () => {
           </div>
           <div>
             <h1 className="text-2xl font-medium">Bản đồ</h1>
-            <div style={{ height: "300px", width: "100%" }}>
-              <GoogleMapReact
-                bootstrapURLKeys={{ key: process.env.REACT_APP_MAP_API }}
-                defaultCenter={defaultProps.center}
-                defaultZoom={defaultProps.zoom}
-              ></GoogleMapReact>
-            </div>
+            {/* <Map address={"Đại học Cần thơ"}></Map> */}
+            <MapCustom address={post?.address} />
           </div>
         </div>
       </div>

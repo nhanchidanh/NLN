@@ -12,7 +12,7 @@ import "swiper/css/navigation";
 // import required modules
 import { Pagination, Navigation } from "swiper";
 const Slider = ({ images }) => {
-  console.log(images);
+  // console.log(images);
   return (
     <>
       <Swiper
