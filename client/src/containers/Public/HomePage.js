@@ -65,7 +65,6 @@ const HomePage = () => {
           />
           <div className="w-full p-3 bg-red-600 text-white text-center rounded-md hover:bg-red-500 transition-all ease-in-out duration-300">
             <Link
-              className=" block"
               onClick={() => {
                 setIsCancel(true);
                 ScrollToList();

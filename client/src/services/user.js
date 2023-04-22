@@ -15,6 +15,22 @@ export const apiGetCurrentUser = () => {
   });
 };
 
+//GET ALL USER
+export const apiGetUsers = () => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const response = await axiosConfig({
+        method: "get",
+        url: "api/v1/user/all",
+      });
+
+      resolve(response);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
 export const apiUpdateUser = (payload) => {
   return new Promise(async (resolve, reject) => {
     try {

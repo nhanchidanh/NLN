@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import { ItemSideBar, Province, RelatedPost } from "../../components";
@@ -7,6 +7,7 @@ import List from "./List";
 import Pagination from "./Pagination";
 
 const Rental = () => {
+  const postRef = useRef();
   const { categories, priceRanges, areaRanges } = useSelector(
     (state) => state.app
   );
@@ -27,6 +28,10 @@ const Rental = () => {
     }
   }, [location, categories]);
 
+  const ScrollToList = () => {
+    postRef.current.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
     <div className=" flex flex-col gap-3">
       <div>
@@ -35,13 +40,14 @@ const Rental = () => {
       </div>
       <Province></Province>
       <div className="grid grid-cols-12 gap-4">
-        <div className="col-span-8 w-full">
+        <div className="col-span-8 w-full" ref={postRef}>
           {categoryId && <List categoryId={categoryId} />}
           {/* <Pagination /> */}
         </div>
         <div className="col-span-4 w-full space-y-4">
           <ItemSideBar
             onResetCancel={() => setIsCancel(false)}
+            onScroll={ScrollToList}
             isCancel={isCancel}
             type="priceRange"
             content={priceRanges}
@@ -50,15 +56,24 @@ const Rental = () => {
           />
           <ItemSideBar
             onResetCancel={() => setIsCancel(false)}
+            onScroll={ScrollToList}
             isCancel={isCancel}
             type="areaRange"
             content={areaRanges}
             title="Xem theo diện tích"
             isDoubleCol={true}
           />
-          <Link onClick={() => setIsCancel(true)} to={"/"}>
-            Hủy
-          </Link>
+          <div className="w-full p-3 bg-red-600 text-white text-center rounded-md hover:bg-red-500 transition-all ease-in-out duration-300">
+            <Link
+              onClick={() => {
+                setIsCancel(true);
+                ScrollToList();
+              }}
+              to={"/"}
+            >
+              Hủy
+            </Link>
+          </div>
           <RelatedPost />
         </div>
       </div>

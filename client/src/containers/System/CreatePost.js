@@ -4,7 +4,7 @@ import { BsFillCameraFill } from "react-icons/bs";
 import { MdDelete } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
-import { Address, Button, Overview } from "../../components";
+import { Address, Button, MapCustom, Overview } from "../../components";
 import { apiCreatePost, apiUpdatePost, apiUploadImages } from "../../services";
 import * as actions from "../../store/actions";
 import { getRangeFromValue } from "../../utils/Common/getRangeFromValue";
@@ -146,14 +146,13 @@ const CreatePost = ({ isEdit, handleCloseModel }) => {
       }
     }
   };
-
   return (
     <div className="px-8">
       <h1 className="text-3xl py-4 border-b">
         {isEdit ? "Chỉnh sửa tin đăng" : "Đăng tin mới"}
       </h1>
-      <div className="grid grid-cols-12 gap-6 mt-4">
-        <form className="col-span-8 pb-8 space-y-8 ">
+      <div className="mt-4">
+        <form className=" pb-8 space-y-8 ">
           <Address
             invalidFields={invalidFields}
             setInvalidFields={setInvalidFields}
@@ -232,9 +231,6 @@ const CreatePost = ({ isEdit, handleCloseModel }) => {
             fullWidth
           />
         </form>
-        <div className="col-span-4">
-          <CircularProgress />
-        </div>
       </div>
     </div>
   );

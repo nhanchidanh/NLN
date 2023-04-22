@@ -13,6 +13,10 @@ export const path = {
   SYSTEM: "/he-thong/*",
   CREATE_POST: "tao-moi-bai-dang",
   MANAGE_POST: "quan-ly-bai-dang",
+  MANAGE_USER: "quan-ly-nguoi-dung",
+  MANAGE_CATE: "quan-ly-danh-muc",
+  MANAGE_PRICE: "quan-ly-khoang-gia",
+  MANAGE_AREA: "quan-ly-khoang-dien-tich",
   PROFILE: "thong-tin-ca-nhan",
 };
 

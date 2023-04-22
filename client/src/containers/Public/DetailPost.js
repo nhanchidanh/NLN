@@ -154,9 +154,8 @@ const DetailPost = () => {
               </tbody>
             </table>
           </div>
-          <div>
+          <div className="space-y-4">
             <h1 className="text-2xl font-medium">Bản đồ</h1>
-            {/* <Map address={"Đại học Cần thơ"}></Map> */}
             <MapCustom address={post?.address} />
           </div>
         </div>

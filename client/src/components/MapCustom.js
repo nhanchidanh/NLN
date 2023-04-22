@@ -7,8 +7,15 @@ function MapCustom({ address }) {
   const [mapInitialized, setMapInitialized] = useState(false);
   const [loadLeaf, setLoadLeaf] = useState(false);
   const [loadEsri, setLoadEsri] = useState(false);
-
+  // console.log(address);
   useEffect(() => {
+    navigator?.geolocation?.getCurrentPosition(
+      ({ coords: { latitude, longitude } }) => {
+        if (!address) {
+          address = [latitude, longitude];
+        }
+      }
+    );
     if (!address) return;
 
     const leafletScript = document.createElement("script");
@@ -89,7 +96,7 @@ function MapCustom({ address }) {
                 .openPopup();
 
               map.fitBounds(response.results[0].bounds);
-              map.setZoom(13);
+              map.setZoom(14);
             });
           setMapInitialized(true);
         } catch (error) {
@@ -111,8 +118,8 @@ function MapCustom({ address }) {
   return <div id="weathermap"></div>;
 }
 
-MapCustom.propTypes = {
-  address: PropTypes.string.isRequired,
-};
+// MapCustom.propTypes = {
+//   address: PropTypes.string.isRequired,
+// };
 
 export default MapCustom;
