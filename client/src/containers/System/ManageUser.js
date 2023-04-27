@@ -1,21 +1,48 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
+import Swal from "sweetalert2";
+import FormEditUser from "../../components/FormEditUser";
+import { apiUpdateUser } from "../../services";
 import { apiGetUsers } from "../../services/user";
+import { useDispatch } from "react-redux";
+import { getCurrentUser } from "../../store/actions";
 
 const ManageUser = () => {
   const [users, setUsers] = useState([]);
+  const [selectUserEdit, setSelectUserEdit] = useState({});
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    const fetchUsers = async () => {
-      const response = await apiGetUsers();
-      // console.log(response?.data?.response);
-      if (response?.status === 200) {
-        setUsers(response?.data?.response);
-      }
-    };
-
     fetchUsers();
   }, []);
+
+  const fetchUsers = async () => {
+    const response = await apiGetUsers();
+    if (response?.status === 200) {
+      setUsers(response?.data?.response);
+    }
+  };
+
+  const handleSubmit = async (data) => {
+    console.log("data update", data);
+    const response = await apiUpdateUser(data);
+
+    if (response?.status === 200) {
+      setSelectUserEdit({});
+
+      Swal.fire("Thành công!", "Đã cập nhật thông tin!", "success").then(() => {
+        dispatch(getCurrentUser());
+        fetchUsers();
+      });
+    } else {
+      Swal.fire("Thất bại", "Có lỗi xảy ra!", "error");
+    }
+  };
+
+  const handleOnClickEdit = (user) => {
+    setSelectUserEdit(user);
+  };
+
   return (
     <div className="px-8">
       <h1 className="text-3xl py-4">Quản lý người dùng</h1>
@@ -48,10 +75,7 @@ const ManageUser = () => {
                 <td className="border p-2">
                   <div className="flex items-center justify-center gap-2 text-white">
                     <button
-                      // onClick={() => {
-                      //   dispatch(actions.editDate(item));
-                      //   setIsEdit(true);
-                      // }}
+                      onClick={() => handleOnClickEdit(item)}
                       className="p-2 bg-blue-500 rounded-md "
                     >
                       <AiOutlineEdit />
@@ -69,6 +93,29 @@ const ManageUser = () => {
           </tbody>
         </table>
       </div>
+
+      {Object.keys(selectUserEdit).length > 0 && (
+        <div
+          onClick={(e) => {
+            e.stopPropagation();
+            setSelectUserEdit({});
+          }}
+          className="absolute flex top-0 right-0 left-0 bottom-0 bg-overlay-30 "
+        >
+          <div
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+            className="w-1100 bg-white m-auto pb-5"
+          >
+            <FormEditUser
+              payload={selectUserEdit}
+              onChangePayload={setSelectUserEdit}
+              onSubmit={handleSubmit}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 };

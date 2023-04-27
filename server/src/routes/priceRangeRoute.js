@@ -6,7 +6,7 @@ const router = express.Router();
 router.get("/all", priceRangeController.getPriceRanges);
 router.get("/:id", priceRangeController.getPriceRange);
 router.post("/create", priceRangeController.createPriceRange);
-router.put("/update/:id", priceRangeController.updatePriceRange);
+router.put("/update", priceRangeController.updatePriceRange);
 router.delete("/delete/:id", priceRangeController.deletePriceRange);
 
 export default router;

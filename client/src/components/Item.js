@@ -1,11 +1,13 @@
-import React, { memo, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { memo, useCallback, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { convertToSlug } from "../utils/Common/convertToSlug";
 import { getDistrictProvince } from "../utils/Common/getDistrictProvince";
 import { truncateText } from "../utils/Common/truncateText";
 import icons from "../utils/icons";
 import anonAvatar from "../assets/anon-avatar.png";
 import convertToMillion from "../utils/Common/convertToMillion";
+import { useDispatch, useSelector } from "react-redux";
+import { addFavorite } from "../store/actions";
 
 const { GrStar, RiHeartLine, RiHeartFill } = icons;
 
@@ -19,10 +21,14 @@ const Item = ({
   title,
   user,
   id,
+  filters,
+  isFavorite = false,
 }) => {
   const [isHoverHeart, setIsHoverHeart] = useState(false);
-  // const navigate = useNavigate();
-  // console.log(images);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { currentUser: userFavorite } = useSelector((state) => state.user);
+
   const handleStar = (star) => {
     let stars = [];
     for (let i = 1; i <= +star; i++) {
@@ -32,6 +38,27 @@ const Item = ({
     }
     return stars;
   };
+
+  const handleClickFavorite = (postId) => {
+    if (!postId) return;
+
+    if (Object.keys(userFavorite).length === 0) {
+      navigate(`/login`, { replace: true });
+      return;
+    }
+
+    const payload = {
+      userId: userFavorite.id,
+      postId: postId,
+      filters: filters,
+    };
+
+    dispatch(addFavorite(payload));
+  };
+
+  const handleChangeHover = useCallback((bool) => {
+    setIsHoverHeart(() => bool);
+  }, []);
 
   return (
     <div className="flex flex-row w-full gap-3 py-4 border-t border-orange-600">
@@ -51,10 +78,11 @@ const Item = ({
         </span>
         <span
           className=" text-white rounded-md absolute bottom-1 right-1"
-          onMouseEnter={() => setIsHoverHeart(true)}
-          onMouseLeave={() => setIsHoverHeart(false)}
+          onMouseEnter={() => handleChangeHover(true)}
+          onMouseLeave={() => handleChangeHover(false)}
+          onClick={() => handleClickFavorite(id)}
         >
-          {isHoverHeart ? (
+          {isHoverHeart || isFavorite ? (
             <RiHeartFill size={24} color="red" />
           ) : (
             <RiHeartLine size={24} />

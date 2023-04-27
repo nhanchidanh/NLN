@@ -1,4 +1,9 @@
 import {
+  apiAddFavorite,
+  apiGetFavoritesByUserId,
+  apiRemoveFavorite,
+} from "../../services/favorite";
+import {
   apiGetNewPosts,
   apiGetPosts,
   apiGetPostsLimit,
@@ -101,6 +106,53 @@ export const getPostsLimitByUserId = (query) => async (dispatch) => {
       type: actionTypes.GET_POSTS_LIMIT_BY_USER_ID,
       posts: null,
     });
+  }
+};
+
+export const getFavoriteByUserId = (payload) => async (dispatch) => {
+  try {
+    const response = await apiGetFavoritesByUserId(payload.userId);
+
+    if (response?.data) {
+      dispatch({
+        type: actionTypes.GET_FAVORITE_BY_USER_ID,
+        favorites: response.data,
+      });
+    }
+  } catch (error) {
+    dispatch({
+      type: actionTypes.GET_FAVORITE_BY_USER_ID,
+      favorites: null,
+    });
+  }
+};
+
+export const removeFavorite = (payload) => async (dispatch) => {
+  try {
+    const response = await apiRemoveFavorite(payload.userId, payload.postId);
+
+    if (response?.data) {
+      dispatch(getFavoriteByUserId({ userId: payload.userId }));
+    }
+  } catch (error) {
+    console.log("error removeFavorite:::", error);
+  }
+};
+
+export const addFavorite = (payload) => async (dispatch) => {
+  try {
+    const response = await apiAddFavorite(payload.userId, payload.postId);
+
+    dispatch(getFavoriteByUserId({ userId: payload.userId }));
+
+    if (response?.data) {
+      const { filters } = payload;
+      setTimeout(() => {
+        dispatch(getPostsLimit(filters));
+      }, 50);
+    }
+  } catch (error) {
+    console.log("error addFavorite:::", error);
   }
 };
 

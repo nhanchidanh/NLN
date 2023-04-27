@@ -28,6 +28,7 @@ export const getUsersService = () => {
   return new Promise(async (resolve, reject) => {
     try {
       const response = await db.User.findAll({
+        where: { role: "user" },
         raw: true,
         attributes: {
           exclude: ["password"],
@@ -97,6 +98,7 @@ export const updateUserService = (id, data) => {
         response,
       });
     } catch (error) {
+      console.log("error service update user:::", error);
       reject(error);
     }
   });

@@ -19,6 +19,10 @@ const actionTypes = {
 
   //USER
   GET_CURRENT_USER: "GET_CURRENT_USER",
+
+  ADD_FAVORITE: "ADD_FAVORITE",
+  REMOVE_FAVORITE: "REMOVE_FAVORITE",
+  GET_FAVORITE_BY_USER_ID: "GET_FAVORITE_BY_USER_ID",
 };
 
 export default actionTypes;

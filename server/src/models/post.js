@@ -27,6 +27,12 @@ module.exports = (sequelize, DataTypes) => {
         as: "images",
         sourceKey: "id",
       });
+
+      Post.hasMany(models.Favorite, {
+        foreignKey: "postId",
+        as: "favorites",
+        sourceKey: "id",
+      });
     }
   }
   Post.init(

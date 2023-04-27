@@ -7,6 +7,7 @@ const initState = {
   newPosts: [],
   postsOfUser: [],
   dataEdit: {},
+  favorites: [],
 };
 
 const postReducer = (state = initState, action) => {
@@ -36,6 +37,12 @@ const postReducer = (state = initState, action) => {
       return {
         ...state,
         dataEdit: action.dataEdit || {},
+      };
+    case actionTypes.GET_FAVORITE_BY_USER_ID:
+      return {
+        ...state,
+        favorites: action.favorites || [],
+        // posts: action.favorites?.post || [],
       };
 
     default:

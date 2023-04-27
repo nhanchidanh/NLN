@@ -42,6 +42,7 @@ export const getUser = async (req, res) => {
 export const updateUser = async (req, res) => {
   const { id } = req.user;
   const data = req.body;
+
   try {
     if (!data) {
       return res.status(400).json({
@@ -49,9 +50,10 @@ export const updateUser = async (req, res) => {
         msg: "Missing inputs!",
       });
     }
-    const response = await userService.updateUserService(id, data);
+    const response = await userService.updateUserService(data.id, data);
     res.status(200).json(response);
   } catch (error) {
+    console.log("error controller update user::", error);
     res.status(500).json({ error: error.message });
   }
 };

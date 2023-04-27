@@ -6,6 +6,7 @@ export const getPriceRangesService = () => {
   return new Promise(async (resolve, reject) => {
     try {
       const response = await db.PriceRange.findAll({
+        order: [["from"]],
         raw: true,
       }); //bình thường trả ve instance chứa data và một vài thông số khác. Nhưng có raw:true thì trả về data{}
       resolve({
@@ -46,7 +47,7 @@ export const createPriceRangeService = ({ title, from, to }) => {
 };
 
 //UPDATE priceRANGE
-export const updatePriceRangeService = ({ id }, { title, from, to }) => {
+export const updatePriceRangeService = ({ id, title, from, to }) => {
   return new Promise(async (resolve, reject) => {
     try {
       const response = await db.PriceRange.update(

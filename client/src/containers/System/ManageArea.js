@@ -1,8 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
 import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import Swal from "sweetalert2";
+import { getAreaRanges } from "../../store/actions";
+import FormEditRange from "../../components/FormEditRange";
+import { apiUpdateAreaRange } from "../../services";
 
 const ManageArea = () => {
+  const dispatch = useDispatch();
+  const [selectRangeEdit, setSelectRangeEdit] = useState({});
+
+  const handleSubmit = async (data) => {
+    console.log("data update", data);
+    const response = await apiUpdateAreaRange(data);
+
+    if (response?.status === 200) {
+      setSelectRangeEdit({});
+
+      Swal.fire("Thành công!", "Đã cập nhật thông tin!", "success").then(() => {
+        dispatch(getAreaRanges());
+      });
+    } else {
+      Swal.fire("Thất bại", "Có lỗi xảy ra!", "error");
+    }
+  };
+
+  const handleOnClickEdit = (item) => {
+    setSelectRangeEdit(item);
+  };
+
   const { areaRanges } = useSelector((state) => state.app);
   // console.log(areaRanges);
   return (
@@ -30,10 +56,7 @@ const ManageArea = () => {
                 <td className="border p-2">
                   <div className="flex items-center justify-center gap-2 text-white">
                     <button
-                      // onClick={() => {
-                      //   dispatch(actions.editDate(item));
-                      //   setIsEdit(true);
-                      // }}
+                      onClick={() => handleOnClickEdit(item)}
                       className="p-2 bg-blue-500 rounded-md "
                     >
                       <AiOutlineEdit />
@@ -51,6 +74,30 @@ const ManageArea = () => {
           </tbody>
         </table>
       </div>
+
+      {Object.keys(selectRangeEdit).length > 0 && (
+        <div
+          onClick={(e) => {
+            e.stopPropagation();
+            setSelectRangeEdit({});
+          }}
+          className="absolute flex top-0 right-0 left-0 bottom-0 bg-overlay-30 "
+        >
+          <div
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+            className="w-1100 bg-white m-auto pb-5"
+          >
+            <FormEditRange
+              title={"Cập nhật khoảng giá"}
+              payload={selectRangeEdit}
+              setPayload={setSelectRangeEdit}
+              onSubmit={handleSubmit}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 };

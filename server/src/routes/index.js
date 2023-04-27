@@ -4,7 +4,7 @@ import categoryRoute from "./categoryRoute";
 import postRoute from "./postRoute";
 import priceRoute from "./priceRangeRoute";
 import areaRoute from "./areaRangeRoute";
-import provinceRoute from "./provinceRoute";
+import favoriteRoute from "./favoriteRoute";
 import userRoute from "./userRoute";
 
 const initRoutes = (app) => {
@@ -14,7 +14,7 @@ const initRoutes = (app) => {
   app.use("/api/v1/post", postRoute);
   app.use("/api/v1/price-range", priceRoute);
   app.use("/api/v1/area-range", areaRoute);
-  app.use("/api/v1/province", provinceRoute);
+  app.use("/api/v1/favorite", favoriteRoute);
   app.use("/api/v1/user", userRoute);
 
   //Neu kh khop voi cac route o tren => Redirect to '/'

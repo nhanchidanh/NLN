@@ -6,7 +6,7 @@ const router = express.Router();
 router.get("/all", areaRangeController.getAreaRanges);
 router.get("/:id", areaRangeController.getAreaRange);
 router.post("/create", areaRangeController.createAreaRange);
-router.put("/update/:id", areaRangeController.updateAreaRange);
+router.put("/update", areaRangeController.updateAreaRange);
 router.delete("/delete/:id", areaRangeController.deleteAreaRange);
 
 export default router;

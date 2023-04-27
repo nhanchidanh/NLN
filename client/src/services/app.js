@@ -15,6 +15,22 @@ export const apiGetPriceRanges = () =>
     }
   });
 
+export const apiUpdatePriceRange = (payload) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const response = await axios({
+        method: "put",
+        url: "api/v1/price-range/update",
+        data: payload,
+      });
+
+      resolve(response);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
 export const apigetAreaRanges = () =>
   new Promise(async (resolve, reject) => {
     try {
@@ -28,6 +44,22 @@ export const apigetAreaRanges = () =>
       reject(error);
     }
   });
+
+export const apiUpdateAreaRange = (payload) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const response = await axios({
+        method: "put",
+        url: "api/v1/area-range/update",
+        data: payload,
+      });
+
+      resolve(response);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
 
 export const apiGetProvinces = () =>
   new Promise(async (resolve, reject) => {

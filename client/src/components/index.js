@@ -21,3 +21,6 @@ export { default as UpdatePost } from "./UpdatePost";
 export { default as Slider } from "./Slider";
 export { default as Map } from "./Map";
 export { default as MapCustom } from "./MapCustom";
+export { default as FormEditRange } from "./FormEditRange";
+export { default as FormEditUser } from "./FormEditUser";
+export { default as FormEditCate } from "./FormEditCate";

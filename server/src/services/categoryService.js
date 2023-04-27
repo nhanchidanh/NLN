@@ -47,7 +47,7 @@ export const createCategoryService = ({ title, header, subheader }) => {
 };
 
 //UPDATE CATEGORY
-export const updateCategoryService = ({ id }, { title, header, subheader }) => {
+export const updateCategoryService = ({ id, title, header, subheader }) => {
   return new Promise(async (resolve, reject) => {
     try {
       const response = await db.Category.update(

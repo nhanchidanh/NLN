@@ -35,10 +35,7 @@ export const createAreaRange = async (req, res) => {
 //UPDATE AREARANGE
 export const updateAreaRange = async (req, res) => {
   try {
-    const response = await areaRangeService.updateAreaRangeService(
-      req.params,
-      req.body
-    );
+    const response = await areaRangeService.updateAreaRangeService(req.body);
     res.status(200).json(response);
   } catch (error) {
     res.status(500).json({ err: 1, msg: error.message });

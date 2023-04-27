@@ -1,18 +1,20 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Item } from "../../components";
-import { getPostsLimit } from "../../store/actions/post";
+import { getFavoriteByUserId, getPostsLimit } from "../../store/actions/post";
 import { useSearchParams } from "react-router-dom";
 import { truncateText } from "../../utils/Common/truncateText";
 import { Pagination } from "@mui/material";
 
 const List = ({ categoryId }) => {
   const dispatch = useDispatch();
-  const { posts, count } = useSelector((state) => state.post);
+  const { posts, count, favorites } = useSelector((state) => state.post);
+  // const [list, setList] = useState([]);
   const [page, setPage] = useState(1);
   const [filter, setFilter] = useState({});
-  // console.log(count);
+  // console.log(favorites);
   const [searchParams] = useSearchParams();
+  const { currentUser } = useSelector((state) => state.user);
 
   const postRef = useRef();
 
@@ -36,6 +38,13 @@ const List = ({ categoryId }) => {
     setPage(1);
     setFilter(searchParamsObject);
   }, [searchParams]);
+
+  // GET FAVORITES
+  useEffect(() => {
+    if (Object.keys(currentUser).length === 0) return;
+
+    dispatch(getFavoriteByUserId({ userId: currentUser.id }));
+  }, [dispatch, currentUser]);
 
   useEffect(() => {
     dispatch(getPostsLimit({ page, categoryId, status: "SHOW", ...filter }));
@@ -63,12 +72,30 @@ const List = ({ categoryId }) => {
             bgColor={"bg-gray-200"}
             text="Mới nhất"
           />
+          <Button
+            onClick={() => setFilter((prev) => ({ ...prev, isNew: 1 }))}
+            bgColor={"bg-gray-200"}
+            text="Yêu thích"
+          />
         </div>
         <div>
-          {posts.length > 0 &&
-            posts.map((item) => {
+          {posts?.length > 0 &&
+            posts?.map((item) => {
+              let isFavorite = false;
+
+              if (favorites?.length) {
+                const index = favorites?.findIndex(
+                  (favorite) => favorite.postId === item.id
+                );
+
+                if (index !== -1) {
+                  isFavorite = true;
+                }
+              }
+
               return (
                 <Item
+                  isFavorite={isFavorite}
                   key={item?.id}
                   address={item?.address}
                   price={item?.price}
@@ -79,6 +106,7 @@ const List = ({ categoryId }) => {
                   title={item?.title}
                   user={item?.user}
                   id={item?.id}
+                  filters={{ page, categoryId, status: "SHOW", ...filter }}
                 />
               );
             })}

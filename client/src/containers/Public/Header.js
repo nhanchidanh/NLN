@@ -8,7 +8,8 @@ import { path } from "../../utils/constant";
 import icons from "../../utils/icons";
 import { menuManagerAccount } from "../../utils/MenuManagerAccount";
 import { AiOutlineArrowUp } from "react-icons/ai";
-import { BsArrowUp } from "react-icons/bs";
+import { BsArrowUp, BsHeartFill } from "react-icons/bs";
+import { RiHeart2Line, RiHeartLine } from "react-icons/ri";
 
 const { AiOutlinePlusCircle, BsChevronDown } = icons;
 
@@ -21,6 +22,8 @@ const Header = () => {
   const [searchParams] = useSearchParams();
   // const headerRef = useRef();
   const { isLoggedIn } = useSelector((state) => state.auth);
+  const { currentUser } = useSelector((state) => state.user);
+
   const postRef = useRef();
 
   const goLogin = useCallback(
@@ -29,6 +32,10 @@ const Header = () => {
     },
     [navigate]
   );
+
+  const handleShowFavorites = () => {
+    // dispatch(actions.getFavoriteByUserId({ userId: currentUser.id }));
+  };
 
   // useEffect(() => {
   //   headerRef.current.scrollIntoView({ behavior: "smooth" }); //scroll cho đến khi header nằm trong view frame
@@ -97,6 +104,13 @@ const Header = () => {
 
         {isLoggedIn && (
           <div className="flex items-center gap-3 relative">
+            <Button
+              text={"Yêu thích"}
+              // textColor="text-white"
+              // bgColor="bg-blue-700"
+              IcAfter={RiHeart2Line}
+              onClick={() => handleShowFavorites}
+            />
             <User />
             <Button
               text={"Quản lý tài khoản"}
