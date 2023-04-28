@@ -17,6 +17,7 @@ import {
   ManageCate,
   System,
   ManageArea,
+  FavoritePost,
 } from "./containers/System";
 import * as actions from "./store/actions";
 import { useDispatch, useSelector } from "react-redux";
@@ -61,6 +62,7 @@ function App() {
           <Route path={path.MANAGE_PRICE} element={<ManagePrice />} />
           <Route path={path.MANAGE_AREA} element={<ManageArea />} />
           <Route path={path.PROFILE} element={<EditProfile />} />
+          <Route path={path.FAVORITE_POST} element={<FavoritePost />} />
         </Route>
       </Routes>
     </div>

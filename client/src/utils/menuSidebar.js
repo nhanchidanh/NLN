@@ -1,4 +1,6 @@
+import { BsHeartFill } from "react-icons/bs";
 import icons from "../utils/icons";
+import { RiHeartLine } from "react-icons/ri";
 
 const {
   BsPencilSquare,
@@ -29,12 +31,18 @@ export const menuSidebar = [
   },
   {
     id: 4,
+    text: "Tin Yêu thích",
+    path: "/he-thong/tin-yeu-thich",
+    icon: <RiHeartLine />,
+  },
+  {
+    id: 5,
     text: "Liên hệ",
     path: "/lien-he",
     icon: <TbMessageCircle />,
   },
   {
-    id: 5,
+    id: 6,
     text: "Đăng xuất",
     path: "/he-thong/thoat",
     icon: <HiOutlineLogout />,

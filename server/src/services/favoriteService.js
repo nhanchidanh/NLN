@@ -52,7 +52,7 @@ const favoriteService = {
               model: db.Post,
               as: "post",
               include: [
-                // { model: db.Image, as: "image", attributes: ["url"] },
+                { model: db.Image, as: "images", attributes: ["url"] },
                 { model: db.User, as: "user" },
               ],
             },

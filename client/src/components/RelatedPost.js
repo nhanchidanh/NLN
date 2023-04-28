@@ -21,6 +21,7 @@ const RelatedPost = () => {
               image={item?.images[0]}
               price={item?.price}
               createdAt={item.createdAt}
+              id={item?.id}
             />
           );
         })}

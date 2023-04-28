@@ -8,3 +8,4 @@ export { default as ManageUser } from "./ManageUser";
 export { default as ManageCate } from "./ManageCate";
 export { default as ManagePrice } from "./ManagePrice";
 export { default as ManageArea } from "./ManageArea";
+export { default as FavoritePost } from "./FavoritePost";

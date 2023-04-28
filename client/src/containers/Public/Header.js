@@ -23,6 +23,7 @@ const Header = () => {
   // const headerRef = useRef();
   const { isLoggedIn } = useSelector((state) => state.auth);
   const { currentUser } = useSelector((state) => state.user);
+  const { favorites } = useSelector((state) => state.post);
 
   const postRef = useRef();
 
@@ -104,13 +105,15 @@ const Header = () => {
 
         {isLoggedIn && (
           <div className="flex items-center gap-3 relative">
-            <Button
-              text={"Yêu thích"}
-              // textColor="text-white"
-              // bgColor="bg-blue-700"
-              IcAfter={RiHeart2Line}
-              onClick={() => handleShowFavorites}
-            />
+            <Link
+              className="flex gap-1 hover:underline"
+              to={`he-thong/${path.FAVORITE_POST}`}
+            >
+              <span>
+                <RiHeartLine size={24} />
+              </span>
+              <span>Yêu thích({favorites?.length})</span>
+            </Link>
             <User />
             <Button
               text={"Quản lý tài khoản"}

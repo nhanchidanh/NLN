@@ -13,6 +13,9 @@ import { apiGetPostById } from "../../services/post";
 import convertToMillion from "../../utils/Common/convertToMillion";
 import { convertToSlug } from "../../utils/Common/convertToSlug";
 import { getDistrictProvince } from "../../utils/Common/getDistrictProvince";
+import anonAvatar from "../../assets/anon-avatar.png";
+import { BsFillTelephoneFill } from "react-icons/bs";
+import RelatedPost from "../../components/RelatedPost";
 const DetailPost = () => {
   const params = useParams();
   const postId = params?.postId;
@@ -42,21 +45,6 @@ const DetailPost = () => {
     kinhDo: "",
     viDo: "",
   });
-
-  useEffect(() => {
-    // navigator.geolocation.getCurrentPosition(
-    //   ({ coords: { longitude, latitude } }) => {
-    //     setToaDo({ kinhDo: longitude, viDo: latitude });
-    //   }
-    //   );
-    // const getCoords = async () => {
-    //   const results = await geocodeByAddress("Ninh Thuận");
-    //   console.log(results);
-    //   const latLng = await getLatLng(results[0]);
-    //   console.log(latLng);
-    // };
-    // post && getCoords();
-  }, [post]);
 
   return (
     <div className="grid grid-cols-12 gap-4">
@@ -160,7 +148,53 @@ const DetailPost = () => {
           </div>
         </div>
       </div>
-      <div className="col-span-4 w-full space-y-4 border"></div>
+      <div className="col-span-4 w-full space-y-4">
+        <div className="w-full p-3 bg-[#febb02] rounded-md flex flex-col gap-4 items-center justify-center">
+          <div className="w-full flex flex-col justify-center items-center">
+            <img
+              src={anonAvatar}
+              alt="avatar"
+              className="w-20 h-20 rounded-full object-cover"
+            />
+            <h3>{post?.user?.fullName}</h3>
+          </div>
+          <div className="w-full flex flex-col items-center justify-center gap-3">
+            <Link
+              className="flex items-center justify-center gap-1 w-full rounded-md py-2 bg-[#16c784] text-white font-bold text-lg transition-all hover:bg-[#13bb7b]"
+              to={`tel:${post?.user?.phone}`}
+            >
+              <span>
+                <BsFillTelephoneFill />
+              </span>
+              <span>{post?.user?.phone}</span>
+            </Link>
+            <Link
+              className="flex items-center gap-1 bg-white w-full justify-center rounded-md py-2 "
+              to="/"
+            >
+              <img
+                className="w-6 h-6 rounded-full object-cover"
+                src="https://phongtro123.com/images/icon-zalo.png"
+                alt="zalo"
+              />
+              <span>nhắn Zalo</span>
+            </Link>
+            <Link
+              className="flex items-center gap-1 bg-white w-full justify-center rounded-md py-2"
+              to="/"
+            >
+              <img
+                className="w-6 h-6 rounded-full object-cover"
+                src="https://phongtro123.com/images/love.svg"
+                alt="tym"
+              />
+              <span>Yêu thích</span>
+            </Link>
+          </div>
+        </div>
+
+        <RelatedPost></RelatedPost>
+      </div>
     </div>
   );
 };

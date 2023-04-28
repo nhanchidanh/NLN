@@ -18,6 +18,7 @@ export const path = {
   MANAGE_PRICE: "quan-ly-khoang-gia",
   MANAGE_AREA: "quan-ly-khoang-dien-tich",
   PROFILE: "thong-tin-ca-nhan",
+  FAVORITE_POST: "tin-yeu-thich",
 };
 
 export const text = {
