@@ -22,16 +22,15 @@ const InputForm = ({
         onChange={(e) =>
           setValue((prev) => ({ ...prev, [keyPayload]: e.target.value }))
         }
-        onFocus={() => setInvalidFields([])}
+        onFocus={() => setInvalidFields && setInvalidFields([])}
         autoComplete="off"
       />
       {/* Show invalid Field:: some-every=>true/false find-filter=>value/null */}
-      {invalidFields.length > 0 &&
-        invalidFields.some((item) => item.name === keyPayload) && (
-          <small className="text-red-500 italic">
-            {invalidFields.find((item) => item.name === keyPayload)?.message}
-          </small>
-        )}
+      {invalidFields?.some((item) => item.name === keyPayload) && (
+        <small className="text-red-500 italic">
+          {invalidFields.find((item) => item.name === keyPayload)?.message}
+        </small>
+      )}
     </div>
   );
 };

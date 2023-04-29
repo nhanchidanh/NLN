@@ -1,60 +1,86 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import Swal from "sweetalert2";
+import { Button, InputForm } from "../../components";
 
 const Contact = () => {
+  const [payload, setPayload] = useState({
+    fullName: "",
+    phone: "",
+    content: "",
+  });
+
+  const handleSubmit = () => {
+    // console.log(payload);
+    Swal.fire(
+      `Cảm ơn ${payload?.fullName || ""}!`,
+      "Phản hồi của bạn đã được chúng tôi ghi nhận",
+      "success"
+    ).then(() => {
+      setPayload({ fullName: "", phone: "", content: "" });
+    });
+  };
+
   return (
-    <div className="border w-full my-3 rounded-md">
-      <div className="p-5 flex flex-col gap-3">
-        <h1>Hướng dẫn đăng tin</h1>
-        <span>
-          Chào bạn, sau đây là hướng dẫn sử dụng cho thành viên website
-          phongtro123.com.
-        </span>
-        <span>
-          Nếu bạn chưa có tài khoản, hãy{" "}
-          <Link to="/login" className="text-blue-600">
-            đăng ký tại đây
-          </Link>{" "}
-          trước khi bắt đầu đăng tin mới.
-        </span>
-        <span>
-          Nếu đã có tài khoản, sau khi{" "}
-          <Link to="/login" className="text-blue-600">
-            đăng nhập
-          </Link>{" "}
-          vào website, bạn bấm vào nút{" "}
-          <Link to="/he-thong/quan-ly-bai-dang" className="text-blue-600">
-            ĐĂNG TIN MỚI
-          </Link>{" "}
-          để bắt đầu.
-        </span>
-        <span>
-          Khi đăng tin các bạn đọc kỹ mô tả từng bước, nhập đầy đủ và chính xác
-          nội dung cho tin đăng, đặc biệt là mục Giá và Diện tích. Những tin có
-          nội dung hình ảnh rõ ràng, đầy đủ sẽ có tỉ lệ xem cao hơn 50%.
-        </span>
-        <span>Lưu ý khi đăng tin:</span>
-        <span>
-          + Điền đầy đủ các thông tin bắt buộc vào các ô nhập liệu trong phần
-          đăng tin.
-        </span>
-        <span>
-          + Phần giá cho thuê, vui lòng nhập chính xác 1 giá duy nhất (Không
-          nhập giá từ ....đến ....) và chọn đúng đơn vị giá là triệu/tháng hoặc
-          nghìn/tháng. Ví dụ bạn cho thuê 3 triệu/tháng thì bạn nhập đủ như sau
-          3000000 (1 số 3 và 6 số 0).
-        </span>
-        <span>
-          + Diện tích nhập đúng 1 diện tích duy nhất (Không nhập diện tích từ
-          ....đến ....)
-        </span>
-        <span>
-          + Sau khi nhập đầy đủ các thông tin, bấm ĐĂNG TIN NGAY và chờ vài giây
-          để tin bạn hiển thị trên website, nếu đăng tin thành công hệ thống sẽ
-          báo bạn đã đăng tin thành công, nếu hệ thống cảnh báo màu đỏ, các ô
-          chọn màu bị sai, vui lòng nhập lại cho chính xác và bấm ĐĂNG TIN NGAY
-          lại.
-        </span>
+    <div className="w-full my-3 rounded-md">
+      <h1 className="text-2xl font-semibold mb-6">Liên hệ với chúng tôi</h1>
+      <div className="flex gap-4">
+        <div className="flex h-fit flex-1 gap-4 flex-col p-4 rounded-3xl text-white bg-gradient-to-br from-[#0039e4] to-[#04dbf1]">
+          <h4 className="font-medium ">Thông tin liên hệ</h4>
+          <span>
+            Chúng tôi biết bạn có rất nhiều sự lựa chọn. Nhưng cảm ơn vì đã lựa
+            chọn PhongTro123.Com
+          </span>
+          <span>Điện thoại: 0917 686 101</span>
+          <span>Email: cskh.phongtro123@gmail.com</span>
+          <span>Zalo: 0917 686 101</span>
+          <span>Viber: 0917 686 101</span>
+          <span>
+            Địa chỉ: LD-06.04, Toà nhà Lexington Residence, Số 67 Mai Chí Thọ,
+            Phường An Phú, Quận 2, Tp. Hồ Chí Minh.
+          </span>
+        </div>
+        <div className="flex-1 bg-white shadow-md rounded-md p-4">
+          <h4 className="font-medium text-lg mb-4">Liên hệ trực tuyến</h4>
+          <form className="space-y-6">
+            <div>
+              <InputForm
+                label={"HỌ TÊN CỦA BẠN"}
+                value={payload?.fullName}
+                setValue={setPayload}
+                keyPayload={"fullName"}
+              />
+            </div>
+            <div>
+              <InputForm
+                label={"SỐ ĐIỆN THOẠI"}
+                value={payload?.phone}
+                setValue={setPayload}
+                keyPayload={"phone"}
+              />
+            </div>
+            <div>
+              <label htmlFor="desc">NỘI DUNG MÔ TẢ</label>
+              <textarea
+                value={payload?.content}
+                onChange={(e) =>
+                  setPayload((prev) => ({ ...prev, content: e.target.value }))
+                }
+                // name="content"
+                id="desc"
+                cols="30"
+                rows="3"
+                className="w-full rounded-md p-2 outline-none bg-[#e8f0fe]"
+              ></textarea>
+            </div>
+            <Button
+              text={"Gửi liên hệ"}
+              bgColor={"bg-secondary1"}
+              textColor={"text-white"}
+              fullWidth
+              onClick={handleSubmit}
+            />
+          </form>
+        </div>
       </div>
     </div>
   );

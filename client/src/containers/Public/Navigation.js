@@ -53,6 +53,12 @@ const Navigation = ({ isAdmin }) => {
         >
           Liên hệ
         </NavLink>
+        <NavLink
+          to={path.INSTRUCTION}
+          className={({ isActive }) => (isActive ? active : notActive)}
+        >
+          Hướng dẫn
+        </NavLink>
       </div>
     </div>
   );

@@ -6,6 +6,7 @@ import {
   HomePage,
   DetailPost,
   Contact,
+  Instruction,
 } from "./containers/Public";
 import { path } from "./utils/constant";
 import {
@@ -45,6 +46,7 @@ function App() {
           <Route path={path.CHO_THUE_PHONG_TRO} element={<Rental />} />
           <Route path={path.TIM_NGUOI_O_GHEP} element={<Rental />} />
           <Route path={path.CONTACT} element={<Contact />} />
+          <Route path={path.INSTRUCTION} element={<Instruction />} />
           <Route
             path={path.DETAIL_POST__TITLE__POSTID}
             element={<DetailPost />}
