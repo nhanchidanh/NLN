@@ -46,7 +46,7 @@ export const updatePriceRange = async (req, res) => {
 export const deletePriceRange = async (req, res) => {
   const { id } = req.params;
   try {
-    // console.log(id);
+    console.log(id);
     const response = await priceRangeService.deletePriceRangeService({ id });
     res.status(200).json(response);
   } catch (error) {

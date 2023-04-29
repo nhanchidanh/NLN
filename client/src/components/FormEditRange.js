@@ -3,12 +3,18 @@ import InputFormSystem from "./InputFormSystem";
 import Button from "./Button";
 import validate from "../utils/Common/validateFields";
 
-const FormEditRange = ({ title, payload, setPayload, onSubmit }) => {
+const FormEditRange = ({
+  title,
+  payload,
+  setPayload,
+  onSubmit,
+  textButton = "Cập nhật",
+}) => {
   const [invalidFields, setInvalidFields] = useState([]);
 
   const handleSubmit = () => {
     const invalidCounter = validate(payload, setInvalidFields);
-
+    // console.log(invalidCounter);
     if (invalidCounter === 0) {
       onSubmit({
         title: payload.title,
@@ -54,7 +60,7 @@ const FormEditRange = ({ title, payload, setPayload, onSubmit }) => {
 
       <Button
         fullWidth
-        text={"Cập nhật"}
+        text={textButton}
         bgColor={"bg-secondary1"}
         textColor={"text-white"}
         onClick={handleSubmit}

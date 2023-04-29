@@ -4,15 +4,28 @@ import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import { getAreaRanges } from "../../store/actions";
 import FormEditRange from "../../components/FormEditRange";
-import { apiUpdateAreaRange } from "../../services";
+import {
+  apiAddAreaRange,
+  apiDeleteAreaRange,
+  apiUpdateAreaRange,
+} from "../../services";
+import Button from "../../components/Button";
 
 const ManageArea = () => {
   const dispatch = useDispatch();
   const [selectRangeEdit, setSelectRangeEdit] = useState({});
+  const [isEditMode, setIsEditMode] = useState(false);
 
   const handleSubmit = async (data) => {
     console.log("data update", data);
-    const response = await apiUpdateAreaRange(data);
+
+    let response;
+
+    if (isEditMode) {
+      response = await apiUpdateAreaRange(data);
+    } else {
+      response = await apiAddAreaRange(data);
+    }
 
     if (response?.status === 200) {
       setSelectRangeEdit({});
@@ -29,11 +42,56 @@ const ManageArea = () => {
     setSelectRangeEdit(item);
   };
 
+  const handleCreateRange = () => {
+    setIsEditMode(false);
+    setSelectRangeEdit({
+      title: "",
+      from: "",
+      to: "",
+    });
+  };
+
+  const handleDeleteRange = async (id) => {
+    console.log(id);
+
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const response = await apiDeleteAreaRange(id);
+        // console.log(response);
+        if (response?.data?.err === 0) {
+          Swal.fire("Deleted!", "Your file has been deleted.", "success").then(
+            () => {
+              dispatch(getAreaRanges());
+            }
+          );
+        } else {
+          Swal.fire("Oops!", "Delete failed!", "error");
+        }
+      }
+    });
+  };
+
   const { areaRanges } = useSelector((state) => state.app);
   // console.log(areaRanges);
   return (
     <div className="px-8">
-      <h1 className="text-3xl py-4">Quản lý khoảng diện tích</h1>
+      <div className="flex justify-between items-center">
+        <h1 className="text-3xl py-4">Quản lý khoảng giá</h1>
+        <Button
+          text="Thêm mới"
+          bgColor="bg-secondary1"
+          textColor={"text-white"}
+          onClick={handleCreateRange}
+        />
+      </div>
       <div className="w-full">
         <table className="w-full table-auto border border-separate border-spacing-0 rounded-2xl overflow-hidden">
           <thead>
@@ -62,7 +120,7 @@ const ManageArea = () => {
                       <AiOutlineEdit />
                     </button>
                     <button
-                      // onClick={() => handleDeletePost(item?.id)}
+                      onClick={() => handleDeleteRange(item?.id)}
                       className="p-2 bg-red-500 rounded-md "
                     >
                       <AiOutlineDelete />

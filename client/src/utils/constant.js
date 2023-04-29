@@ -4,9 +4,7 @@ export const path = {
   LOGIN: "login", //route con kh có dấu / ở trc
   REGISTER: "register",
   CHO_THUE_PHONG_TRO: "cho-thue-phong-tro",
-  CHO_THUE_MAT_BANG: "cho-thue-mat-bang",
-  CHO_THUE_CAN_HO: "cho-thue-can-ho",
-  NHA_CHO_THUE: "nha-cho-thue",
+  TIM_NGUOI_O_GHEP: "tim-nguoi-o-ghep",
   DETAIL_POST__TITLE__POSTID: "chi-tiet/:title/:postId",
   CONTACT: "lien-he",
 

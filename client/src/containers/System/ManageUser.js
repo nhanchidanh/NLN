@@ -3,9 +3,10 @@ import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
 import Swal from "sweetalert2";
 import FormEditUser from "../../components/FormEditUser";
 import { apiUpdateUser } from "../../services";
-import { apiGetUsers } from "../../services/user";
+import { apiDeleteUser, apiGetUsers } from "../../services/user";
 import { useDispatch } from "react-redux";
 import { getCurrentUser } from "../../store/actions";
+import anonAvatar from "../../assets/anon-avatar.png";
 
 const ManageUser = () => {
   const [users, setUsers] = useState([]);
@@ -43,6 +44,37 @@ const ManageUser = () => {
     setSelectUserEdit(user);
   };
 
+  const handleDeleteUser = async (id) => {
+    console.log(id);
+
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const response = await apiDeleteUser(id);
+        console.log(response);
+        if (response?.data?.err === 0) {
+          Swal.fire("Deleted!", "Your file has been deleted.", "success").then(
+            () => {
+              fetchUsers();
+            }
+          );
+        } else {
+          Swal.fire("Oops!", "Delete failed!", "error");
+        }
+      }
+    });
+
+    // const response = await apiDeleteUser(id);
+    // console.log(response);
+  };
+
   return (
     <div className="px-8">
       <h1 className="text-3xl py-4">Quản lý người dùng</h1>
@@ -66,7 +98,7 @@ const ManageUser = () => {
                 <td className="border p-2 flex items-center justify-center">
                   <img
                     className="h-20 w-20 object-cover rounded-md"
-                    src={item?.avatar}
+                    src={item?.avatar || anonAvatar}
                     alt="avatar"
                   />
                 </td>
@@ -81,7 +113,7 @@ const ManageUser = () => {
                       <AiOutlineEdit />
                     </button>
                     <button
-                      // onClick={() => handleDeletePost(item?.id)}
+                      onClick={() => handleDeleteUser(item?.id)}
                       className="p-2 bg-red-500 rounded-md "
                     >
                       <AiOutlineDelete />

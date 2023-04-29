@@ -80,7 +80,7 @@ export const updateCategoryService = ({ id, title, header, subheader }) => {
 };
 
 //DELETE CATEGORY
-export const deleteCategoryService = ({ id }) => {
+export const deleteCategoryService = (id) => {
   return new Promise(async (resolve, reject) => {
     try {
       const response = await db.Category.destroy({

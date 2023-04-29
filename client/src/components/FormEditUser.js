@@ -43,7 +43,7 @@ function FormEditUser({ payload, onChangePayload, onSubmit }) {
   return (
     <div className="px-8">
       <h1 className="text-3xl py-4 border-b">Thông tin cá nhân</h1>
-      <div className="py-4 space-y-4">
+      <form className="py-4 space-y-4">
         <div className="flex flex-col justify-center items-center gap-2">
           <label className="font-medium" htmlFor="avatar">
             Ảnh đại diện
@@ -58,6 +58,7 @@ function FormEditUser({ payload, onChangePayload, onSubmit }) {
             type="file"
             className="appearance-none"
             id="avatar"
+            defaultValue={""}
           />
         </div>
         <div className="grid grid-cols-12 space-x-6">
@@ -96,14 +97,14 @@ function FormEditUser({ payload, onChangePayload, onSubmit }) {
             </div>
           </div>
         </div>
-      </div>
-      <Button
-        fullWidth
-        text={"Cập nhật"}
-        bgColor={"bg-secondary1"}
-        textColor={"text-white"}
-        onClick={handleSubmit}
-      ></Button>
+        <Button
+          fullWidth
+          text={"Cập nhật"}
+          bgColor={"bg-secondary1"}
+          textColor={"text-white"}
+          onClick={handleSubmit}
+        ></Button>
+      </form>
     </div>
   );
 }

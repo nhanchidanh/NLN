@@ -3,21 +3,41 @@ import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import FormEditRange from "../../components/FormEditRange";
 import { getPriceRanges } from "../../store/actions";
-import { apiUpdatePriceRange } from "../../services";
+import {
+  apiAddPriceRange,
+  apiDeletePriceRange,
+  apiUpdatePriceRange,
+} from "../../services";
 import Swal from "sweetalert2";
+import Button from "../../components/Button";
 
 const ManagePrice = () => {
   const dispatch = useDispatch();
   const [selectRangeEdit, setSelectRangeEdit] = useState({});
+  const [isEditMode, setIsEditMode] = useState(false);
 
   const handleSubmit = async (data) => {
-    console.log("data update", data);
-    const response = await apiUpdatePriceRange(data);
+    // console.log("data update", data);
+    let response;
 
-    if (response?.status === 200) {
+    if (isEditMode) {
+      response = await apiUpdatePriceRange(data);
+    } else {
+      response = await apiAddPriceRange(data);
+    }
+
+    if (response?.data?.err === 0) {
       setSelectRangeEdit({});
 
-      Swal.fire("Thành công!", "Đã cập nhật thông tin!", "success").then(() => {
+      Swal.fire(
+        "Thành công!",
+        `Đã ${isEditMode ? "cập nhật" : "thêm"} thông tin!`,
+        "success"
+      ).then(() => {
+        if (isEditMode) {
+          setIsEditMode(false);
+        }
+
         dispatch(getPriceRanges());
       });
     } else {
@@ -26,12 +46,59 @@ const ManagePrice = () => {
   };
 
   const handleOnClickEdit = (item) => {
+    setIsEditMode(true);
     setSelectRangeEdit(item);
   };
+
+  const handleCreateRange = () => {
+    setIsEditMode(false);
+    setSelectRangeEdit({
+      title: "",
+      from: "",
+      to: "",
+    });
+  };
+
+  const handleDeleteRange = async (id) => {
+    console.log(id);
+
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const response = await apiDeletePriceRange(id);
+        // console.log(response);
+        if (response?.data?.err === 0) {
+          Swal.fire("Deleted!", "Your file has been deleted.", "success").then(
+            () => {
+              dispatch(getPriceRanges());
+            }
+          );
+        } else {
+          Swal.fire("Oops!", "Delete failed!", "error");
+        }
+      }
+    });
+  };
+
   const { priceRanges } = useSelector((state) => state.app);
   return (
     <div className="px-8">
-      <h1 className="text-3xl py-4">Quản lý khoảng giá</h1>
+      <div className="flex justify-between items-center">
+        <h1 className="text-3xl py-4">Quản lý khoảng giá</h1>
+        <Button
+          text="Thêm mới"
+          bgColor="bg-secondary1"
+          textColor={"text-white"}
+          onClick={handleCreateRange}
+        />
+      </div>
       <div className="w-full">
         <table className="w-full table-auto border border-separate border-spacing-0 rounded-2xl overflow-hidden">
           <thead>
@@ -60,7 +127,7 @@ const ManagePrice = () => {
                       <AiOutlineEdit />
                     </button>
                     <button
-                      // onClick={() => handleDeletePost(item?.id)}
+                      onClick={() => handleDeleteRange(item?.id)}
                       className="p-2 bg-red-500 rounded-md "
                     >
                       <AiOutlineDelete />
@@ -88,10 +155,11 @@ const ManagePrice = () => {
             className="w-1100 bg-white m-auto pb-5"
           >
             <FormEditRange
-              title={"Cập nhật khoảng giá"}
+              title={isEditMode ? "Cập nhật khoảng giá" : "Thêm khoảng giá"}
               payload={selectRangeEdit}
               setPayload={setSelectRangeEdit}
               onSubmit={handleSubmit}
+              textButton={!isEditMode ? "Thêm" : "Cập nhật"}
             />
           </div>
         </div>

@@ -74,6 +74,7 @@ const validate = (payload, setInvalidFields) => {
               message: "Chưa đặt giá trị cho trường này",
             },
           ]);
+          invalids++;
         }
         if (isNaN(+item[1])) {
           setInvalidFields((prev) => [
@@ -83,9 +84,23 @@ const validate = (payload, setInvalidFields) => {
               message: "Trường này phải là số!",
             },
           ]);
+          invalids++;
         }
         break;
 
+      case "from":
+      case "to":
+        if (isNaN(+item[1])) {
+          setInvalidFields((prev) => [
+            ...prev,
+            {
+              name: item[0],
+              message: "Trường này phải là số!",
+            },
+          ]);
+          invalids++;
+        }
+        break;
       default:
         break;
     }

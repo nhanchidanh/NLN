@@ -130,7 +130,6 @@ export const getFavoriteByUserId = (payload) => async (dispatch) => {
 export const removeFavorite = (payload) => async (dispatch) => {
   try {
     const response = await apiRemoveFavorite(payload.userId, payload.postId);
-
     if (response?.data) {
       dispatch(getFavoriteByUserId({ userId: payload.userId }));
     }

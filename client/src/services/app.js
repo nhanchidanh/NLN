@@ -31,6 +31,37 @@ export const apiUpdatePriceRange = (payload) => {
   });
 };
 
+export const apiAddPriceRange = (payload) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const response = await axios({
+        method: "post",
+        url: "api/v1/price-range/create",
+        data: payload,
+      });
+
+      resolve(response);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+export const apiDeletePriceRange = (id) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const response = await axios({
+        method: "delete",
+        url: `api/v1/price-range/delete/${id}`,
+      });
+
+      resolve(response);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
 export const apigetAreaRanges = () =>
   new Promise(async (resolve, reject) => {
     try {
@@ -52,6 +83,37 @@ export const apiUpdateAreaRange = (payload) => {
         method: "put",
         url: "api/v1/area-range/update",
         data: payload,
+      });
+
+      resolve(response);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+export const apiAddAreaRange = (payload) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const response = await axios({
+        method: "post",
+        url: "api/v1/area-range/create",
+        data: payload,
+      });
+
+      resolve(response);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+export const apiDeleteAreaRange = (id) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const response = await axios({
+        method: "delete",
+        url: `api/v1/area-range/delete/${id}`,
       });
 
       resolve(response);

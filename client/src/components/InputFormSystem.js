@@ -22,7 +22,7 @@ const InputFormSystem = ({
           className={`flex-auto ${
             unit ? "rounded-tl-md rounded-bl-md" : "rounded-md"
           } border p-2 outline-none`}
-          value={value}
+          defaultValue={value}
           onChange={(e) =>
             setValue((prev) => ({ ...prev, [name]: e.target.value }))
           }

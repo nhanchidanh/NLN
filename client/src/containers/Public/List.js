@@ -72,11 +72,6 @@ const List = ({ categoryId }) => {
             bgColor={"bg-gray-200"}
             text="Mới nhất"
           />
-          <Button
-            onClick={() => setFilter((prev) => ({ ...prev, isNew: 1 }))}
-            bgColor={"bg-gray-200"}
-            text="Yêu thích"
-          />
         </div>
         <div>
           {posts?.length > 0 &&
@@ -121,6 +116,7 @@ const List = ({ categoryId }) => {
           onChange={(e, value) => handleChangePage(value)}
           hidePrevButton={true}
           hideNextButton={true}
+          // count={Math.ceil(count / process.env.REACT_APP_LIMIT_POSTS)}
           count={Math.ceil(count / process.env.REACT_APP_LIMIT_POSTS)}
         ></Pagination>
       </div>
