@@ -9,6 +9,7 @@ import { apiDeletePost, apiUpdatePost } from "../../services";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 import convertToMillion from "../../utils/Common/convertToMillion";
+import { convertToSlug } from "../../utils/Common/convertToSlug";
 
 const ManagePost = () => {
   const dispatch = useDispatch();
@@ -63,7 +64,8 @@ const ManagePost = () => {
         if (response?.data?.err === 0) {
           Swal.fire("Deleted!", "Your file has been deleted.", "success").then(
             () => {
-              setIsDelete(true);
+              dispatch(actions.getPostsLimitByUserId({ page }));
+              // setIsDelete(true);
             }
           );
         } else {
@@ -74,9 +76,9 @@ const ManagePost = () => {
   };
 
   const handleApprovePost = async (data) => {
-    console.log(data);
+    // console.log(data);
     const response = await apiUpdatePost(data);
-    console.log(response);
+    // console.log(response);
     if (response?.data?.response?.err === 0) {
       Swal.fire(
         "Thành công!",
@@ -144,15 +146,29 @@ const ManagePost = () => {
                   <tr key={item?.id} className="text-center">
                     <td className="border p-2">{index + 1}</td>
                     <td className="border p-2 flex items-center justify-center">
-                      <img
-                        className="h-20 w-20 object-cover rounded-md"
-                        src={
-                          item?.images.find((item) => item?.url !== null)?.url
-                        }
-                        alt="post"
-                      />
+                      <Link
+                        to={`/chi-tiet/${convertToSlug(
+                          item?.title?.replaceAll("/", "-")
+                        )}/${item?.id}`}
+                      >
+                        <img
+                          className="h-20 w-20 object-cover rounded-md"
+                          src={
+                            item?.images.find((item) => item?.url !== null)?.url
+                          }
+                          alt="post"
+                        />
+                      </Link>
                     </td>
-                    <td className="border p-2">{item?.title}</td>
+                    <td className="border p-2">
+                      <Link
+                        to={`/chi-tiet/${convertToSlug(
+                          item?.title?.replaceAll("/", "-")
+                        )}/${item?.id}`}
+                      >
+                        {item?.title}
+                      </Link>
+                    </td>
                     <td className="border p-2">
                       {convertToMillion(item?.price)}
                     </td>

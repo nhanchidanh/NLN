@@ -127,7 +127,7 @@ export const createPost = async (req, res) => {
 export const deletePost = async (req, res) => {
   const { id } = req.body;
   const userId = req.user.id;
-  console.log(req.body);
+  // console.log(req.body);
 
   try {
     if (!userId || !id) {

@@ -6,7 +6,7 @@ const ProvinceBtn = ({ name, image, province }) => {
   const dispatch = useDispatch();
 
   const handleOnClick = () => {
-    console.log(province);
+    // console.log(province);
     dispatch(getPostsLimit({ province }));
   };
   return (

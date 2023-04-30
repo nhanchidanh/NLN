@@ -99,7 +99,7 @@ const CreatePost = ({ isEdit, handleCloseModel }) => {
       id: dataEdit?.id,
     };
 
-    console.log(finalPayload);
+    // console.log(finalPayload);
     // console.log(payload);
     const result = validate(finalPayload, setInvalidFields);
 
@@ -120,10 +120,11 @@ const CreatePost = ({ isEdit, handleCloseModel }) => {
         }
       } else {
         const response = await apiCreatePost(finalPayload);
-        console.log(response);
+        // console.log(response);
         if (response.status === 200) {
           Swal.fire("Thành công", "Tạo tin mới thành công", "success").then(
             () => {
+              // dispatch(actions.editDate({}));
               setPayload({
                 title: "",
                 price: "",

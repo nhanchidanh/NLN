@@ -17,7 +17,7 @@ export const getCategories = async (req, res) => {
 export const createCategory = async (req, res) => {
   const { title, header, subheader } = req.body;
 
-  console.log(req.body);
+  // console.log(req.body);
   try {
     if (!title || !header || !subheader) {
       return res.status(400).json({
@@ -54,7 +54,7 @@ export const updateCategory = async (req, res, next) => {
 export const deleteCategory = async (req, res) => {
   try {
     const { id } = req.params;
-    console.log(id);
+    // console.log(id);
     const response = await categoryService.deleteCategoryService(id);
     res.status(200).json(response);
   } catch (error) {

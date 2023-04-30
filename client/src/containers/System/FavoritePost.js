@@ -9,7 +9,7 @@ const FavoritePost = () => {
   const { favorites } = useSelector((state) => state.post);
   const { currentUser } = useSelector((state) => state.user);
 
-  console.log(favorites);
+  // console.log(favorites);
 
   useEffect(() => {
     if (Object.keys(currentUser).length === 0) return;

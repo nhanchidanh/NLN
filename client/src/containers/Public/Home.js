@@ -25,6 +25,7 @@ const Home = () => {
       <Navigation></Navigation>
       {location?.pathname !== `/${path.LOGIN}` &&
         location?.pathname !== `/${path.CONTACT}` &&
+        location?.pathname !== `/${path.INSTRUCTION}` &&
         !location?.pathname?.includes("chi-tiet") && <Search />}
 
       <div className="w-4/5 mx-auto flex flex-col justify-start mt-5">
@@ -34,7 +35,7 @@ const Home = () => {
         <Intro></Intro>
         <Contact></Contact>
       </div>
-      <div className="h-[500px]"></div>
+      <div className="h-[100px]"></div>
     </div>
   );
 };

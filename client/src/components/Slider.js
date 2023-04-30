@@ -26,7 +26,7 @@ const Slider = ({ images }) => {
         {images?.map((item) => (
           <SwiperSlide className="text-center text-lg" key={item?.url}>
             <img
-              className="w-full h-full object-cover"
+              className="w-full h-full object-contain bg-black"
               src={item?.url}
               alt="swiper"
             />

@@ -93,10 +93,10 @@ const Item = ({
       <div className="w-full basis-3/5">
         <div>
           <div className="text-red-600 font-semibold">
-            {handleStar(+star).length > 0 &&
+            {/* {handleStar(+star).length > 0 &&
               handleStar(+star).map((star, number) => {
                 return <span key={number}>{star}</span>;
-              })}
+              })} */}
             <Link
               to={`/chi-tiet/${convertToSlug(
                 title?.replaceAll("/", "-")
@@ -128,9 +128,12 @@ const Item = ({
             <button className="bg-blue-700 text-white py-1 px-2 rounded-md">
               {`Gọi ${user?.phone}`}
             </button>
-            <button className="text-blue-700 py-1 px-2 rounded-md border border-blue-700 ">
+            <Link
+              to={`https://zalo.me/${user?.phone}`}
+              className="text-blue-700 py-1 px-2 rounded-md border border-blue-700 "
+            >
               Nhắn Zalo
-            </button>
+            </Link>
           </div>
         </div>
       </div>

@@ -60,7 +60,7 @@ const ItemSideBar = ({
                 }
                 key={item?.id}
                 className={`flex gap-1  items-center cursor-pointer hover:text-orange-600 border-b border-gray-200 pb-1 border-dashed 
-                    ${activeId === item.id ? "text-orange-600" : ""}`}
+                    ${activeId === item.id ? "text-orange-600 font-bold" : ""}`}
                 onClick={() => handleClick(item)}
               >
                 <MdNavigateNext color="#999" className="mt-[2px]" />

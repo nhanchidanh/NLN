@@ -38,7 +38,7 @@ const Overview = ({ payload, setPayload, invalidFields, setInvalidFields }) => {
         </label>
         <textarea
           id="description"
-          className="outline-none border rounded-md"
+          className="outline-none border rounded-md whitespace-pre-wrap p-2"
           cols={30}
           rows={10}
           value={payload?.description}

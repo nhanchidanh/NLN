@@ -15,7 +15,7 @@ const SubItem = ({ id, title, price, image, createdAt }) => {
         <img
           src={image?.url}
           alt="anh"
-          className=" h-[80px] w-full object-cover rounded-md"
+          className=" h-[80px] w-28 object-cover rounded-md"
         />
       </Link>
 
@@ -26,7 +26,7 @@ const SubItem = ({ id, title, price, image, createdAt }) => {
         >
           {`${title?.slice(0, 50)}...`}
         </Link>
-        <div className="flex justify-between items-center w-full  mt-2">
+        <div className="flex justify-between items-center w-full mt-2">
           <span className="text-green-600 font-bold ">
             {convertToMillion(price)}
           </span>

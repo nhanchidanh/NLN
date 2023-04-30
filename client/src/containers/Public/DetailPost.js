@@ -54,12 +54,12 @@ const DetailPost = () => {
         </div>
         <div className="p-5 space-y-5">
           <div className="flex items-center gap-1">
-            <span>
+            {/* <span>
               {handleStar(+star).length > 0 &&
                 handleStar(+star).map((star, number) => {
                   return <span key={number}>{star}</span>;
                 })}
-            </span>
+            </span> */}
             <h2 className="text-2xl text-red-600 font-bold">{post?.title}</h2>
           </div>
           <div className="space-y-1">
@@ -96,7 +96,7 @@ const DetailPost = () => {
           </div>
           <div className="space-y-1">
             <h1 className="text-2xl font-medium">Thông tin mô tả</h1>
-            <p>{post?.description}</p>
+            <p className="whitespace-pre-wrap">{post?.description}</p>
           </div>
           <div className="space-y-4">
             <h1 className="text-2xl font-medium">Đặc điểm tin đăng</h1>
@@ -170,14 +170,14 @@ const DetailPost = () => {
             </Link>
             <Link
               className="flex items-center gap-1 bg-white w-full justify-center rounded-md py-2 "
-              to="/"
+              to={`https://zalo.me/${post?.user?.phone}`}
             >
               <img
                 className="w-6 h-6 rounded-full object-cover"
                 src="https://phongtro123.com/images/icon-zalo.png"
                 alt="zalo"
               />
-              <span>nhắn Zalo</span>
+              <span>Nhắn Zalo</span>
             </Link>
             <Link
               className="flex items-center gap-1 bg-white w-full justify-center rounded-md py-2"

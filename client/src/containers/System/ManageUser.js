@@ -45,7 +45,7 @@ const ManageUser = () => {
   };
 
   const handleDeleteUser = async (id) => {
-    console.log(id);
+    // console.log(id);
 
     Swal.fire({
       title: "Are you sure?",
@@ -58,7 +58,7 @@ const ManageUser = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         const response = await apiDeleteUser(id);
-        console.log(response);
+        // console.log(response);
         if (response?.data?.err === 0) {
           Swal.fire("Deleted!", "Your file has been deleted.", "success").then(
             () => {

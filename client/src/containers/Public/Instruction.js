@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const Instruction = () => {
   return (
-    <div className="border w-full my-3 rounded-md">
+    <div className="border bg-white w-full my-3 rounded-md">
       <div className="p-5 flex flex-col gap-3">
         <h1>Hướng dẫn đăng tin</h1>
         <span>
