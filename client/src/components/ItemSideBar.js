@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useRef, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { convertToSlug } from "../utils/Common/convertToSlug";
 import icons from "../utils/icons";
@@ -14,6 +14,7 @@ const ItemSideBar = ({
   onResetCancel,
   onScroll,
 }) => {
+  const [searchParams] = useSearchParams();
   const [activeId, setActiveId] = useState(0);
   // console.log(type);
 
@@ -32,7 +33,7 @@ const ItemSideBar = ({
       setActiveId(0);
       onResetCancel();
     }
-  }, [isCancel, onResetCancel]);
+  }, [isCancel, onResetCancel, searchParams]);
 
   const handleClick = (item) => {
     setActiveId(item.id);

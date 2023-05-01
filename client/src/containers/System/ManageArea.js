@@ -84,7 +84,7 @@ const ManageArea = () => {
   return (
     <div className="px-8">
       <div className="flex justify-between items-center">
-        <h1 className="text-3xl py-4">Quản lý khoảng giá</h1>
+        <h1 className="text-3xl py-4">Quản lý khoảng diện tích</h1>
         <Button
           text="Thêm mới"
           bgColor="bg-secondary1"
@@ -148,7 +148,7 @@ const ManageArea = () => {
             className="w-1100 bg-white m-auto pb-5"
           >
             <FormEditRange
-              title={"Cập nhật khoảng giá"}
+              title={isEditMode ? "Cập nhật khoảng giá" : "Thêm khoảng giá"}
               payload={selectRangeEdit}
               setPayload={setSelectRangeEdit}
               onSubmit={handleSubmit}
