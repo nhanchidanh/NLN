@@ -22,19 +22,17 @@ PhongTro123 is a web platform designed for posting and searching for rental acco
 
 - **Frontend:** ReactJS
 - **Backend:** NodeJS
-- ![MoHinhChucNang drawio](https://github.com/nhanchidanh/phongtro123/assets/106689501/a8fd2fdd-6709-4dac-8814-0a7c3bf0133e)
-
 - **Database:** MySQL
 - **Other Technologies:** ExpressJS, Sequelize, Tailwind CSS, Leaflet, React-hook, React-router-dom.
 
 ## Demo
 
-- [Video Demo](https://youtu.be/Cuu8aybVZcs) <!-- Replace # with the actual link to your video demo -->
+- ![Video Demo](https://youtu.be/Cuu8aybVZcs) <!-- Replace # with the actual link to your video demo -->
   
 ![Demo Image 1](https://www.pexels.com/vi-vn/anh/dan-ong-di-d-o-toa-nha-thanh-th-17550988/) <!-- Replace path/to/demo/image1.jpg with the actual path to your image -->
 ![Demo Image 2](path/to/demo/image2.jpg) <!-- Replace path/to/demo/image2.jpg with the actual path to your image -->
 ![Demo Image 3](path/to/demo/image3.jpg) <!-- Replace path/to/demo/image3.jpg with the actual path to your image -->
-
+![MoHinhChucNang drawio](https://github.com/nhanchidanh/phongtro123/assets/106689501/a8fd2fdd-6709-4dac-8814-0a7c3bf0133e)
 
 ## Contact
 
